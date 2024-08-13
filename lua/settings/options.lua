@@ -1,7 +1,6 @@
---- ----------------------------------------
---- This contain the configs for the basic
---- usage of the neovim
---- ----------------------------------------
+---------------------------------------------
+--- Config options
+---------------------------------------------
 
 ---
 local vopt = vim.opt
@@ -17,9 +16,9 @@ local options = {
   guicursor = 'a:block-cursor', -- show the cursor in block in any mode
   virtualedit = 'block', --
 
-  -- Sizes
-  winwidth = 60,
-  winminwidth = 10,
+  -- Sizes -- Removed cause is used in the toggler map
+  -- winwidth = 60,
+  -- winminwidth = 10,
   -- winheight=30,
   -- winminheight = 20,
 

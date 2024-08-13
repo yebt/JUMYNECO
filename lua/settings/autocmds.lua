@@ -1,27 +1,26 @@
---- ----------------------------------------
---- This are the auto commands to execute
---- on the load
---- ----------------------------------------
+---------------------------------------------
+--- Autocmds
+---------------------------------------------
 
 ---
 local au = vim.api.nvim_create_autocmd
--- This file is automatically loaded by lazyvim.config.init.
+--- This file is automatically loaded by lazyvim.config.init.
 local function augroup(name)
   return vim.api.nvim_create_augroup('_kernel_' .. name, { clear = true })
 end
 
---- ----------------------------------------
--- auto no h in normal mode
-vim.on_key(function(char)
-  if vim.fn.mode() == 'n' then
-    local new_hlsearch = vim.tbl_contains({ '<CR>', 'n', 'N', '*', '#', '?', '/' }, vim.fn.keytrans(char))
-    if vim.opt.hlsearch:get() ~= new_hlsearch then
-      vim.opt.hlsearch = new_hlsearch
-    end
-  end
-end, vim.api.nvim_create_namespace('auto_hlsearch'))
+-------------------------------------------
+--- auto no h in normal mode
+-- vim.on_key(function(char)
+--   if vim.fn.mode() == 'n' then
+--     local new_hlsearch = vim.tbl_contains({ '<CR>', 'n', 'N', '*', '#', '?', '/' }, vim.fn.keytrans(char))
+--     if vim.opt.hlsearch:get() ~= new_hlsearch then
+--       vim.opt.hlsearch = new_hlsearch
+--     end
+--   end
+-- end, vim.api.nvim_create_namespace('auto_hlsearch'))
 
---- ----------------------------------------
+-------------------------------------------
 -- Check if we need to reload the file when it changed
 au({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   group = augroup('checktime'),
