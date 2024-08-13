@@ -109,5 +109,4 @@ mp('n', '<M-z>m', fns.toggleMaximize, { silent = true, desc = 'Toggle maximize w
 --- Terminal
 --- Escape in the terminal
 mp('t', '<esc><esc>', '<C-\\><C-n>', { silent = true, desc = 'Exit terminal insert mode' })
-mp("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
-
+-- mp("t", "<c-_>", "<cmd>close<cr>", { desc = "Close the terminal" })
