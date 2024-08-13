@@ -3,12 +3,12 @@
 --- ----------------------------------------
 
 local M = {}
--- Add blank space above
+--- Add blank space above
 M.blank_above = function()
   vim.cmd("put! =repeat(nr2char(10), v:count1)|silent ']+")
 end
 
--- Add blank space below
+--- Add blank space below
 M.blank_below = function()
   vim.cmd("put =repeat(nr2char(10), v:count1)|silent '[-")
 end
@@ -25,7 +25,7 @@ M.homeVsKey = function()
   return action
 end
 
--- Remove buffer
+--- Remove buffer
 M.brem = function()
   -- if there are less than 2
   if vim.fn.winnr('$') < 2 then
@@ -40,7 +40,50 @@ M.brem = function()
   vim.cmd('bn |  bw #')
 end
 
--- Toggle netrw
+--- Lazynvim buff remove
+M.brem2 = function()
+  buf = buf or 0
+  buf = buf == 0 and vim.api.nvim_get_current_buf() or buf
+
+  if vim.bo.modified then
+    local choice = vim.fn.confirm(('Save changes to %q?'):format(vim.fn.bufname()), '&Yes\n&No\n&Cancel')
+    if choice == 0 or choice == 3 then -- 0 for <Esc>/<C-c> and 3 for Cancel
+      return
+    end
+    if choice == 1 then -- Yes
+      vim.cmd.write()
+    end
+  end
+
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    vim.api.nvim_win_call(win, function()
+      if not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_buf(win) ~= buf then
+        return
+      end
+      -- Try using alternate buffer
+      local alt = vim.fn.bufnr('#')
+      if alt ~= buf and vim.fn.buflisted(alt) == 1 then
+        vim.api.nvim_win_set_buf(win, alt)
+        return
+      end
+
+      -- Try using previous buffer
+      local has_previous = pcall(vim.cmd, 'bprevious')
+      if has_previous and buf ~= vim.api.nvim_win_get_buf(win) then
+        return
+      end
+
+      -- Create new listed buffer
+      local new_buf = vim.api.nvim_create_buf(true, false)
+      vim.api.nvim_win_set_buf(win, new_buf)
+    end)
+  end
+  if vim.api.nvim_buf_is_valid(buf) then
+    pcall(vim.cmd, 'bdelete! ' .. buf)
+  end
+end
+
+--- Toggle netrw
 M.toggleNetrw = function()
   -- Verificar si el buffer de netrw ya está abierto
   local netrw_buf_exists = false
@@ -95,10 +138,40 @@ M.surround = function()
   return 'c' .. char .. '<C-r><C-o>"' .. pair_char .. '<ESC><Left>vi' .. char
 end
 
--- Check if an plugin is available
+--- Check if an plugin is available
 M.plugin_is_available = function(pg)
   local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
   return lazy_config_avail and lazy_config.spec.plugins[pg] ~= nil
+end
+
+M.toggleMaximize = function()
+
+  if not M._maximized then
+    M._maximized = {}
+    local function set(k, v)
+      table.insert(M._maximized, 1, { k = k, v = vim.o[k] })
+      vim.o[k] = v
+    end
+    set('winwidth', 999)
+    set('winheight', 999)
+    set('winminwidth', 10)
+    set('winminheight', 4)
+    vim.cmd('wincmd =')
+    vim.api.nvim_create_autocmd('ExitPre', {
+      once = true,
+      group = vim.api.nvim_create_augroup('lazyvim_restore_max_exit_pre', { clear = true }),
+      desc = 'Restore width/height when close Neovim while maximized',
+      callback = function()
+        M.maximize.set(false)
+      end,
+    })
+  else
+    for _, opt in ipairs(M._maximized) do
+      vim.o[opt.k] = opt.v
+    end
+    M._maximized = nil
+    vim.cmd('wincmd =')
+  end
 end
 
 return M
