@@ -2,14 +2,14 @@
 
 ## After
 
-- [ ] Markdown
-- [ ] Lua
+- [x] Markdown
+- [x] Lua
 
 ## Settings
 
-- [ ] Options
-- [ ] Autocommands
-- [ ] Keybindings
+- [x] Options
+- [x] Autocommands
+- [x] Keybindings
 
 ## Plugins
 
