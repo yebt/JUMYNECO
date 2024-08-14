@@ -31,5 +31,28 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+-- vim.api.nvim_create_autocmd('BufReadPost', {
+--   once = true,
+--   callback = function(event)
+--     -- Skip if we already entered vim
+--     if vim.v.vim_did_enter == 1 then
+--       return
+--     end
+--
+--     -- Try to guess the filetype (may change later on during Neovim startup)
+--     local ft = vim.filetype.match({ buf = event.buf })
+--     if ft then
+--       -- Add treesitter highlights and fallback to syntax
+--       local lang = vim.treesitter.language.get_lang(ft)
+--       if not (lang and pcall(vim.treesitter.start, event.buf, lang)) then
+--         vim.bo[event.buf].syntax = ft
+--       end
+--
+--       -- Trigger early redraw
+--       vim.cmd([[redraw]])
+--     end
+--   end,
+-- })
+
 --- Load plugins
 require('plugins')
