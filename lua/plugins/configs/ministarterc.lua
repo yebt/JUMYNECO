@@ -1,5 +1,56 @@
 return function()
 
+  local uv = vim.uv or vim.loop
+
+  --- ST
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⣄⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⢰⣿⣦⡀⡀⡀⢀⡄⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡄⡀⠂⢀⣿⣿⣿⣧⡀⢠⣾⡇⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⣬⡄⠠⣤⣼⣿⣿⣿⡿⠛⠛⠛⠓⠠⡀⢀⣀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⣴⣿⣿⣿⣿⣿⣿⣿⣿⠷⡀⡀⡀⡀⡀⡀⣀⣀⡉⢷⣄⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣶⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⡀⡀⡀⠐⠶⢿⣿⣿⣿⡀⠉⠒⠤⣄⣀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣤⣤⣤⠶⣤⣄⠙⠛⠟⡀⡀⡀⡀⡀⠈⠉⠹⣷⣶⣶⡄⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡅⡀⠱⡿⣧⡀⡀⡀⡀⠘⡀⠘⠤⢀⡀⠙⠹⣿⠁⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣀⡀⢁⡀⠳⠒⠒⠶⠒⠤⠿⠶⡺⡀⠎⢲⡼⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣤⣄⣀⣀⣀⣀⣄⣀⣠⡤⠷⠚⠛⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠋⠉⠉⠉⠛⠋⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡛⠁⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⢿⣿⣟⡁⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+  -- ⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀⡀
+
+  --- FSessions.
+  local fsessions = function(n)
+    local msessions = require('mini.sessions')
+    local items = vim.tbl_keys(msessions.detected)
+    local session_name = 'Mini Sessions'
+
+    if vim.tbl_count(items) == 0 then
+      return {
+        { name = [[There are no detected sessions]], action = '', section = session_name },
+      }
+    end
+
+    local fitems = {}
+    local homed = vim.fn.expand('~')
+    for indx, el in ipairs(items) do
+      local dir, branch = unpack(vim.split(el, '%%', { plain = true }))
+      local name = dir:gsub('%%', '/'):gsub(homed, '~')
+      branch = branch and ' [' .. branch:gsub('%%', '/') .. ']' or ''
+      table.insert(fitems, {
+        name = name .. branch,
+        action = function()
+          msessions.read(el)
+        end,
+        section = session_name,
+      })
+
+      if indx == n then
+        break
+      end
+    end
+    return fitems
+  end
+
   local starter = require('mini.starter')
   starter.setup({
     header = 'PERFECTO',
@@ -14,7 +65,7 @@ return function()
         { name = 'Old files', action = [[Pick oldfiles]], section = 'CMD' },
         -- {name="Old files", action = [[Pick oldfiles]], section="CMD"},
       },
-      -- fsessions(4),
+      fsessions(4),
       -- starter.sections.pick(),
 
       -- starter.sections.recent_files(6, false),
