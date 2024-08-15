@@ -19,33 +19,33 @@ return function()
     swap_backgrounds = false,
     -- Override the styling of any highlight group.
     override = {},
-      -- Cursorline options.  Also includes visual/selection.
-      cursorline = {
-        -- Bold font in cursorline.
-        bold = false,
-        -- Bold cursorline number.
-        bold_number = true,
-        -- Available styles: 'dark', 'light'.
-        theme = 'dark',
-        -- Blending the cursorline bg with the buffer bg.
-        blend = 0.85,
-      },
-      noice = {
-        -- Available styles: `classic`, `flat`.
-        style = 'flat',
-      },
-      telescope = {
-        -- Available styles: `classic`, `flat`.
-        style = 'flat',
-      },
-      leap = {
-        -- Dims the backdrop when using leap.
-        dim_backdrop = false,
-      },
-      ts_context = {
-        -- Enables dark background for treesitter-context window
-        dark_background = true,
-      },
+    -- Cursorline options.  Also includes visual/selection.
+    cursorline = {
+      -- Bold font in cursorline.
+      bold = false,
+      -- Bold cursorline number.
+      bold_number = true,
+      -- Available styles: 'dark', 'light'.
+      theme = 'dark',
+      -- Blending the cursorline bg with the buffer bg.
+      blend = 0.85,
+    },
+    noice = {
+      -- Available styles: `classic`, `flat`.
+      style = 'flat',
+    },
+    telescope = {
+      -- Available styles: `classic`, `flat`.
+      style = 'flat',
+    },
+    leap = {
+      -- Dims the backdrop when using leap.
+      dim_backdrop = false,
+    },
+    ts_context = {
+      -- Enables dark background for treesitter-context window
+      dark_background = true,
+    },
   })
   nrdc.load()
 end

@@ -1,4 +1,4 @@
 return function()
   -- Lua initialization file
-vim.cmd [[colorscheme moonfly]]
+  vim.cmd([[colorscheme moonfly]])
 end
