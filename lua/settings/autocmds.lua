@@ -52,22 +52,22 @@ au({ 'VimResized' }, {
 })
 
 -- go to last loc when opening a buffer
--- au('BufReadPost', {
---   group = augroup('last_loc'),
---   callback = function(event)
---     local exclude = { 'gitcommit' }
---     local buf = event.buf
---     if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
---       return
---     end
---     vim.b[buf].lazyvim_last_loc = true
---     local mark = vim.api.nvim_buf_get_mark(buf, '"')
---     local lcount = vim.api.nvim_buf_line_count(buf)
---     if mark[1] > 0 and mark[1] <= lcount then
---       pcall(vim.api.nvim_win_set_cursor, 0, mark)
---     end
---   end,
--- })
+au('BufReadPost', {
+  group = augroup('last_loc'),
+  callback = function(event)
+    local exclude = { 'gitcommit' }
+    local buf = event.buf
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+      return
+    end
+    vim.b[buf].lazyvim_last_loc = true
+    local mark = vim.api.nvim_buf_get_mark(buf, '"')
+    local lcount = vim.api.nvim_buf_line_count(buf)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
 
 -- Automake the views
 local view_group = augroup('_auto_view')
@@ -98,6 +98,30 @@ au('BufWinEnter', {
     end
   end,
 })
+
+--- Try early redraw
+-- au('BufReadPost', {
+--   once = true,
+--   callback = function(event)
+--     -- Skip if we already entered vim
+--     if vim.v.vim_did_enter == 1 then
+--       return
+--     end
+--
+--     -- Try to guess the filetype (may change later on during Neovim startup)
+--     local ft = vim.filetype.match({ buf = event.buf })
+--     if ft then
+--       -- Add treesitter highlights and fallback to syntax
+--       local lang = vim.treesitter.language.get_lang(ft)
+--       if not (lang and pcall(vim.treesitter.start, event.buf, lang)) then
+--         vim.bo[event.buf].syntax = ft
+--       end
+--
+--       -- Trigger early redraw
+--       vim.cmd([[redraw]])
+--     end
+--   end,
+-- })
 
 -- close some filetypes with <q>
 au('FileType', {
@@ -138,6 +162,7 @@ au('FileType', {
     vim.opt_local.spell = true
     vim.opt_local.listchars.eol = '¶'
     vim.opt_local.colorcolumn = '100'
+    vim.opt_local.conceallevel = 2
   end,
 })
 
