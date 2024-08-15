@@ -54,10 +54,10 @@ vim.opt.rtp:prepend(lazypath)
 -- })
 
 local Event = require('lazy.core.handler.event')
-
 Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' } }
 Event.mappings['User LazyFile'] = Event.mappings.LazyFile
 
+--- Register event
 --- Setup lazy.nvim
 require('lazy').setup({
 
