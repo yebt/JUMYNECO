@@ -1,5 +1,6 @@
 return function()
   local opts = {
+    max_count = 2,
     disabled_filetypes = {
       'carbon.explorer',
       'NvimTree',
