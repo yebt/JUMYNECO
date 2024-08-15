@@ -28,6 +28,9 @@ vim.api.nvim_create_autocmd('User', {
     if without_args then
       require('settings.autocmds')
     end
+    -- vim.schedule(function()
+    --   vim.api.nvim_exec_autocmds("FileType", {})
+    -- end)
   end,
 })
 

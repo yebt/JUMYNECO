@@ -24,4 +24,10 @@ return {
       -- },
     },
   },
+
+  --- Auto Pairs
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+  }
 }

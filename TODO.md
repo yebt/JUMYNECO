@@ -13,25 +13,34 @@
 
 ## Plugins
 
-- [ ] Init
+- [x] Init
 
 ### Core
 
-- [ ] Treesitter
-- [ ] HardTime
+- [x] Treesitter
+- [x] HardTime
 
 ### Coding
 
-- [ ] Autocompletions
+- [x] Auto Tag
+- [ ] Auto completions
 - [ ] LSP
 - [ ] Formatter
 - [ ] Linter
 
 ### Usage
 
-- [ ] Colorschemes
+- [x] Colorschemes
+  - [x] Kanagawa
+  - [x] Tokionight
 - [ ] Autopairs
 - [ ] Remove Buffer
+- [ ] Trouble
+- [ ] LSPSaga
+- [ ] Color view hex _"colorized"_
+- [x] Git
+  - [x] Diff
+  - [x] Commands
 
 ### Iterations
 
@@ -42,12 +51,16 @@
 
 ### UI
 
-- [ ] Notify
-- [ ] Statusline
+- [x] Notify
+- [x] Statusline
+  - [x] mini-statusline
+- [x] Starter
 - [ ] Dressing
 
 ### Editor
 
+- [x] Sessions
+  - [x] Sessions auto save
 - [ ] File Manager
 - [ ] Execute Task
 - [ ] Execute Test
