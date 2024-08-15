@@ -36,6 +36,7 @@ local options = {
   autoindent = true,
 
   -- Wrap
+  wrap = false,
   linebreak = true,
   breakindentopt = 'shift:2,min:20', --"min:40, shift:0,sbr"
   breakindent = true,
