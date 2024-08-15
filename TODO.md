@@ -41,6 +41,10 @@
 - [x] Git
   - [x] Diff
   - [x] Commands
+- [x] Ai completion
+  - [x] SuperMaven
+  - [x] Copilot
+  - [x] Codium
 
 ### Iterations
 
