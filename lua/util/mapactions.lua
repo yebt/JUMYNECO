@@ -141,7 +141,6 @@ M.plugin_is_available = function(pg)
 end
 
 M.toggleMaximize = function()
-
   if not M._maximized then
     M._maximized = {}
     local function set(k, v)

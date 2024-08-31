@@ -1,2 +1,2 @@
 --- start
-require("krnl")
+require('krnl')
