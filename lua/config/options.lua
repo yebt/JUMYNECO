@@ -264,4 +264,3 @@ end
 --if vim.fn.executable('rg') == 1 then
 vopt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 vopt.grepprg = 'rg --vimgrep --no-heading --smart-case'
-
