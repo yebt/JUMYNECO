@@ -242,6 +242,9 @@ local options = {
 local globals = {
   loaded_perl_provider = 0,
   loaded_ruby_provider = 0,
+  loaded_node_provider = 0,
+  loaded_python_provider = 0,
+  loaded_python3_provider = 0,
   --
   -- netrw_browse_split = 4,
   netrw_banner = 0,
