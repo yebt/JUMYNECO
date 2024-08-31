@@ -63,20 +63,20 @@ require('lazy').setup({
   performance = {
     rtp = {
       disabled_plugins = {
-        "editorconfig",
-        "gzip",
-        "man",
+        'editorconfig',
+        'gzip',
+        'man',
         -- "matchit",
         -- "matchparen",
         -- "netrwPlugin",
-        "osc52",
-        "rplugin",
-        "shada",
+        'osc52',
+        'rplugin',
+        'shada',
         -- "spellfile",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
+        'tarPlugin',
+        'tohtml',
+        'tutor',
+        'zipPlugin',
       },
     },
   },
@@ -87,5 +87,4 @@ require('lazy').setup({
     -- Track each new require in the Lazy profiling tab
     require = false,
   },
-
 })

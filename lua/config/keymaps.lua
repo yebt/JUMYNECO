@@ -1,4 +1,4 @@
-local actions = require("util.mapactions")
+local actions = require('util.mapactions')
 local map = vim.keymap.set
 
 --- Usage
@@ -106,4 +106,3 @@ map('n', '<M-z>m', actions.toggleMaximize, { silent = true, desc = 'Toggle maxim
 --- Escape in the terminal
 map('t', '<esc><esc>', '<C-\\><C-n>', { silent = true, desc = 'Exit terminal insert mode' })
 -- mp("t", "<c-_>", "<cmd>close<cr>", { desc = "Close the terminal" })
-

@@ -199,4 +199,3 @@ au({ 'BufLeave' }, {
   group = c,
   command = [[stopinsert]],
 })
-
