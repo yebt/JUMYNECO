@@ -1,8 +1,4 @@
 return {
-  --- Lsp utils
-  {
-    'neovim/nvim-lspconfig',
-  },
 
   --- Autopairs
   {
