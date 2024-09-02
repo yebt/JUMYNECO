@@ -4,7 +4,7 @@ return {
     'neovim/nvim-lspconfig',
   },
 
-  --- autopairs
+  --- Autopairs
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
@@ -15,7 +15,7 @@ return {
     end,
   },
 
-  --- completions
+  --- Completions
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -26,6 +26,7 @@ return {
     event = 'InsertEnter',
     config = require('plugins.configs.cmp'),
   },
+
   -- Automatically add closing tags for HTML and JSX
   {
     'windwp/nvim-ts-autotag',
