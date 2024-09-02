@@ -8,35 +8,39 @@ Plugins and function to integrate
 
 Plugins Managment
 
-- Lazy
+- [x] Lazy
 
 Needed for work
 
-- Colorscheme
+- [-] Colorscheme
+  - [x] Night owl
   - 0xstepit/flow.nvim
-- Autopairs
-- Treesetter
-- Autocompletion
-- LSP
+- [x] Autopairs
+- [x] Treesetter
+- [x] Autocompletion
+- [ ] LSP
 
 Better programming
 
-- Code action
- - rachartier/tiny-code-action.nvim
+- [ ] Code action
+ - [ ] rachartier/tiny-code-action.nvim
 
 Usage
 
-- Flash
-- Picker
-- Telescope
-- FZF
-- Sessions
-  - Persistence
-- Buffer
-  - https://github.com/leath-dub/snipe.nvim
-
+- [x] Flash
+- [x] Picker
+- [x] Telescope
+- [x] FZF
+- [x] Sessions
+  - [ ] Persistence
+  - [x] Minisessions
+- [ ] Buffer
+  -  [ ] https://github.com/leath-dub/snipe.nvim
+- [ ] LSP
+- [ ] Formatter and linter
+    - [ ] Guard
 View
 
-- Dressing
-- Makrdown
-  - https://github.com/OXY2DEV/markview.nvim
+- [x] Dressing
+- [x] Makrdown
+  - [x] https://github.com/OXY2DEV/markview.nvim
