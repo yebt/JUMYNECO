@@ -40,7 +40,6 @@ return {
   },
 
   --- Inputs
-  { 'MunifTanjim/nui.nvim', module = true },
   {
     'stevearc/dressing.nvim',
     init = function()
