@@ -82,6 +82,9 @@ return function()
     },
   }
   mp.setup(opts)
+  
+  --- Add mini extra pickers
+  require('mini.extra').setup()
 
   --- Registry
   mp.registry.registry = function()

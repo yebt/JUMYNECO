@@ -70,6 +70,12 @@ return {
         desc = 'Search the fiels in path',
       },
       {
+        '<M-p>',
+        "<CMD>Pick registry<CR>",
+        silent = true,
+        desc = 'Search the fiels in path',
+      },
+      {
         '<leader>b',
         function()
           if MiniPick.registry.bufferlist then
