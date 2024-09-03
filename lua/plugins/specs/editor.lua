@@ -44,6 +44,7 @@ return {
       sort = 'last',
     },
   },
+
   --- Iterator
   {
     'folke/trouble.nvim',

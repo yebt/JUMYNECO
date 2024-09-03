@@ -50,10 +50,39 @@ return function()
     return fitems
   end
 
+
+
+  vim.api.nvim_create_autocmd("User", {
+    once = true,
+    pattern = {"LazyVimStarted", "VeryLazy"},
+    callback = function()
+      local stats = require("lazy").stats()
+      local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+      vim.g.lazy_ms  = ms
+      pcall(MiniStarter.refresh)
+    end,
+  })
+
+  local foot = function()
+    local stats = require("lazy").stats()
+    if vim.g.lazy_ms then
+      local ms = vim.g.lazy_ms
+      return  "Neovim loaded "
+      .. stats.loaded
+      .. "/"
+      .. stats.count
+      .. " plugins in "
+      .. ms
+      .. "ms"
+    end
+    return "..."
+  end
+
   local starter = require('mini.starter')
   starter.setup({
-    header = 'PERFECTO',
-    footer = '---',
+    header = '> W4L0D3V',
+    -- footer = '---',
+    footer = foot,
     evaluate_single = true,
     items = {
       -- starter.sections.telescope(),
@@ -64,7 +93,7 @@ return function()
         { name = 'Old files', action = [[Pick oldfiles]], section = 'CMD' },
         -- {name="Old files", action = [[Pick oldfiles]], section="CMD"},
       },
-      -- fsessions(4),
+      fsessions(4),
       -- starter.sections.pick(),
 
       -- starter.sections.recent_files(6, false),
