@@ -14,8 +14,28 @@ M.homeVsKey = function()
   local line = vim.api.nvim_get_current_line()
   local nonBlankColumn = vim.fn.match(line, '\\S') + 1
   if col == nonBlankColumn then
-    action = 'g0'
+    -- action = 'g0'
+    action = '0'
   else
+    -- if vim.opt_local.wrap._value then
+    --   local current_line = vim.fn.line('.')
+    --   local visual_start = vim.fn.virtcol('.')
+    --   local visual_end = vim.fn.virtcol("$")
+    --   print(current_line, visual_start, visual_end)
+    --   -- local wrapped = visual_end > vim.api.nvim_win_get_width(0)
+    --   -- if wrapped then
+    --   --   action = 'g0'
+    --   -- else
+    --   --   action = '^'
+    --   -- end
+    --
+    --   action = '^'
+    -- else
+    --   action = '^'
+    -- end
+
+    -- local wrap_staus = vim.opt_local.wrap._value
+    -- local win_width = vim.api.nvim_win_get_width(0)
     action = '^'
   end
   return action
