@@ -252,4 +252,11 @@ return {
 
     config = require('plugins.configs.minisessions'),
   },
+
+  --- Files
+  {
+    'echasnovski/mini.files',
+    version = false,
+    config = require('plugins.configs.minifilesc')
+  },
 }
