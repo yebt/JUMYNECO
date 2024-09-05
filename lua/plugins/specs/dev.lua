@@ -45,4 +45,11 @@ return {
       -- },
     },
   },
+
+  --- Emmet
+  {
+    "mattn/emmet-vim",
+    event = "VeryLazy"
+  }
+
 }
