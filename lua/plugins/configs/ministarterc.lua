@@ -93,8 +93,12 @@ return function()
         { name = 'Old files', action = [[Pick oldfiles]], section = 'CMD' },
         -- {name="Old files", action = [[Pick oldfiles]], section="CMD"},
       },
+      -- starter.sections.telescope(),
+      --
+      -- starter.sections.recent_files(5, false),
+      -- starter.sections.recent_files(5, true),
+      starter.sections.pick(),
       fsessions(4),
-      -- starter.sections.pick(),
 
       -- starter.sections.recent_files(6, false),
       -- starter.sections.recent_files(6, true),
@@ -103,13 +107,20 @@ return function()
     },
     content_hooks = {
       -- starter.gen_hook.padding(2,2),
-      starter.gen_hook.adding_bullet(),
       -- starter.gen_hook.adding_bullet('┃ '),
       -- starter.gen_hook.indexing('all', { 'Builtin actions' }),
       -- starter.gen_hook.adding_bullet('├ ', true),
-      starter.gen_hook.aligning('center', 'center'),
-      -- starter.gen_hook.indexing('all', { 'Builtin actions' }),
       -- starter.gen_hook.padding(3, 2),
+      --
+      -- starter.gen_hook.aligning('center', 'center'),
+
+      -- starter.gen_hook.adding_bullet(),
+      -- starter.gen_hook.indexing('all', { 'Builtin actions', 'Mini Sessions','CMD' }),
+      -- starter.gen_hook.padding(3, 2),
+
+      starter.gen_hook.adding_bullet(),
+      starter.gen_hook.indexing('all', { 'Builtin actions', 'Mini Sessions','CMD' }),
+      starter.gen_hook.aligning('center', 'center'),
 
       -- starter.gen_hook.adding_bullet('» '),
       -- starter.gen_hook.adding_bullet('░ '),
