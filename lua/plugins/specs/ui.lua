@@ -7,6 +7,9 @@ return {
     config = require('plugins.configs.mininotifyc'),
   },
 
+  --- Visit tracker
+  { 'echasnovski/mini.visits', event = { 'LazyFile','VeryLazy' }, version = false, opts = {} },
+
   --- Starter view
   {
     'echasnovski/mini.starter',
