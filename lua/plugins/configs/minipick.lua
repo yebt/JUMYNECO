@@ -57,16 +57,16 @@ return function()
     window = {
       -- Float window config (table or callable returning it)
       config = function()
-        -- height = math.floor(0.6 * vim.o.lines)
-        -- width = math.floor(0.5 * vim.o.columns)
-        height = 10
-        width = 60
+        height = math.floor(0.6 * vim.o.lines)
+        width = math.floor(0.5 * vim.o.columns)
+        -- height = 10
+        -- width = 60
         return {
           anchor = 'NW',
           height = height,
           width = width,
-          -- row = math.floor(0.5 * (vim.o.lines - height)),
-          row = 1,
+          row = math.floor(0.5 * (vim.o.lines - height)),
+          -- row = 1,
           col = math.floor(0.5 * (vim.o.columns - width)),
           -- border = 'double',
           -- border = 'solid',

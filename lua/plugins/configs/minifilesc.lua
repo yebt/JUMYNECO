@@ -17,9 +17,9 @@ return function()
     mappings = {
       close = 'q',
       go_in = 'l',
-      go_in_plus = 'L',
+      go_in_plus = '<CR>',
       go_out = 'h',
-      go_out_plus = 'H',
+      go_out_plus = '-',
       mark_goto = "'",
       mark_set = 'm',
       reset = '<BS>',
@@ -55,4 +55,77 @@ return function()
 
   mf.setup(options)
 
+  --- Customize Windows
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniFilesWindowOpen',
+    callback = function(args)
+      local win_id = args.data.win_id
+
+      -- Customize window-local settings
+      vim.wo[win_id].winblend = 50
+      local config = vim.api.nvim_win_get_config(win_id)
+      config.border = 'single'
+      config.title_pos = 'right'
+      vim.api.nvim_win_set_config(win_id, config)
+    end,
+  })
+
+  --- Map splits
+
+  -- local map_split = function(buf_id, lhs, direction)
+  --   local rhs = function()
+  --     -- Make new window and set it as target
+  --     local cur_target = MiniFiles.get_explorer_state().target_window
+  --     local new_target = vim.api.nvim_win_call(cur_target, function()
+  --       vim.cmd(direction .. ' split')
+  --       return vim.api.nvim_get_current_win()
+  --     end)
+  --
+  --     MiniFiles.set_target_window(new_target)
+  --   end
+  --
+  --   -- Adding `desc` will result into `show_help` entries
+  --   local desc = 'Split ' .. direction
+  --   vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
+  -- end
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'MiniFilesBufferCreate',
+  --   callback = function(args)
+  --     local buf_id = args.data.buf_id
+  --     -- Tweak keys to your liking
+  --     map_split(buf_id, '<C-s>', 'belowright horizontal')
+  --     map_split(buf_id, '<C-v>', 'belowright vertical')
+  --   end,
+  -- })
+
+  -- local list_bookmarks = function(path)
+  --   local mf_state = MiniFiles.get_explorer_state()
+  --   if mf_state then
+  --     local bks = mf_state.bookmarks
+  --     if bks and #bks > 0 then
+  --       vim.ui.select(bks, {
+  --           prompt = 'Select bookmark',
+  --           format_item = function(item)
+  --               return " " .. item
+  --           end,
+  --       }, function(choice)
+  --         vim.notify(vim.inspect(choice))
+  --           -- if choice == 'spaces' then
+  --           --     vim.o.expandtab = true
+  --           -- else
+  --           --     vim.o.expandtab = false
+  --           -- end
+  --       end)
+  --     end
+  --     vim.notify(vim.inspect({bks,#bks}))
+  --   end
+  -- end
+  --
+  -- vim.api.nvim_create_autocmd('User', {
+  --   pattern = 'MiniFilesBufferCreate',
+  --   callback = function(args)
+  --     vim.keymap.set('n', "'", list_bookmarks, { buffer = args.data.buf_id })
+  --   end,
+  -- })
 end
