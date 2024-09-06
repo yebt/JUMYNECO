@@ -64,14 +64,42 @@ return {
       {
         '<C-p>',
         function()
-          MiniPick.builtin.files({ tool = 'rg' })
+          MiniPick.builtin.files({
+            -- tool = 'rg',
+          }, {
+            window = {
+              -- Float window config (table or callable returning it)
+              config = function()
+                -- height = math.floor(0.6 * vim.o.lines)
+                -- width = math.floor(0.5 * vim.o.columns)
+                height = 14
+                width = 60
+                return {
+                  anchor = 'NW',
+                  height = height,
+                  width = width,
+                  row = 1,
+                  col = math.floor(0.5 * (vim.o.columns - width)),
+                  -- border = 'double',
+                  -- border = 'solid',
+                  border = 'single',
+                }
+              end,
+
+              -- String to use as cursor in prompt
+              prompt_cursor = '▏',
+
+              -- String to use as prefix in prompt
+              prompt_prefix = '󰥨  ',
+            },
+          })
         end,
 
         desc = 'Search the fiels in path',
       },
       {
         '<M-p>',
-        "<CMD>Pick registry<CR>",
+        '<CMD>Pick registry<CR>',
         silent = true,
         desc = 'Search the fiels in path',
       },

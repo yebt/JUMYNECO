@@ -257,6 +257,18 @@ return {
   {
     'echasnovski/mini.files',
     version = false,
-    config = require('plugins.configs.minifilesc')
+    keys = {
+      {
+        '\\',
+        function()
+          if not MiniFiles.close() then
+            MiniFiles.open()
+          end
+        end,
+        silent = true,
+        desc = 'Toggle Mini Files',
+      },
+    },
+    config = require('plugins.configs.minifilesc'),
   },
 }
