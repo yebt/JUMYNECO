@@ -268,6 +268,17 @@ return {
         silent = true,
         desc = 'Toggle Mini Files',
       },
+      {
+        '¿',
+        function()
+          if not MiniFiles.close() then
+            -- MiniFiles.open()
+            MiniFiles.open(vim.api.nvim_buf_get_name(0), true)
+          end
+        end,
+        silent = true,
+        desc = 'Toggle Mini Files try reveal',
+      },
     },
     config = require('plugins.configs.minifilesc'),
   },
