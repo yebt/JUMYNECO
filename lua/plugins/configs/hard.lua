@@ -19,6 +19,7 @@ return function()
       'mason',
       'neotest%-summary',
       'minifiles',
+      'minifiles-help',
       'neo%-tree*',
       'netrw',
       'noice',
