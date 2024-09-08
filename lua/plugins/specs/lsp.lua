@@ -3,6 +3,20 @@ return {
   --- Lsp config wrapper
   {
     'neovim/nvim-lspconfig',
+    dependencies = {
+      --- Packages
+      {
+        'williamboman/mason.nvim',
+        cmd = { 'Mason', 'MasonUpdate', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
+      },
+      --- Bridge
+      {
+         "williamboman/mason-lspconfig.nvim",
+         cmd = {'LspInstall', 'LspUninstall'}
+      }
+    },
+    event = {"VeryLazy"},
+    config = require('plugins.configs.lspc'),
   },
 
   --- LSP Iteration Utils
