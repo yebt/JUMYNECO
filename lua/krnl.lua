@@ -10,18 +10,24 @@ vim.g.maplocal = ' '
 require('config.options')
 --- Load maps
 require('config.keymaps')
+
 if not without_args then
   --- Load autocmds
   require('config.autocmds')
+  --- Load lspconfigs
+  require('modules.lsp')
 end
 
 --- Event for lazy.nvim
 vim.api.nvim_create_autocmd('User', {
-  group = group,
+  -- group = group,
   pattern = 'VeryLazy',
   callback = function()
     if without_args then
+      --- Loaad autocmds
       require('config.autocmds')
+      --- Load lspconfigs
+      require('modules.lsp')
     end
     vim.schedule(function()
       vim.api.nvim_exec_autocmds('FileType', {})
