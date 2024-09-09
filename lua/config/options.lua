@@ -114,7 +114,8 @@ local options = {
   -- Sign
   -- signcolumn = 'yes',
   -- signcolumn = 'yes:1',
-  signcolumn = 'auto:4',
+  -- signcolumn = 'auto:4',
+  signcolumn = 'auto:2',
 
   -- Text
   textwidth = 100,
