@@ -3,6 +3,8 @@ vim.opt_local.formatexpr = ''
 vim.opt_local.tabstop = 2
 vim.opt_local.softtabstop = 2
 vim.opt_local.shiftwidth = 2
+vim.opt_local.textwidth = 80
+vim.opt_local.colorcolumn = "80"
 
 --
 -- Function to insert empty brackets up and below
