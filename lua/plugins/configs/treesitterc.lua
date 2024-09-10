@@ -25,8 +25,11 @@ return function()
         node_decremental = '<bs>',
       },
     },
-    -- indent = {
-    --   enable = true,
-    -- },
+    indent = {
+      enable = true,
+    },
   })
+
+  vim.wo.foldmethod = 'expr'
+  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 end

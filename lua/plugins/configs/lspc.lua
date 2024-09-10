@@ -45,4 +45,7 @@ return function()
   -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
   --   capabilities = capabilities
   -- }
+
+  --- Load words
+  -- require('modules.lspwords').setup()
 end
