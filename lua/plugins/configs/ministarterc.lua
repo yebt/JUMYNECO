@@ -50,32 +50,24 @@ return function()
     return fitems
   end
 
-
-
-  vim.api.nvim_create_autocmd("User", {
+  vim.api.nvim_create_autocmd('User', {
     once = true,
-    pattern = {"LazyVimStarted", "VeryLazy"},
+    pattern = { 'LazyVimStarted', 'VeryLazy' },
     callback = function()
-      local stats = require("lazy").stats()
+      local stats = require('lazy').stats()
       local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-      vim.g.lazy_ms  = ms
+      vim.g.lazy_ms = ms
       pcall(MiniStarter.refresh)
     end,
   })
 
   local foot = function()
-    local stats = require("lazy").stats()
+    local stats = require('lazy').stats()
     if vim.g.lazy_ms then
       local ms = vim.g.lazy_ms
-      return  "Neovim loaded "
-      .. stats.loaded
-      .. "/"
-      .. stats.count
-      .. " plugins in "
-      .. ms
-      .. "ms"
+      return 'Neovim loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms .. 'ms'
     end
-    return "..."
+    return '...'
   end
 
   local starter = require('mini.starter')
@@ -119,7 +111,7 @@ return function()
       -- starter.gen_hook.padding(3, 2),
 
       starter.gen_hook.adding_bullet(),
-      starter.gen_hook.indexing('all', { 'Builtin actions', 'Mini Sessions','CMD' }),
+      starter.gen_hook.indexing('all', { 'Builtin actions', 'Mini Sessions', 'CMD' }),
       starter.gen_hook.aligning('center', 'center'),
 
       -- starter.gen_hook.adding_bullet('» '),

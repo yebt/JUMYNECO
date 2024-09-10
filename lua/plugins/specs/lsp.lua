@@ -11,11 +11,11 @@ return {
       },
       --- Bridge
       {
-         "williamboman/mason-lspconfig.nvim",
-         cmd = {'LspInstall', 'LspUninstall'}
-      }
+        'williamboman/mason-lspconfig.nvim',
+        cmd = { 'LspInstall', 'LspUninstall' },
+      },
     },
-    event = {"VeryLazy"},
+    event = { 'VeryLazy' },
     config = require('plugins.configs.lspc'),
   },
 

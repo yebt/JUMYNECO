@@ -8,7 +8,7 @@ return {
   },
 
   --- Visit tracker
-  { 'echasnovski/mini.visits', event = { 'LazyFile','VeryLazy' }, version = false, opts = {} },
+  { 'echasnovski/mini.visits', event = { 'LazyFile', 'VeryLazy' }, version = false, opts = {} },
 
   --- Starter view
   {

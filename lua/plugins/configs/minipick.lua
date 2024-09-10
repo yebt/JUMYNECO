@@ -82,7 +82,7 @@ return function()
     },
   }
   mp.setup(opts)
-  
+
   --- Add mini extra pickers
   require('mini.extra').setup()
 

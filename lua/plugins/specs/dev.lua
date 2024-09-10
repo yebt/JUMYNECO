@@ -48,8 +48,7 @@ return {
 
   --- Emmet
   {
-    "mattn/emmet-vim",
-    event = "VeryLazy"
-  }
-
+    'mattn/emmet-vim',
+    event = 'VeryLazy',
+  },
 }
