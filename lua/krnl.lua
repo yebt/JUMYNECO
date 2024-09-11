@@ -15,7 +15,7 @@ if not without_args then
   --- Load autocmds
   require('config.autocmds')
   --- Load lspconfigs
-  require('modules.lsp')
+  -- require('modules.lsp')
 end
 
 --- Event for lazy.nvim
@@ -26,9 +26,9 @@ vim.api.nvim_create_autocmd('User', {
     if without_args then
       --- Loaad autocmds
       require('config.autocmds')
-      --- Load lspconfigs
-      require('modules.lsp')
     end
+    --- Load lspconfigs
+    require('modules.lsp')
     vim.schedule(function()
       vim.api.nvim_exec_autocmds('FileType', {})
     end)
