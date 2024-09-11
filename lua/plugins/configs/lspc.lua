@@ -47,5 +47,7 @@ return function()
   -- }
 
   --- Load words
-  -- require('modules.lspwords').setup()
+  local mlsp = require('modules.lspUtils')
+  mlsp.setup()
+  mlsp.words.setup()
 end
