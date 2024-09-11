@@ -46,8 +46,4 @@ return function()
   --   capabilities = capabilities
   -- }
 
-  --- Load words
-  local mlsp = require('modules.lspUtils')
-  mlsp.setup()
-  mlsp.words.setup()
 end
