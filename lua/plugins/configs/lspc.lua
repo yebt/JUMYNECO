@@ -33,6 +33,31 @@ return function()
     function(server_name) -- default handler (optional)
       lspc[server_name].setup(default_server_ops)
     end,
+
+    ['lua_ls'] = function(sn)
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        settings = {
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths here.
+                -- "${3rd}/luv/library"
+                -- "${3rd}/busted/library",
+              },
+              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+              -- library = vim.api.nvim_get_runtime_file("", true)
+            },
+            -- diagnostics = {
+            --   globals = {
+            --     'vim',
+            --   },
+            -- },
+          },
+        },
+      }))
+    end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
     -- ['rust_analyzer'] = function()
@@ -45,5 +70,4 @@ return function()
   -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
   --   capabilities = capabilities
   -- }
-
 end
