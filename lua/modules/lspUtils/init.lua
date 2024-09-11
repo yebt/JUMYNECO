@@ -3,6 +3,22 @@ local M = {}
 
 M._supports_method = {}
 
+function M.get_clients(opts)
+  local ret = {} 
+  if vlsp.get_clients then
+    ret = vlsp.get_clients(opts)
+  else
+    ---@diagnostic disable-next-line: deprecated
+    ret = vlsp.get_active_clients(opts)
+    if opts and opts.method then
+      ret = vim.tbl_filter(function(client)
+        return client.supports_method(opts.method, { bufnr = opts.bufnr })
+      end, ret)
+    end
+  end
+  return opts and opts.filter and vim.tbl_filter(opts.filter, ret) or ret
+end
+
 function M._check_methods(client, buffer)
   -- don't trigger on invalid buffers
   if not vapi.nvim_buf_is_valid(buffer) then
