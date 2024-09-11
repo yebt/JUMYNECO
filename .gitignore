@@ -2,3 +2,4 @@ test/*
 lazy-lock.json
 sessions
 OLD/*
+lua/modules.bak
