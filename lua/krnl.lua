@@ -28,7 +28,10 @@ vim.api.nvim_create_autocmd('User', {
       require('config.autocmds')
     end
     --- Load lspconfigs
-    require('modules.lsp')
+    require('modules')
+    -- mlsp.setup()
+    -- mlsp.words.setup({ enabled = true })
+
     vim.schedule(function()
       vim.api.nvim_exec_autocmds('FileType', {})
     end)
