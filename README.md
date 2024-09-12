@@ -39,8 +39,14 @@ Usage
 - [ ] LSP
 - [ ] Formatter and linter
     - [ ] Guard
+    - [ ] stevearc/conform.nvim
 View
 
 - [x] Dressing
 - [x] Makrdown
   - [x] https://github.com/OXY2DEV/markview.nvim
+
+Additional
+
+- [ ] Templates for a new files
+  - [ ] For php use the PSR namespace
