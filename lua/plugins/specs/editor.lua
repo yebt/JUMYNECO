@@ -289,4 +289,11 @@ return {
     },
     config = require('plugins.configs.minifilesc'),
   },
+
+  --- Aliner
+  {
+    'godlygeek/tabular',
+    cmd = { 'Tabular', 'Tab' },
+  },
+  -- "../"
 }
