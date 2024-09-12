@@ -9,9 +9,11 @@ map('i', ',', ',<c-g>u')
 map('i', '.', '.<c-g>u')
 map('i', ';', ';<c-g>u')
 
---- Save
-map('n', '<leader>q', '<cmd>q<CR>', { silent = true, desc = 'Quit of nvim' })
 --- Quit
+map('n', '<leader>q', '<cmd>q<CR>', { silent = true, desc = 'Quit of nvim' })
+map('i', '<M-Q>', '<C-o><cmd>q!<CR>', { silent = true, desc = 'Quit of nvim' })
+
+--- Save
 map('n', '<leader>w', '<cmd>w<CR>', { silent = true, desc = 'Save buffer' })
 --- Stop with C-c like ESC key
 map({ 'x', 'i', 'n' }, '<C-c>', '<ESC>', { silent = true, desc = 'Stop like C-c like ESC' })
