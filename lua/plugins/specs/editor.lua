@@ -293,7 +293,7 @@ return {
   --- Aliner
   {
     'godlygeek/tabular',
-    cmd = { 'Tabular', 'Tab' },
+    cmd = { 'Tabularize', 'Tab' },
   },
   -- "../"
 }
