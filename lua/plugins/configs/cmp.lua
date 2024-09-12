@@ -2,6 +2,71 @@ return function()
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
   local cmp = require('cmp')
 
+  local nwd = require('nvim-web-devicons')
+
+  -- local cmp_kinds = {
+  --   Text = '  ',
+  --   Method = '  ',
+  --   Function = '  ',
+  --   Constructor = '  ',
+  --   Field = '  ',
+  --   Variable = '  ',
+  --   Class = '  ',
+  --   Interface = '  ',
+  --   Module = '  ',
+  --   Property = '  ',
+  --   Unit = '  ',
+  --   Value = '  ',
+  --   Enum = '  ',
+  --   Keyword = '  ',
+  --   Snippet = '  ',
+  --   Color = '  ',
+  --   File = '  ',
+  --   Reference = '  ',
+  --   Folder = '  ',
+  --   EnumMember = '  ',
+  --   Constant = '  ',
+  --   Struct = '  ',
+  --   Event = '  ',
+  --   Operator = '  ',
+  --   TypeParameter = '  ',
+  -- }
+  local frommer = {
+    buffer = '[Buffer]',
+    nvim_lsp = '[LSP]',
+    luasnip = '[LuaSnip]',
+    nvim_lua = '[Lua]',
+    latex_symbols = '[LaTeX]',
+  }
+
+  local kind_icons = {
+    Text = '',
+    Method = '󰆧',
+    Function = '󰊕',
+    Constructor = '',
+    Field = '󰇽',
+    Variable = '󰂡',
+    Class = '󰠱',
+    Interface = '',
+    Module = '',
+    Property = '󰜢',
+    Unit = '',
+    Value = '󰎠',
+    Enum = '',
+    Keyword = '󰌋',
+    Snippet = '',
+    Color = '󰏘',
+    File = '󰈙',
+    Reference = '',
+    Folder = '󰉋',
+    EnumMember = '',
+    Constant = '󰏿',
+    Struct = '',
+    Event = '',
+    Operator = '󰆕',
+    TypeParameter = '󰅲',
+  }
+
   cmp.setup({
     snippet = {
       -- REQUIRED - you must specify a snippet engine
@@ -10,8 +75,52 @@ return function()
       end,
     },
     window = {
+      completion = {
+        winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
+        col_offset = -3,
+        side_padding = 0,
+      },
       -- completion = cmp.config.window.bordered(),
       -- documentation = cmp.config.window.bordered(),
+    },
+    formatting = {
+      fields = { 'kind', 'abbr', 'menu' },
+      format = function(entry, vim_item)
+        -- local kind = require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
+        -- local strings = vim.split(kind.kind, '%s', { trimempty = true })
+        -- kind.kind = ' ' .. (strings[1] or '') .. ' '
+        -- kind.menu = '    (' .. (strings[2] or '') .. ')'
+        --
+        -- return kind
+
+        local vicon = nil
+        local vhgr = nil
+
+        if vim.tbl_contains({ 'path' }, entry.source.name) then
+          if vim_item.kind == 'Folder' then
+            vicon = '󰉋'
+          else
+            local icon, hl_group = nwd.get_icon(entry:get_completion_item().label)
+            if icon then
+              vicon = icon
+              vhgr = hl_group
+            else
+              vicon = '󰈔'
+            end
+          end
+        else
+          vicon = kind_icons[vim_item.kind]
+        end
+
+        local txt = vim_item.kind or 'unknow'
+        vim_item.kind = ' ' .. (vicon or '') .. ' '
+        if vhgr then
+          vim_item.hl_group = vhgr
+        end
+        vim_item.menu = '    (' .. (txt:lower()) .. ')'
+
+        return vim_item
+      end,
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -68,4 +177,6 @@ return function()
   })
 
   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+  require('plugins.configs.cmp_color')
 end
