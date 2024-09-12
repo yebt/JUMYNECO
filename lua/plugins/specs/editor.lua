@@ -189,25 +189,32 @@ return {
       vim.api.nvim_create_autocmd('VimLeavePre', {
         group = vim.api.nvim_create_augroup('_mini_session_persistence', { clear = true }),
         callback = function()
+          -- try load mini sessions
+          local ok, ms = pcall(require, 'mini.sessions')
+          if not ok then
+            return
+          end
+
+          --
           local buffers = vim.fn.getbufinfo({ buflisted = 1 })
           local cntrs = #buffers
 
+          -- Filter empty buffers
           for _, buffer in ipairs(buffers) do
             if buffer.name == '' then
               cntrs = cntrs - 1
             end
           end
 
+          --
           if cntrs ~= 0 then
             local cwd = vim.fn.getcwd()
             local basename = cwd:match('[^/]+$')
             local path = cwd:gsub('/', '%%')
             local session_name = basename .. ' (' .. path .. ')'
             local session_opts = { verbose = false }
-            if MiniSessions then
-              MiniSessions.write(session_name)
-              MiniSessions.write('latest') -- save the latest work
-            end
+            ms.write(session_name, session_opts)
+            ms.write('latest', session_opts) -- save the latest work
           end
         end,
       })
