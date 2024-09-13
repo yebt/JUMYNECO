@@ -49,6 +49,32 @@ return function()
         },
       }))
     end,
+    ['emmet_language_server'] = function(sn)
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        filetypes = {
+          'css',
+          'eruby',
+          'html',
+          'htmldjango',
+          'javascriptreact',
+          'less',
+          'pug',
+          'sass',
+          'scss',
+          'typescriptreact',
+          'htmlangular',
+          'blade',
+          'php',
+          'vue',
+          'jsx',
+        },
+        init_options = {
+          showAbbreviationSuggestions = true,
+          -- showExpandedAbbreviation = 'always',
+          showSuggestionsAsSnippets = true,
+        },
+      }))
+    end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
     -- ['rust_analyzer'] = function()
