@@ -3,19 +3,10 @@ return function()
   local msn = require('mason')
   local msnslpc = require('mason-lspconfig')
 
-  msn.setup({
-    ui = {
-      icons = {
-        package_installed = '✓',
-        package_pending = '➜',
-        package_uninstalled = '✗',
-      },
-    },
-  })
-
-  msnslpc.setup({
-    ensure_installed = { 'lua_ls' },
-  })
+  --- Move to dedicated opts call
+  -- msn.setup()
+  --- Move to dedicated opts call
+  -- msnslpc.setup()
 
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
