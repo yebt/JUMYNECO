@@ -295,4 +295,11 @@ return {
     'godlygeek/tabular',
     cmd = { 'Tabularize', 'Tab' },
   },
+
+  --- highlight
+  {
+    'brenoprata10/nvim-highlight-colors',
+    cmd = { 'HighlightColors' },
+    config = require('plugins.configs.nhc'),
+  },
 }
