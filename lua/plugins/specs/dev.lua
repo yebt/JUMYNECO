@@ -30,12 +30,12 @@ return {
           friendly_snippets = true,
           search_paths = {
             --- ~/.config/nvim/snippets
-            vim.fn.stdpath('config') .. '/snippets'
-          }
-        }
+            vim.fn.stdpath('config') .. '/snippets',
+          },
+        },
       },
     },
-    event = {'InsertEnter', 'VeryLazy'},
+    event = { 'InsertEnter', 'VeryLazy' },
     config = require('plugins.configs.cmp'),
   },
 

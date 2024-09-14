@@ -44,7 +44,7 @@ return {
       'nvim-treesitter/nvim-treesitter', -- optional
       'nvim-tree/nvim-web-devicons', -- optional
     },
-    cmd = {'Lspsaga'},
+    cmd = { 'Lspsaga' },
     -- event = "LazyFile",
     event = { 'LspAttach' },
     config = require('plugins.configs.lspsaga'),
@@ -68,4 +68,9 @@ return {
   --   config = require('plugins.configs.guardc'),
   -- },
 
+  --- Formatter
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
 }

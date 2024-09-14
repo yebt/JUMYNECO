@@ -80,19 +80,18 @@ return function()
       end,
     },
     window = {
-      completion = use_atom_view and  {
+      completion = use_atom_view and {
         winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
         col_offset = -3,
         side_padding = 0,
-      } or nil ,
-        -- and
-        -- cmp.config.window.bordered(),
+      } or nil,
+      -- and
+      -- cmp.config.window.bordered(),
       -- completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
     },
     formatting = {
-      fields = use_atom_view and { 'kind', 'abbr', 'menu' }
-      or nil,
+      fields = use_atom_view and { 'kind', 'abbr', 'menu' } or nil,
       format = function(entry, vim_item)
         if not use_atom_view then
           return vim_item
@@ -158,7 +157,7 @@ return function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       -- { name = 'nvim_lsp_signature_help' },
-      { name = 'snippets'},
+      { name = 'snippets' },
       -- { name = 'vsnip' }, -- For vsnip users.
       -- { name = 'luasnip' }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.

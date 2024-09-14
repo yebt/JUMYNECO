@@ -53,7 +53,7 @@ return function()
       -- else
       --   --- wake coroutine on exit, omit error checking
       -- end
-        coroutine.resume(co, result.stderr)
+      coroutine.resume(co, result.stderr)
     end)
 
     -- write contents to stdin and close it

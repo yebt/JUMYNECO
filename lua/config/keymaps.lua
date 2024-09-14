@@ -11,7 +11,7 @@ map('i', ';', ';<c-g>u')
 
 --- Quit
 map('n', '<leader>q', '<cmd>q<CR>', { silent = true, desc = 'Quit of nvim' })
-map({'i','n'}, '<M-Q>', '<C-o><cmd>q!<CR>', { silent = true, desc = 'Quit of nvim' })
+map({ 'i', 'n' }, '<M-Q>', '<C-o><cmd>q!<CR>', { silent = true, desc = 'Quit of nvim' })
 
 --- Save
 map('n', '<leader>w', '<cmd>w<CR>', { silent = true, desc = 'Save buffer' })

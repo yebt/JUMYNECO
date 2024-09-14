@@ -1,5 +1,5 @@
 local mroot = require('modules.root')
-local lcutl = require("lazy.core.util")
+local lcutl = require('lazy.core.util')
 
 local M = {}
 
@@ -207,7 +207,7 @@ function M.formatter(opts)
       end, ret)
     end,
   }
-  return lcutl.merge(ret, opts) 
+  return lcutl.merge(ret, opts)
 end
 
 function M.format(opts)
