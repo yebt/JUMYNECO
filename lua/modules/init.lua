@@ -1,5 +1,7 @@
 --- Load lspconfigs
 local kmp = vim.keymap
+local vlsp = vim.lsp
+
 local mlsp = require('modules.lsp')
 
 mlsp.setup()
@@ -23,7 +25,7 @@ vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   local clientn = vim.lsp.get_client_by_id(ctx.client_id)
   local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
   vim.notify(result.message, lvl, {
-    title = 'LSP | ' .. clientn or clientn.name,
+    title = 'LSP | ' .. (clientn and clientn.name or ''),
     timeout = 10000,
     keep = function()
       return lvl == 'ERROR' or lvl == 'WARN'
@@ -77,97 +79,74 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     -- Create a keymap for vim.lsp.buf.implementation
-    kmp.set('n', ']]', function()
-      mlsp.words.jump(vim.v.count1, true)
-    end, { silent = true, desc = 'Next lsp highliht element' })
-    kmp.set('n', '[[', function()
-      mlsp.words.jump(-vim.v.count1, true)
-    end, { silent = true, desc = 'Prev lsp highliht element' })
+    -- kmp.set('n', ']]', function()
+    --   mlsp.words.jump(vim.v.count1, true)
+    -- end, { silent = true, desc = 'Next lsp highliht element' })
+    -- kmp.set('n', '[[', function()
+    --   mlsp.words.jump(-vim.v.count1, true)
+    -- end, { silent = true, desc = 'Prev lsp highliht element' })
 
     local bufnr = args.buf
     -- local opts = { buffer = bufnr, noremap = true, silent = true }
-    kmp.set(
-      'n',
-      'gD',
-      vim.lsp.buf.declaration,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP go to Declaration' }
-    )
-    kmp.set(
-      'n',
-      'gd',
-      vim.lsp.buf.definition,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP go to Definition' }
-    )
-    kmp.set(
-      'n',
-      '<leader>D',
-      vim.lsp.buf.type_definition,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP go to type definition' }
-    )
-    kmp.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, noremap = true, silent = true, desc = 'LSP Hover' })
-    kmp.set(
-      'n',
-      'gi',
-      vim.lsp.buf.implementation,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP go to implementation' }
-    )
-    kmp.set(
-      'n',
-      '<C-k>',
-      vim.lsp.buf.signature_help,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP signature help' }
-    )
-    kmp.set(
-      'n',
-      '<leader>lwa',
-      vim.lsp.buf.add_workspace_folder,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP add workspace folder' }
-    )
-    kmp.set(
-      'n',
-      '<leader>lwr',
-      vim.lsp.buf.remove_workspace_folder,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP remove workspace folder' }
-    )
-    kmp.set('n', '<leader>lwl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, { buffer = bufnr, noremap = true, silent = true, desc = 'LSP list work space' })
-    kmp.set(
-      'n',
-      '<leader>rn',
-      vim.lsp.buf.rename,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP rename' }
-    )
-    kmp.set(
-      'n',
-      'gr',
-      vim.lsp.buf.references,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP references' }
-    )
-    kmp.set(
-      'n',
-      '<leader>e',
-      vim.diagnostic.open_float,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP diagnostic open float' }
-    )
-    kmp.set(
-      'n',
-      '[d',
-      vim.diagnostic.goto_prev,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP diagnostic prev' }
-    )
-    kmp.set(
-      'n',
-      ']d',
-      vim.diagnostic.goto_next,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP diagnostic next' }
-    )
-    kmp.set(
-      'n',
-      '<leader>lq',
-      vim.diagnostic.setloclist,
-      { buffer = bufnr, noremap = true, silent = true, desc = 'LSP diagnostic set loc list' }
-    )
+    local lspmaps = {
+      { 'gd', vlsp.buf.definition, desc = 'LSP go to definition' },
+      { 'gD', vlsp.buf.declaration, desc = 'LSP go to declaration' },
+      { 'gy', vlsp.buf.type_definition, desc = 'LSP go to t[y]pe definition' },
+      { 'gr', vlsp.buf.references, desc = 'LSP go to references' },
+      { 'gI', vlsp.buf.implementation, desc = 'LSP go to implementation' },
+      --
+      { '<leader>ic', vlsp.buf.incoming_calls, desc = 'LSP go to incoming calls' },
+      { '<leader>oc', vlsp.buf.outgoing_calls, desc = 'LSP go to outgoing calls' },
+      --
+      { 'K', vlsp.buf.hover, desc = 'LSP hover' },
+      { '<c-k>', vlsp.buf.signature_help, mode = { 'n', 'i' }, desc = 'LSP signature help' },
+      --
+      { '<leader>ca', '<cmd>Lspsaga code_action<CR>', desc = 'LSP code action' },
+      { '<leader>cA', mlsp.action.source, desc = 'LSP source action' },
+      --
+      { '<leader>cr', mlsp.action.source, desc = 'LSP source action' },
+      --
+      { '<leader>lwa', vlsp.buf.add_workspace_folder, desc = 'LSP add workspace folder' },
+      { '<leader>lwr', vlsp.buf.remove_workspace_folder, desc = 'LSP remove workspace folder' },
+      {
+        '<leader>lwl',
+        function()
+          print(vlsp.buf.remove_workspace_folder())
+        end,
+        desc = 'LSP list workspace folders',
+      },
+      ---
+      { '<leader>rn', vlsp.buf.rename, desc = 'LPS rename' },
+      { '<leader>rN', mlsp.rename_file, desc = 'LPS rename' },
+      ---
+      { '<leader>e', vim.diagnostic.open_float, desc = 'LSP diagnostic open float' },
+      { '<leader>dl', vlsp.diagnostic.setqflist, desc = '' },
+      {
+        ']]',
+        function()
+          mlsp.words.jump(vim.v.count1, true)
+        end,
+        desc = 'LSP go to next word ref',
+      },
+      {
+        '[[',
+        function()
+          mlsp.words.jump(-vim.v.count1, true)
+        end,
+        desc = 'LSP go to prev word ref',
+      },
+    }
+
+    for _, mp in pairs(lspmaps) do
+      kmp.set(
+        mp.mode or 'n',
+        mp[1],
+        mp[2] or '',
+        { buffer = bufnr, silent = true, noremap = true, desc = mp.desc or 'LSP mp' }
+      )
+    end
+    -- TODO: codelens
+    -- TODO: inlay_hint
 
     -- vim.api.nvim_create_autocmd("CursorHold", {
     --   buffer = bufnr,
