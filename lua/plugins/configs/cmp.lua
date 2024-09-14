@@ -2,6 +2,10 @@ return function()
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
   local cmp = require('cmp')
 
+  local use_path_icon = false
+  local use_kind_icons = false
+  local use_atom_view = false
+
   local nwd = require('nvim-web-devicons')
 
   -- local cmp_kinds = {
@@ -31,13 +35,14 @@ return function()
   --   Operator = '  ',
   --   TypeParameter = '  ',
   -- }
-  local frommer = {
-    buffer = '[Buffer]',
-    nvim_lsp = '[LSP]',
-    luasnip = '[LuaSnip]',
-    nvim_lua = '[Lua]',
-    latex_symbols = '[LaTeX]',
-  }
+
+  -- local frommer = {
+  --   buffer = '[Buffer]',
+  --   nvim_lsp = '[LSP]',
+  --   luasnip = '[LuaSnip]',
+  --   nvim_lua = '[Lua]',
+  --   latex_symbols = '[LaTeX]',
+  -- }
 
   local kind_icons = {
     Text = '',
@@ -75,23 +80,23 @@ return function()
       end,
     },
     window = {
-      completion = {
+      completion = use_atom_view and  {
         winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
         col_offset = -3,
         side_padding = 0,
-      },
+      } or nil ,
+        -- and
+        -- cmp.config.window.bordered(),
       -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
     },
     formatting = {
-      fields = { 'kind', 'abbr', 'menu' },
+      fields = use_atom_view and { 'kind', 'abbr', 'menu' }
+      or nil,
       format = function(entry, vim_item)
-        -- local kind = require('lspkind').cmp_format({ mode = 'symbol_text', maxwidth = 50 })(entry, vim_item)
-        -- local strings = vim.split(kind.kind, '%s', { trimempty = true })
-        -- kind.kind = ' ' .. (strings[1] or '') .. ' '
-        -- kind.menu = '    (' .. (strings[2] or '') .. ')'
-        --
-        -- return kind
+        if not use_atom_view then
+          return vim_item
+        end
 
         local vicon = nil
         local vhgr = nil
@@ -130,18 +135,20 @@ return function()
       ['<C-y>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif vim.snippet.active({ direction = 1 }) then
+        -- if cmp.visible() then
+        --   cmp.select_next_item()
+        -- elseif vim.snippet.active({ direction = 1 }) then
+        if vim.snippet.active({ direction = 1 }) then
           vim.snippet.jump(1)
         else
           fallback()
         end
       end, { 'i', 's' }),
       ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif vim.snippet.active({ direction = -1 }) then
+        -- if cmp.visible() then
+        --   cmp.select_prev_item()
+        -- elseif vim.snippet.active({ direction = -1 }) then
+        if vim.snippet.active({ direction = -1 }) then
           vim.snippet.jump(-1)
         else
           fallback()
@@ -150,6 +157,8 @@ return function()
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'snippets'},
       -- { name = 'vsnip' }, -- For vsnip users.
       -- { name = 'luasnip' }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
@@ -178,5 +187,7 @@ return function()
 
   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
-  require('plugins.configs.cmp_color')
+  if use_atom_view then
+    require('plugins.configs.cmp_color')
+  end
 end

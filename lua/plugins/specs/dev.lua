@@ -15,11 +15,27 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
+      'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
+      --- snippets
+      {
+        'garymjr/nvim-snippets',
+        dependencies = {
+          'rafamadriz/friendly-snippets',
+        },
+        opts = {
+          create_cmp_source = true,
+          friendly_snippets = true,
+          search_paths = {
+            --- ~/.config/nvim/snippets
+            vim.fn.stdpath('config') .. '/snippets'
+          }
+        }
+      },
     },
-    event = 'InsertEnter',
+    event = {'InsertEnter', 'VeryLazy'},
     config = require('plugins.configs.cmp'),
   },
 
@@ -47,8 +63,8 @@ return {
   },
 
   --- Emmet
-  {
-    'mattn/emmet-vim',
-    event = 'VeryLazy',
-  },
+  -- {
+  --   'mattn/emmet-vim',
+  --   event = 'VeryLazy',
+  -- },
 }
