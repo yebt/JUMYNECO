@@ -71,6 +71,8 @@ return {
   --- Formatter
   {
     'stevearc/conform.nvim',
-    opts = {},
+    -- TODO: load all available formatter for the current file
+    keys = {'<leader>f'},
+    config = require("plugins.configs.conformc")
   },
 }
