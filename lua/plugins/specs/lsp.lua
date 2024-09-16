@@ -42,7 +42,7 @@ return {
     'nvimdev/lspsaga.nvim',
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons', -- optional
+      'nvim-tree/nvim-web-devicons',     -- optional
     },
     cmd = { 'Lspsaga' },
     -- event = "LazyFile",
@@ -69,10 +69,26 @@ return {
   -- },
 
   --- Formatter
+  -- {
+  --   'stevearc/conform.nvim',
+  --   -- TODO: load all available formatter for the current file
+  --   keys = {'<leader>f'},
+  --   config = require("plugins.configs.conformc")
+  -- },
+
+  --- Null
   {
-    'stevearc/conform.nvim',
-    -- TODO: load all available formatter for the current file
-    keys = {'<leader>f'},
-    config = require("plugins.configs.conformc")
+    'jay-babu/mason-null-ls.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'williamboman/mason.nvim',
+
+      'nvimtools/none-ls.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+    keys = {
+       {'<leader>gq', desc = "None ls format"}
+    },
+    config = require('plugins.configs.nonels'),
   },
 }

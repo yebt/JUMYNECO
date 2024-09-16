@@ -21,17 +21,19 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
-  local clientn = vim.lsp.get_client_by_id(ctx.client_id)
-  local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
-  vim.notify(result.message, lvl, {
-    title = 'LSP | ' .. (clientn and clientn.name or ''),
-    timeout = 10000,
-    keep = function()
-      return lvl == 'ERROR' or lvl == 'WARN'
-    end,
-  })
-end
+-- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+--   local clientn = vim.lsp.get_client_by_id(ctx.client_id)
+--   local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
+--   vim.notify(result.message, lvl, {
+--     title = 'LSP | ' .. (clientn and clientn.name or ''),
+--     timeout = 10000,
+--     keep = function()
+--       -- return lvl == 'ERROR' or lvl == 'WARN'
+--       return true
+--     end,
+--   })
+-- end
+
 -- You will likely want to reduce updatetime which affects CursorHold
 -- note: this setting is global and should be set only once
 -- vim.o.updatetime = 250

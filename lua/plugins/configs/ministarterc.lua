@@ -233,6 +233,7 @@ return function()
       starter.gen_hook.indexing('all', {
         'Builtin actions',
         'Mini Sessions',
+        'F Sessions',
         'CMD',
       }),
       starter.gen_hook.aligning('center', 'center'),
