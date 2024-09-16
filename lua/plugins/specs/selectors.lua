@@ -72,8 +72,8 @@ return {
               config = function()
                 -- height = math.floor(0.6 * vim.o.lines)
                 -- width = math.floor(0.5 * vim.o.columns)
-                height = 14
-                width = 60
+                local height = 14
+                local width = 60
                 return {
                   anchor = 'NW',
                   height = height,
@@ -151,5 +151,19 @@ return {
       })
     end,
     config = require('plugins.configs.minipick'),
+  },
+
+  --- FZF cause some selections are better with fzf
+  {
+    'ibhagwan/fzf-lua',
+    -- optional for icon support
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      { "junegunn/fzf", build = "./install --bin" },
+    },
+    cmd = {
+      "FzfLua"
+    },
+    opts ={}
   },
 }
