@@ -57,8 +57,11 @@ return function()
     window = {
       -- Float window config (table or callable returning it)
       config = function()
-        height = math.floor(0.6 * vim.o.lines)
-        width = math.floor(0.5 * vim.o.columns)
+        -- local height = math.floor(0.6 * vim.o.lines)
+        -- local width = math.floor(0.5 * vim.o.columns)
+
+        local width = math.min(60, vim.o.columns)
+        local height = math.min(30, vim.o.lines)
         -- height = 10
         -- width = 60
         return {
