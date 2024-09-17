@@ -114,10 +114,58 @@ vim.api.nvim_create_autocmd('LspAttach', {
       {
         '<leader>lwl',
         function()
-          print(vlsp.buf.remove_workspace_folder())
+          vim.print(vlsp.buf.list_workspace_folders())
         end,
         desc = 'LSP list workspace folders',
       },
+      ---
+      -- {
+      --   '<leader>lcc',
+      --   function()
+      --     local clients = vlsp.get_clients({
+      --       bufnr = bufnr,
+      --       method = 'workspace/executeCommand',
+      --     })
+      --     local lsp_commands = {}
+      --     for _, clnt in pairs(clients) do
+      --       local cl_cmmnds = clnt.server_capabilities.executeCommandProvider.commands
+      --       if cl_cmmnds then
+      --         for _, lsp_cmmnd in pairs(cl_cmmnds) do
+      --           table.insert(lsp_commands, {
+      --             text = '[' .. clnt.name .. '] ' .. lsp_cmmnd,
+      --             _clien = clnt,
+      --             _command = lsp_cmmnd,
+      --           })
+      --         end
+      --       end
+      --     end
+      --     if vim.tbl_count(lsp_commands) == 0 then
+      --       vim.notify('No LSP commands to execute', vim.log.levels.WARN)
+      --       return
+      --     end
+      --     vim.ui.select(lsp_commands, {
+      --       prompt = 'LSP commands: ',
+      --       format_item = function(item)
+      --         return item.text
+      --       end,
+      --     }, function(choice)
+      --         if not choice then
+      --           return
+      --         end
+      --         -- vim.notify(vim.inspect(choice))
+      --         vim.notify(vim.inspect(choice._command))
+      --         vim.lsp.buf.execute_command(choice._command)
+      --       -- if choice == 'spaces' then
+      --       --   vim.o.expandtab = true
+      --       -- else
+      --       --   vim.o.expandtab = false
+      --       -- end
+      --     end)
+      --
+      --     -- vim.print(vlsp.buf.list_workspace_folders())
+      --   end,
+      --   desc = 'LSP list workspace folders',
+      -- },
       ---
       { '<leader>rn', vlsp.buf.rename, desc = 'LPS rename' },
       { '<leader>rN', mlsp.rename_file, desc = 'LPS rename' },
