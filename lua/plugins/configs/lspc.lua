@@ -49,6 +49,19 @@ return function()
         },
       }))
     end,
+    ['pyright'] = function(sn)
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              diagnosticMode = 'openFilesOnly',
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      }))
+    end,
     ['emmet_language_server'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
         filetypes = {
