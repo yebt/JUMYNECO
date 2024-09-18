@@ -67,4 +67,12 @@ return {
   --   'mattn/emmet-vim',
   --   event = 'VeryLazy',
   -- },
+
+  --- AI
+  {
+    'supermaven-inc/supermaven-nvim',
+    --  event = 'VeryLazy',
+    event = {'InsertEnter'},
+    config = require("plugins.configs.smaven")
+  },
 }
