@@ -5,8 +5,8 @@ return function()
     local registry = require('mason-registry')
     registry.refresh(function()
       local packages = registry.get_installed_packages()
-      local packages_names = vim.tbl_map( function (el)
-        return el.name or "??"
+      local packages_names = vim.tbl_map(function(el)
+        return el.name or '??'
       end, packages)
       vim.notify(vim.inspect(packages_names))
     end)

@@ -62,7 +62,7 @@ return function()
       if repcr and als then
         singlePath = string.gsub(singlePath, repcr, als)
       end
-      singlePath = singlePath:gsub("/[%w%-]*%)$","/)")
+      singlePath = singlePath:gsub('/[%w%-]*%)$', '/)')
       return singlePath
     end
 
