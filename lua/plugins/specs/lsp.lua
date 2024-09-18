@@ -42,7 +42,7 @@ return {
     'nvimdev/lspsaga.nvim',
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons',     -- optional
+      'nvim-tree/nvim-web-devicons', -- optional
     },
     cmd = { 'Lspsaga' },
     -- event = "LazyFile",
@@ -87,7 +87,7 @@ return {
       'nvim-lua/plenary.nvim',
     },
     keys = {
-       {'<leader>gq', desc = "None ls format"}
+      { '<leader>gq', desc = 'None ls format' },
     },
     config = require('plugins.configs.nonels'),
   },

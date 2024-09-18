@@ -159,11 +159,11 @@ return {
     -- optional for icon support
     dependencies = {
       'nvim-tree/nvim-web-devicons',
-      { "junegunn/fzf", build = "./install --bin" },
+      { 'junegunn/fzf', build = './install --bin' },
     },
     cmd = {
-      "FzfLua"
+      'FzfLua',
     },
-    opts ={}
+    opts = {},
   },
 }
