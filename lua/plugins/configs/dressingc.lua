@@ -19,7 +19,8 @@ return function()
       -- These are passed to nvim_open_win
       border = 'rounded',
       -- 'editor' and 'win' will default to being centered
-      relative = 'cursor',
+      -- relative = 'cursor',
+      relative = 'win',
 
       -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
       prefer_width = 40,
@@ -44,6 +45,7 @@ return function()
       mappings = {
         n = {
           ['<Esc>'] = 'Close',
+          ['<C-c>'] = 'Close',
           ['<CR>'] = 'Confirm',
         },
         i = {
@@ -69,7 +71,7 @@ return function()
 
       -- Priority list of preferred vim.select implementations
       -- backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
-      backend = { 'fzf', 'telescope', 'nui' },
+      backend = { 'fzf','fzf_lua', 'telescope', 'nui' },
 
       -- Trim trailing `:` from prompt
       trim_prompt = true,
@@ -89,10 +91,10 @@ return function()
 
       -- Options for fzf-lua
       fzf_lua = {
-        -- winopts = {
-        --   height = 0.5,
-        --   width = 0.5,
-        -- },
+        winopts = {
+          height = 0.5,
+          width = 0.5,
+        },
       },
 
       -- Options for nui Menu

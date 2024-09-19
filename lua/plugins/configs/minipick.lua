@@ -61,13 +61,14 @@ return function()
         -- local width = math.floor(0.5 * vim.o.columns)
 
         local width = math.min(60, vim.o.columns)
-        local height = math.min(30, vim.o.lines)
+        local height = math.min(27, vim.o.lines)
         -- height = 10
         -- width = 60
         return {
           anchor = 'NW',
           height = height,
           width = width,
+          -- row = math.floor(0.5 * (vim.o.lines - height)),
           row = math.floor(0.5 * (vim.o.lines - height)),
           -- row = 1,
           col = math.floor(0.5 * (vim.o.columns - width)),
