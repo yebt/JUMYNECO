@@ -72,7 +72,7 @@ return {
   {
     'supermaven-inc/supermaven-nvim',
     --  event = 'VeryLazy',
-    event = {'InsertEnter'},
-    config = require("plugins.configs.smaven")
+    event = { 'InsertEnter' },
+    config = require('plugins.configs.smaven'),
   },
 }

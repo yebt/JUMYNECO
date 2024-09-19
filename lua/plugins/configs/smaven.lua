@@ -18,6 +18,4 @@ return function()
       return false
     end, -- condition to check for stopping supermaven, `true` means to stop supermaven when the condition is true.
   })
-
 end
-
