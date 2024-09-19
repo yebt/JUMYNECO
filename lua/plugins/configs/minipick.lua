@@ -212,7 +212,7 @@ return function()
 
     local homed = vim.fn.expand('~')
     for indx, el in ipairs(items) do
-      local dir, branch = unpack(vim.split(el, '%%', { plain = true }))
+      local dir, branch = table.unpack(vim.split(el, '%%', { plain = true }))
       local name = '**' .. (dir:gsub('%%', '/'):gsub(homed, '~')) .. '**'
       branch = branch and ' _[' .. branch:gsub('%%', '/') .. ']_' or ''
       local item = name .. branch
