@@ -71,7 +71,7 @@ return function()
 
       -- Priority list of preferred vim.select implementations
       -- backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
-      backend = { 'fzf','fzf_lua', 'telescope', 'nui' },
+      backend = { 'fzf', 'fzf_lua', 'telescope', 'nui' },
 
       -- Trim trailing `:` from prompt
       trim_prompt = true,
