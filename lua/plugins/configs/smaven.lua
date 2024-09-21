@@ -9,7 +9,7 @@ return function()
     ignore_filetypes = { 
       'minifiles',
       'minipick',
-      -- 'OverseerForm',
+      'OverseerForm',
       'Overseer*'
     }, -- or { "cpp", }
     color = {

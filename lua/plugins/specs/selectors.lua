@@ -120,10 +120,10 @@ return {
         return vim.api.nvim_create_augroup('_kernel_' .. name, { clear = true })
       end
 
-      vim.ui.select = function(...)
-        vim.ui.select = require('mini.pick').ui_select
-        return vim.ui.select(...)
-      end
+      -- vim.ui.select = function(...)
+      --   vim.ui.select = require('mini.pick').ui_select
+      --   return vim.ui.select(...)
+      -- end
 
       -- vim.keymap.set('n', '<C-b>', function()
       --   local bfs = _G._kernel._bufferslist
@@ -164,6 +164,6 @@ return {
     cmd = {
       'FzfLua',
     },
-    opts = {},
+    config = require('plugins.configs.fzfluac'),
   },
 }

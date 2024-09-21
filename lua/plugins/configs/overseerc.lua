@@ -148,7 +148,7 @@ return function()
     component_aliases = {
       -- Most tasks are initialized with the default components
       default = {
-        { 'display_duration',    detail_level = 2 },
+        { 'display_duration', detail_level = 2 },
         'on_output_summarize',
         'on_exit_set_status',
         'on_complete_notify',
@@ -202,6 +202,12 @@ return function()
 
   overseer.setup(options)
 
+  overseer.setup({
+    templates = {
+      'builtin',
+      'rnn',
+    },
+  })
   -- overseer.register_template({
   --   name = "Git checkout",
   --   params = function()
