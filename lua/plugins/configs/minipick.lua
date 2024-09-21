@@ -61,7 +61,7 @@ return function()
         -- local width = math.floor(0.5 * vim.o.columns)
 
         local width = math.min(60, vim.o.columns)
-        local height = math.min(27, vim.o.lines)
+        local height = math.min(20, vim.o.lines)
         -- height = 10
         -- width = 60
         return {
