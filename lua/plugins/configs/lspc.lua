@@ -13,7 +13,15 @@ return function()
   local default_server_ops = {
     capabilities = capabilities,
   }
-  function make_opts(nops)
+  --- Add foldingRange to capabilities
+  default_server_ops.textDocument = {
+    foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    },
+  }
+
+  local function make_opts(nops)
     return vim.tbl_extend('force', default_server_ops, nops)
   end
 
