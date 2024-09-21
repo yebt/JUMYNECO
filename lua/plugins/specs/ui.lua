@@ -60,4 +60,28 @@ return {
     end,
     config = require('plugins.configs.dressingc'),
   },
+
+  --- Fold
+  {
+    'kevinhwang91/nvim-ufo',
+    event = 'VeryLazy',
+    dependencies = {
+      'kevinhwang91/promise-async',
+    },
+    keys = {
+      {
+        'zR',
+        function(...)
+          require('ufo').openAllFolds(...)
+        end,
+      },
+      {
+        'zM',
+        function(...)
+          require('ufo').closeAllFolds(...)
+        end,
+      },
+    },
+    config = require('plugins.configs.ufoc'),
+  },
 }
