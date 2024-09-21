@@ -75,4 +75,29 @@ return {
     event = { 'InsertEnter' },
     config = require('plugins.configs.smaven'),
   },
+
+  --- Runner
+  {
+    'stevearc/overseer.nvim',
+    config = require('plugins.configs.overseerc'),
+    cmd = {
+      'OverseerRun',
+      'OverseerOpen',
+      'OverseerClose',
+      'OverseerToggle',
+      'OverseerSaveBundle',
+      'OverseerLoadBundle',
+      'OverseerDeleteBundle',
+      'OverseerRunCmd',
+      'OverseerRun',
+      'OverseerInfo',
+      'OverseerBuild',
+      'OverseerQuickAction',
+      'OverseerTaskAction',
+      'OverseerClearCache',
+    },
+    keys = {
+      { 'ø', ':OverseerRun<CR>' },
+    },
+  },
 }
