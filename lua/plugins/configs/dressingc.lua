@@ -71,7 +71,8 @@ return function()
 
       -- Priority list of preferred vim.select implementations
       -- backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
-      backend = { 'fzf', 'fzf_lua', 'telescope', 'nui' },
+      -- backend = { 'fzf', 'fzf_lua', 'telescope', 'nui' },
+      backend = { 'fzf_lua', 'telescope', 'nui' },
 
       -- Trim trailing `:` from prompt
       trim_prompt = true,
@@ -93,7 +94,7 @@ return function()
       fzf_lua = {
         winopts = {
           height = 0.5,
-          width = 0.5,
+          width = 0.8,
         },
       },
 
