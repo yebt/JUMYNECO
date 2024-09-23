@@ -33,6 +33,7 @@ return function()
       'Trouble',
       'fugitive',
       'saga*', -- lspsaga
+      'Overseer*', -- overseer
     },
     hints = {
       ['[dcyvV][ia][%(%)]'] = {
