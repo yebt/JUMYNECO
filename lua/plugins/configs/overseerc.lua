@@ -206,6 +206,7 @@ return function()
     templates = {
       'builtin',
       'rnn',
+      'python',
     },
   })
   -- overseer.register_template({
