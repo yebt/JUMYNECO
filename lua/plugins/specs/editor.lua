@@ -229,7 +229,8 @@ return {
       {
         '<leader>SS',
         function()
-          MiniSessions.select()
+          require('mini.sessions').select()
+          -- MiniSessions.select()
         end,
         desc = 'Select a session',
       },
@@ -244,14 +245,14 @@ return {
           -- local session_name = basename .. " (" .. cwd .. ")"
           local session_name = basename .. ' (' .. path .. ')'
           -- vim.notify(vim.inspect(session_name))
-          MiniSessions.write(session_name)
+          require('mini.sessions').write(session_name)
         end,
         desc = 'Make session',
       },
       {
         '<leader>SL',
         function()
-          MiniSessions.read('latest')
+          require('mini.sessions').read('latest')
         end,
         desc = "Read 'latest' session",
       },
@@ -268,8 +269,12 @@ return {
       {
         '\\',
         function()
-          if not MiniFiles.close() then
-            MiniFiles.open()
+          local ok, mf = pcall(require, 'mini.files')
+          if not ok then
+            return
+          end
+          if not mf.close() then
+            mf.open()
           end
         end,
         silent = true,
@@ -278,9 +283,10 @@ return {
       {
         '¿',
         function()
-          if not MiniFiles.close() then
+          local ok, mf = pcall(require, 'mini.files')
+          if not mf.close() then
             -- MiniFiles.open()
-            MiniFiles.open(vim.api.nvim_buf_get_name(0), true)
+            mf.open(vim.api.nvim_buf_get_name(0), true)
           end
         end,
         silent = true,
@@ -301,5 +307,26 @@ return {
     'brenoprata10/nvim-highlight-colors',
     cmd = { 'HighlightColors' },
     config = require('plugins.configs.nhc'),
+  },
+
+  --- term
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    opts = {},
+    cmd = {
+      'ToggleTerm',
+    },
+  },
+
+  --- neotest
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
   },
 }
