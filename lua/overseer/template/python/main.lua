@@ -12,7 +12,7 @@ return {
         -- },
         {
           'open_output',
-          direction = 'dock', -- "dock"|"float"|"tab"|"vertical"|"horizontal"
+          direction = 'dock',
         },
         -- {
         --   "display_duration",
