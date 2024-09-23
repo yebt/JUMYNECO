@@ -79,6 +79,11 @@ return {
   --- Runner
   {
     'stevearc/overseer.nvim',
+    dependencies = {
+      -- 'nvim-lua/plenary.nvim',
+      -- 'nvim-telescope/telescope.nvim',
+      'akinsho/toggleterm.nvim',
+    },
     config = require('plugins.configs.overseerc'),
     cmd = {
       'OverseerRun',
