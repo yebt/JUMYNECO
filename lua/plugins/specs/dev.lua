@@ -103,7 +103,7 @@ return {
     },
     keys = {
       { 'ø', ':OverseerRun<CR>' },
-      { '<C-j>', ':OverseerToggle<CR>'},
+      { '<C-j>', ':OverseerToggle<CR>' },
     },
   },
 }

@@ -6,11 +6,11 @@ return function()
       clear_suggestion = '<C-]>',
       accept_word = '<C-j>',
     },
-    ignore_filetypes = { 
+    ignore_filetypes = {
       'minifiles',
       'minipick',
       'OverseerForm',
-      'Overseer*'
+      'Overseer*',
     }, -- or { "cpp", }
     color = {
       suggestion_color = '#cdbcde',
