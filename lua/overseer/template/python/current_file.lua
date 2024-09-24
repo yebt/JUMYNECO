@@ -1,35 +1,34 @@
-
-local overseer = require("overseer")
+local overseer = require('overseer')
 return {
   -- Required fields
-  name = "Python exampler",
+  name = 'Python exampler',
   builder = function(params)
-    vim.notify("Python exampler")
+    vim.notify('Python exampler')
 
-  --   -- This must return an overseer.TaskDefinition
-  --   return {
-  --     -- cmd is the only required field
-  --     cmd = { 'echo' },
-  --     -- additional arguments for the cmd
-  --     args = { "hello", "world" },
-  --     -- the name of the task (defaults to the cmd of the task)
-  --     name = "Greet",
-  --     -- set the working directory for the task
-  --     cwd = "/tmp",
-  --     -- additional environment variables
-  --     env = {
-  --       VAR = "FOO",
-  --     },
-  --     -- the list of components or component aliases to add to the task
-  --     components = { "my_custom_component", "default" },
-  --     -- arbitrary table of data for your own personal use
-  --     metadata = {
-  --       foo = "bar",
-  --     },
-  --   }
+    --   -- This must return an overseer.TaskDefinition
+    --   return {
+    --     -- cmd is the only required field
+    --     cmd = { 'echo' },
+    --     -- additional arguments for the cmd
+    --     args = { "hello", "world" },
+    --     -- the name of the task (defaults to the cmd of the task)
+    --     name = "Greet",
+    --     -- set the working directory for the task
+    --     cwd = "/tmp",
+    --     -- additional environment variables
+    --     env = {
+    --       VAR = "FOO",
+    --     },
+    --     -- the list of components or component aliases to add to the task
+    --     components = { "my_custom_component", "default" },
+    --     -- arbitrary table of data for your own personal use
+    --     metadata = {
+    --       foo = "bar",
+    --     },
+    --   }
   end,
   -- Optional fields
-  desc = "Run a python exampler",
+  desc = 'Run a python exampler',
   -- Tags can be used in overseer.run_template()
   tags = { overseer.TAG.BUILD },
   params = {
@@ -42,7 +41,7 @@ return {
   condition = {
     -- A string or list of strings
     -- Only matches when current buffer is one of the listed filetypes
-    filetype = { "c", "cpp", "python" },
+    filetype = { 'c', 'cpp', 'python' },
     -- A string or list of strings
     -- Only matches when cwd is inside one of the listed dirs
     -- dir = "/home/user/my_project",

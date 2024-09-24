@@ -1,4 +1,4 @@
 return {
-  "python.current_file",
-  "python.main",
+  'python.current_file',
+  'python.main',
 }
