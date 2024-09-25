@@ -2,9 +2,9 @@ return function()
   local smv = require('supermaven-nvim')
   smv.setup({
     keymaps = {
-      accept_suggestion = '<M-Tab>',
+      accept_suggestion = '<C-j>',
       clear_suggestion = '<C-]>',
-      accept_word = '<C-j>',
+      accept_word = '<M-j>',
     },
     ignore_filetypes = {
       'minifiles',
