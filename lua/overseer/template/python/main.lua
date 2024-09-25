@@ -1,5 +1,6 @@
 return {
-  name = 'python runner main',
+  name = 'PRM',
+  description = 'Python run main.py file',
   builder = function()
     local file = vim.fn.expand('%:p')
     return {
