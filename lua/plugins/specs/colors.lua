@@ -1,7 +1,9 @@
-local color = 'night-owl.nvim'
+-- local color = 'night-owl.nvim'
 -- local color = 'obscure.nvim'
 -- local color = 'porcelain.nvim'
 -- local color = 'vitesse.nvim'
+-- local color = 'newpaper.nvim'
+local color = 'hyper.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
@@ -107,5 +109,35 @@ return {
       require('vitesse').setup(opts)
       vim.cmd.colorscheme('vitesse')
     end,
+  },
+
+  --- Colorbuddy
+  {
+    "yorik1984/newpaper.nvim",
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      style = "dark",
+      lightness =  0.1,
+      saturation = 0.5,
+      -- "lightness", "average", "luminosity"
+      greyscale = false,
+      -- "bg", "contrast", "inverse", "inverse_transparent"
+      terminal = "contrast",
+      sidebars_contrast = { "NvimTree", "vista_kind", "Trouble" },
+      delim_rainbow_bold = true,
+    }
+  },
+
+  --- Hyper
+  {
+    "paulo-granthon/hyper.nvim",
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    config = function()
+      require('hyper').load()
+    end
   },
 }
