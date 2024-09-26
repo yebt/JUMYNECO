@@ -84,4 +84,20 @@ return {
     },
     config = require('plugins.configs.ufoc'),
   },
+
+  --- Beter quickfix
+  {
+    'stevearc/quicker.nvim',
+    event = 'FileType qf',
+    keys = {
+      {
+        '<leader>lq',
+        function()
+          require('quicker').toggle({ loclist = true })
+        end,
+        desc = 'Toggle loclist',
+      },
+    },
+    config = require('plugins.configs.quickerc'),
+  },
 }
