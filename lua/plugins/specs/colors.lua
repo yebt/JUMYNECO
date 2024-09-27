@@ -1,9 +1,9 @@
 -- local color = 'night-owl.nvim'
 -- local color = 'obscure.nvim'
--- local color = 'porcelain.nvim'
+local color = 'porcelain.nvim'
 -- local color = 'vitesse.nvim'
 -- local color = 'newpaper.nvim'
-local color = 'hyper.nvim'
+-- local color = 'hyper.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
