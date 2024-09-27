@@ -4,6 +4,9 @@ return function()
   local msn = require('mason')
   local msnnls = require('mason-null-ls')
   local nls = require('null-ls')
+  local util = vim.lsp.util
+  local api = vim.api
+
   -- msn.setup()
 
   -- local async_formatting = function(bufnr)
@@ -47,6 +50,7 @@ return function()
   nls.setup({
     sources = {
       -- Anything not supported by mason.
+      require('plugins.configs.nonels-sources.autopep8'),
     },
     -- on_attach = function(client, bufnr)
     --   if client.supports_method('textDocument/formatting') then
@@ -75,8 +79,6 @@ return function()
     end,
   })
 
-  local util = vim.lsp.util
-  local api = vim.api
 
   local function overwrite_format2(options)
     options = options or {}
