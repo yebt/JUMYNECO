@@ -113,31 +113,31 @@ return {
 
   --- Colorbuddy
   {
-    "yorik1984/newpaper.nvim",
+    'yorik1984/newpaper.nvim',
     lazy = false,
     priority = 1000,
     cond = isColor,
     opts = {
-      style = "dark",
-      lightness =  0.1,
+      style = 'dark',
+      lightness = 0.1,
       saturation = 0.5,
       -- "lightness", "average", "luminosity"
       greyscale = false,
       -- "bg", "contrast", "inverse", "inverse_transparent"
-      terminal = "contrast",
-      sidebars_contrast = { "NvimTree", "vista_kind", "Trouble" },
+      terminal = 'contrast',
+      sidebars_contrast = { 'NvimTree', 'vista_kind', 'Trouble' },
       delim_rainbow_bold = true,
-    }
+    },
   },
 
   --- Hyper
   {
-    "paulo-granthon/hyper.nvim",
+    'paulo-granthon/hyper.nvim',
     lazy = false,
     priority = 1000,
     cond = isColor,
     config = function()
       require('hyper').load()
-    end
+    end,
   },
 }

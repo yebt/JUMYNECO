@@ -1,11 +1,11 @@
-return function ()
-  require("quicker").setup({
+return function()
+  require('quicker').setup({
     -- Local options to set for quickfix
     opts = {
       buflisted = false,
       number = false,
       relativenumber = false,
-      signcolumn = "auto",
+      signcolumn = 'auto',
       winfixheight = true,
       wrap = false,
     },
@@ -22,7 +22,7 @@ return function ()
       enabled = true,
       -- Set to true to write buffers after applying edits.
       -- Set to "unmodified" to only write unmodified buffers.
-      autosave = "unmodified",
+      autosave = 'unmodified',
     },
     -- Keep the cursor to the right of the filename and lnum columns
     constrain_cursor = true,
@@ -36,23 +36,23 @@ return function ()
     },
     -- Map of quickfix item type to icon
     type_icons = {
-      E = "󰅚 ",
-      W = "󰀪 ",
-      I = " ",
-      N = " ",
-      H = " ",
+      E = '󰅚 ',
+      W = '󰀪 ',
+      I = ' ',
+      N = ' ',
+      H = ' ',
     },
     -- Border characters
     borders = {
-      vert = "┃",
+      vert = '┃',
       -- Strong headers separate results from different files
-      strong_header = "━",
-      strong_cross = "╋",
-      strong_end = "┫",
+      strong_header = '━',
+      strong_cross = '╋',
+      strong_end = '┫',
       -- Soft headers separate results within the same file
-      soft_header = "╌",
-      soft_cross = "╂",
-      soft_end = "┨",
+      soft_header = '╌',
+      soft_cross = '╂',
+      soft_end = '┨',
     },
     -- Trim the leading whitespace from results
     trim_leading_whitespace = true,
