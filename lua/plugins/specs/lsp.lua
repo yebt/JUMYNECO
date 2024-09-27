@@ -84,6 +84,7 @@ return {
       'williamboman/mason.nvim',
 
       'nvimtools/none-ls.nvim',
+      'nvimtools/none-ls-extras.nvim',
       'nvim-lua/plenary.nvim',
     },
     keys = {
