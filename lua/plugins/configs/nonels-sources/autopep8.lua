@@ -17,7 +17,6 @@ return h.make_builtin({
     command = "autopep8",
     args = function(params)
       if params.method == FORMATTING then
-        vim.notify('FORMATTING')
         return {
           "--in-place", "--aggressive", "--aggressive",
           "$FILENAME",
