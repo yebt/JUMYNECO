@@ -75,6 +75,12 @@ return {
     cond = isColor,
     config = function()
       vim.cmd.colorscheme('porcelain')
+      --- Fix some color problems
+      -- vim.cmd.highlight('NormalFloat', 'guibg=NONE')
+      vim.cmd.highlight('IndentLine guifg=#123456')
+      vim.cmd.highlight('IndentLineCurrent guifg=#125750')
+      vim.cmd.highlight('FoldColumn guifg=#666A62')
+      vim.cmd.highlight('LspReferenceText guibg=#1F282E gui=underline')
     end,
   },
 
