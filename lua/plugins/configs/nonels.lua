@@ -80,7 +80,6 @@ return function()
     -- end,
   })
 
-
   local function overwrite_format2(options)
     options = options or {}
     local bufnr = options.bufnr or api.nvim_get_current_buf()
