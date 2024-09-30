@@ -7,7 +7,7 @@ return function()
       -- Delay between computation start and visual feedback about it
       busy = 50,
     },
-    -- Keys for performing actions. See `:h MiniPick-actions`.
+    -- Keys for performing actions. See `:h mp-actions`.
     mappings = {
       caret_left = '<Left>',
       caret_right = '<Right>',
@@ -92,18 +92,19 @@ return function()
 
   --- Registry
   mp.registry.registry = function()
-    local items = vim.tbl_keys(MiniPick.registry)
+    local items = vim.tbl_keys(mp.registry)
     table.sort(items)
     local source = { items = items, name = 'Registry', choose = function() end }
-    local chosen_picker_name = MiniPick.start({ source = source })
+    local chosen_picker_name = mp.start({ source = source })
     if chosen_picker_name == nil then
       return
     end
-    return MiniPick.registry[chosen_picker_name]()
+    return mp.registry[chosen_picker_name]()
   end
 
   mp.registry.bufferlist = function()
-    local buffers_output = vim.api.nvim_exec('buffers', true)
+    -- local buffers_output = vim.api.nvim_exec('buffers', true)
+    local buffers_output = vim.api.nvim_exec2('buffers', {output = true}).output
     local curbuf = vim.api.nvim_get_current_buf()
     local curbuf_name = 'Buffers L'
     local items = {}
@@ -121,13 +122,14 @@ return function()
         local buf_filename = buf_relname:match('([^/]+)$')
         local buf_relpath = buf_relname:match('(.*/)') or ''
         -- local flag = (bfactual == buf_num and '%' or (bfaltternate == buf_num and '#' or ' '))
+        local realpath_str = #buf_relpath > 0 and (' `' .. buf_relpath .. '`') or ''
         table.insert(items, {
           buf = buf_num,
           -- name = buf_relname,
           -- text = buf_relname,
           -- text = buf_relname,
           -- text = buf_filename,
-          text = ' ' .. buf_filename .. ' \n _' .. buf_relpath .. '_',
+          text = ' ' .. buf_filename .. realpath_str,
           -- filename = buf_filename,
           -- pathname = buf_relpath,
           -- -- flag = flag,
@@ -146,7 +148,7 @@ return function()
       -- choose = function()end
       show = function(buf_id, items, query)
         vim.treesitter.start(buf_id, 'markdown')
-        MiniPick.default_show(buf_id, items, query, { show_icons = true })
+        mp.default_show(buf_id, items, query, { show_icons = true })
       end,
       -- show = function(buf_id, items_arr, query)
       --   local lines = vim.tbl_map(function(x)
@@ -156,7 +158,7 @@ return function()
       --   vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
       -- end,
     }
-    MiniPick.start({ source = source })
+    mp.start({ source = source })
 
     -- -- all existing bufers
     -- local buffers_list = vim.api.nvim_list_bufs()
@@ -200,9 +202,9 @@ return function()
     --   items = buffer_items,
     --   name = "Buffers L",
     --   -- choose = function()end
-    --   show = function(buf_id, items, query) MiniPick.default_show(buf_id, items, query, { show_icons = true }) end
+    --   show = function(buf_id, items, query) mp.default_show(buf_id, items, query, { show_icons = true }) end
     -- }
-    -- MiniPick.start({source = source})
+    -- mp.start({source = source})
   end
 
   mp.registry.sessions = function()
@@ -223,15 +225,15 @@ return function()
     -- table.sort(fitems)
     local source = {
       items = fitems,
-      index = indx,
+      -- index = indx,
       name = 'Sessions',
       choose = function() end,
-      show = function(buf_id, items, query)
+      show = function(buf_id, itemsl, query)
         vim.treesitter.start(buf_id, 'markdown')
-        MiniPick.default_show(buf_id, items, query, { show_icons = false })
+        mp.default_show(buf_id, itemsl, query, { show_icons = false })
       end,
     }
-    local chosen_picker_session = MiniPick.start({ source = source })
+    local chosen_picker_session = mp.start({ source = source })
     if chosen_picker_session == nil then
       return
     end
