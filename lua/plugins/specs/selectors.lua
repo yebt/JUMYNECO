@@ -164,6 +164,30 @@ return {
     cmd = {
       'FzfLua',
     },
+    keys = {
+      {
+        '<leader><leader>',
+        function()
+          require('fzf-lua').buffers({
+            -- previewer = false,
+            winopts = {
+              height = 0.6,
+              width = 0.6,
+              row = 0.2,
+              -- 'none', 'single', 'double', 'thicc' (+cc) or 'rounded' (default)
+              border = false,
+              -- title_pos     = "center",    -- 'left', 'center' or 'right'
+              title = 'Title',
+              title_pos = 'center', -- 'left', 'center' or 'right'
+              preview = {
+                hidden         = 'hidden',      -- hidden|nohidden
+              },
+            },
+          })
+        end,
+        desc = 'Buffers',
+      },
+    },
     config = require('plugins.configs.fzfluac'),
   },
 }
