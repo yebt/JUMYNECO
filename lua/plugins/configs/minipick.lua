@@ -104,7 +104,7 @@ return function()
 
   mp.registry.bufferlist = function()
     -- local buffers_output = vim.api.nvim_exec('buffers', true)
-    local buffers_output = vim.api.nvim_exec2('buffers', {output = true}).output
+    local buffers_output = vim.api.nvim_exec2('buffers', { output = true }).output
     local curbuf = vim.api.nvim_get_current_buf()
     local curbuf_name = 'Buffers L'
     local items = {}
@@ -125,14 +125,7 @@ return function()
         local realpath_str = #buf_relpath > 0 and (' `' .. buf_relpath .. '`') or ''
         table.insert(items, {
           buf = buf_num,
-          -- name = buf_relname,
-          -- text = buf_relname,
-          -- text = buf_relname,
-          -- text = buf_filename,
           text = ' ' .. buf_filename .. realpath_str,
-          -- filename = buf_filename,
-          -- pathname = buf_relpath,
-          -- -- flag = flag,
           time = order[buf_num] or -1,
         })
       end
@@ -207,36 +200,113 @@ return function()
     -- mp.start({source = source})
   end
 
-  mp.registry.sessions = function()
+  local session_func = function()
     local minisessions = require('mini.sessions')
-    local items = vim.tbl_keys(minisessions.detected)
-    local fitems = {}
-    local refs = {}
+    local detected = minisessions.detected
+    local fitems, refs = {}, {}
 
     local homed = vim.fn.expand('~')
-    for indx, el in ipairs(items) do
+    local function process_item(el)
       local dir, branch = table.unpack(vim.split(el, '%%', { plain = true }))
-      local name = '**' .. (dir:gsub('%%', '/'):gsub(homed, '~')) .. '**'
-      branch = branch and ' _[' .. branch:gsub('%%', '/') .. ']_' or ''
-      local item = name .. branch
-      table.insert(fitems, item)
-      refs[item] = el
+      local parts = vim.split(dir, ' ', { plain = true })
+      dir = parts[1] .. ' `' .. (parts[2] or ' ') .. '`'
+      local name = (dir:gsub('%%', '/'):gsub(homed, '~'))
+      branch = branch and (' _[' .. branch:gsub('%%', '/') .. ']_') or ''
+      return "   "..name .. branch
     end
-    -- table.sort(fitems)
+
+    for session_name, session in pairs(detected) do
+      local item_name = process_item(session_name)
+      table.insert(fitems, {
+        text = item_name,
+        _session_name = session_name,
+        _mt = session.type == 'local' and math.huge or session.modify_time,
+        _session = session,
+      })
+    end
+
+    table.sort(fitems, function(a, b)
+      return a._mt > b._mt
+    end)
+
     local source = {
+      name = 'F Sessions',
       items = fitems,
-      -- index = indx,
-      name = 'Sessions',
-      choose = function() end,
+      choose = function(item)
+        vim.notify(vim.inspect(item))
+      end,
       show = function(buf_id, itemsl, query)
         vim.treesitter.start(buf_id, 'markdown')
         mp.default_show(buf_id, itemsl, query, { show_icons = false })
       end,
+      preview = function(buf_id, item)
+        local dir, branch = table.unpack(vim.split(item._session_name, '%%', { plain = true }))
+        local parts = vim.split(dir, ' ', { plain = true })
+        local sname = parts[1]
+        local dirname = (parts[2] or ''):gsub('%%', '/')
+        local branchname = branch and (' _[' .. branch:gsub('%%', '/') .. ']_') or ''
+
+        local lines = {
+          -- '**name**: `' .. item._session.name .. '`',
+          '**name**: `' .. sname .. '`',
+          '**path**: `' .. dirname .. '`',
+          '**branch**: `' .. branchname .. '`',
+          '**date**: `' .. os.date('%Y-%m-%d %H:%M:%S', item._mt) .. '`',
+        }
+        vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+        vim.api.nvim_set_option_value('wrap', true, {})
+        vim.treesitter.start(buf_id, 'markdown')
+      end,
     }
     local chosen_picker_session = mp.start({ source = source })
-    if chosen_picker_session == nil then
-      return
-    end
-    minisessions.read(refs[chosen_picker_session])
+
+    -- local items = vim.tbl_keys(minisessions.detected)
+    -- local fitems = {}
+    -- local refs = {}
+
+    -- local homed = vim.fn.expand('~')
+    -- local function process_item(el)
+    --   local dir, branch = table.unpack(vim.split(el, '%%', { plain = true }))
+    --   local parts = vim.split(dir, ' ', { plain = true })
+    --   dir = parts[1] .. ' `' .. (parts[2] or ' ') .. '`'
+    --   local name = (dir:gsub('%%', '/'):gsub(homed, '~'))
+    --   branch = branch and (' _[' .. branch:gsub('%%', '/') .. ']_') or ''
+    --   return name .. branch
+    -- end
+    --
+    -- -- table.sort(items, function(a, b)
+    -- --   local a_time = a.type == 'local' and math.huge or a.modify_time
+    -- --   local b_time = b.type == 'local' and math.huge or b.modify_time
+    -- --   -- local a_time = a._session.type == 'local' and math.huge or a._session.modify_time
+    -- --   -- local b_time = b._session.type == 'local' and math.huge or b._session.modify_time
+    -- --   return a_time > b_time
+    -- -- end)
+    --
+    -- for session_name, session in pairs(items) do
+    --   vim.notify(vim.inspect(session_name))
+    --   -- local item_name = process_item(session_name)
+    --   -- fitems[session_name] = item_name
+    -- end
+    --
+    -- local source = {
+    --   items = fitems,
+    --   -- index = indx,
+    --   name = 'Sessions',
+    --   -- choose = function(a,b)
+    --   --   vim.notify(vim.inspect({a,b}))
+    --   -- end,
+    --   show = function(buf_id, itemsl, query)
+    --     vim.treesitter.start(buf_id, 'markdown')
+    --     mp.default_show(buf_id, itemsl, query, { show_icons = false })
+    --   end,
+    -- }
+    -- local chosen_picker_session = mp.start({ source = source })
+    -- if chosen_picker_session == nil then
+    --   return
+    -- end
+    -- minisessions.read(refs[chosen_picker_session])
   end
+
+  mp.registry.sessions = session_func
+  mp.registry.ms = session_func
 end
