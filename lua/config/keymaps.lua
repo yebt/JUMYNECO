@@ -63,8 +63,8 @@ map('x', '<C-s>', actions.surround, { silent = true, expr = true, desc = 'Add su
 --- Replace cursor word
 map(
   'n',
-  '<leader>r',
-  '<cmd>%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>',
+  '<leader>rw',
+  ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>',
   { desc = 'Remplace cursor word, in all document' }
 )
 
