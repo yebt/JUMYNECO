@@ -69,11 +69,12 @@ local options = {
   },
 
   ruler = true,
-  showtabline = 2, -- always
+  showtabline = 1, -- always
   tabpagemax = 15,
   -- tabline='%0*%#TabLine#%#TabLineSel#> %<%f %h%m%r %0*'
   -- tabline='%#TabLine# %#TabLineSel#> %<%f %#WarningMsg#%h%m%r %#TabLineFill#',
-  -- laststatus = 3,
+  laststatus = 3,
+  winbar = " %<%f %h%m%r%w%y%#Normal#",
   -- statuscolumn
   -- statusline
   -- statusline = " ",
