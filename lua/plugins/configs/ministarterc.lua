@@ -149,7 +149,8 @@ return function()
 
   vim.api.nvim_create_autocmd('User', {
     once = true,
-    pattern = { 'LazyVimStarted', 'VeryLazy' },
+    -- pattern = { 'LazyVimStarted', 'VeryLazy' },
+    pattern = { 'VeryLazy' },
     callback = function()
       local stats = require('lazy').stats()
       local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -162,7 +163,16 @@ return function()
     local stats = require('lazy').stats()
     if vim.g.lazy_ms then
       local ms = vim.g.lazy_ms
-      return 'Neovim loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms .. 'ms'
+
+      local lines = {
+        'Loaded ' .. stats.loaded .. '/' .. stats.count .. ' plugins in ' .. ms .. 'ms'
+      }
+      -- local status = require('lazy.status')
+      --   vim.notify(vim.inspect(status.has_updates()))
+      --   if status.has_updates() then
+      --     table.insert(lines, 'Updates available')
+      --   end
+      return table.concat(lines, ' ')
     end
     return '...'
   end
@@ -209,7 +219,7 @@ return function()
       -- starter.sections.recent_files(5, false),
       -- starter.sections.recent_files(5, true),
       -- starter.sections.pick(),
-      fsessions(4, true),
+      fsessions(5, true),
 
       -- starter.sections.recent_files(6, false),
       -- starter.sections.recent_files(6, true),
