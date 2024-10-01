@@ -40,3 +40,5 @@ vim.api.nvim_create_autocmd('User', {
 
 --- lazy
 require('config.lazy')
+require('modules.status')
+-- require('modules.modeline').setup()
