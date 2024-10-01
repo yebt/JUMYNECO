@@ -293,6 +293,7 @@ return {
         desc = 'Toggle Mini Files try reveal',
       },
     },
+    init = require('plugins.inits.minifilesc'),
     config = require('plugins.configs.minifilesc'),
   },
 
@@ -329,4 +330,11 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
   },
+
+  --- Rest 
+  {
+    'rest-nvim/rest.nvim',
+    cmd = { 'Rest' },
+    init = require('plugins.inits.resti'),
+  }
 }
