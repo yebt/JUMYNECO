@@ -74,7 +74,7 @@ local options = {
   -- tabline='%0*%#TabLine#%#TabLineSel#> %<%f %h%m%r %0*'
   -- tabline='%#TabLine# %#TabLineSel#> %<%f %#WarningMsg#%h%m%r %#TabLineFill#',
   laststatus = 3,
-  winbar = " %<%f %h%m%r%w%y%#Normal#",
+  -- winbar = " %<%f %h%m%r%w%y%#Normal#",
   -- statuscolumn
   -- statusline
   -- statusline = " ",
