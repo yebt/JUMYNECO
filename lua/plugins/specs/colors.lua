@@ -1,9 +1,20 @@
 -- local color = 'night-owl.nvim'
 -- local color = 'obscure.nvim'
-local color = 'porcelain.nvim'
+-- local color = 'porcelain.nvim'
 -- local color = 'vitesse.nvim'
 -- local color = 'newpaper.nvim'
 -- local color = 'hyper.nvim'
+-- local color = 'alduin.nvim'
+-- local color = 'obscure.nvim'
+-- local color = 'monokai-nightasty.nvim'
+-- local color = 'ronny.nvim'
+-- local color = 'aquarium-vim'
+-- local color = 'monokai-pro.nvim'
+-- local color = 'onedarkpro.nvim'
+-- local color = 'nvimgelion'
+-- local color = 'one_monokai.nvim'
+-- local color = 'midnight.nvim'
+local color = 'oxocarbon.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
@@ -144,6 +155,218 @@ return {
     cond = isColor,
     config = function()
       require('hyper').load()
+    end,
+  },
+
+  --- Alduin
+  {
+    'bakageddy/alduin.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      terminal_colors = true, -- add neovim terminal colors
+      inverse = true, -- invert background for search, diffs, statuslines and errors
+      palette_overrides = {},
+      overrides = {},
+    },
+    config = function(_, opts)
+      require('alduin').setup(opts)
+      vim.cmd.colorscheme('alduin')
+    end,
+  },
+
+  --- Obscure
+  {
+    'killitar/obscure.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      transparent = false,
+      terminal_colors = true,
+      dim_inactive = true,
+      keywords = { italic = true },
+      identifiers = {},
+      functions = {},
+      variables = {},
+      booleans = {},
+      comments = { italic = true },
+    },
+    config = function(_, opts)
+      require('obscure').setup(opts)
+      vim.cmd.colorscheme('obscure')
+    end,
+  },
+
+  --- Monokai nightastic
+  {
+    'polirritmico/monokai-nightasty.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      dim_inactive = true,
+    },
+    config = function(_, opts)
+      require('monokai-nightasty').setup(opts)
+      vim.cmd.colorscheme('monokai-nightasty')
+    end,
+  },
+
+  --- ronny
+  {
+    'judaew/ronny.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {},
+    config = function(_, opts)
+      require('ronny').setup(opts)
+      vim.cmd.colorscheme('ronny')
+    end,
+  },
+
+  --- Aquarium
+  {
+    'FrenzyExists/aquarium-vim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    config = function()
+      -- vim.opt.background = 'light'
+      -- vim.g.aquarium_style= 'light'
+      vim.cmd.colorscheme('aquarium')
+    end,
+  },
+
+  --- monokai-pro
+  {
+    'loctvl842/monokai-pro.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      transparent_background = false,
+      terminal_colors = true,
+      devicons = true, -- highlight the icons of `nvim-web-devicons`
+      styles = {
+        comment = { italic = true },
+        keyword = { italic = true }, -- any other keyword
+        type = { italic = true }, -- (preferred) int, long, char, etc
+        storageclass = { italic = true }, -- static, register, volatile, etc
+        structure = { italic = true }, -- struct, union, enum, etc
+        parameter = { italic = true }, -- parameter pass in function
+        annotation = { italic = true },
+        tag_attribute = { italic = true }, -- attribute of tag in reactjs
+      },
+      -- classic | octagon | pro | machine | ristretto | spectrum
+      filter = 'spectrum',
+      -- Enable this will disable filter option
+      day_night = {
+        enable = false, -- turn off by default
+        day_filter = 'pro', -- classic | octagon | pro | machine | ristretto | spectrum
+        night_filter = 'spectrum', -- classic | octagon | pro | machine | ristretto | spectrum
+      },
+      inc_search = 'background', -- underline | background
+      background_clear = {
+        -- "float_win",
+        'toggleterm',
+        'telescope',
+        -- "which-key",
+        'renamer',
+        -- 'notify',
+        -- "nvim-tree",
+        -- "neo-tree",
+        -- "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
+      }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
+      plugins = {
+        bufferline = {
+          underline_selected = false,
+          underline_visible = false,
+        },
+        indent_blankline = {
+          context_highlight = 'default', -- default | pro
+          context_start_underline = false,
+        },
+      },
+    },
+    config = function(_, opts)
+      require('monokai-pro').setup(opts)
+      vim.cmd.colorscheme('monokai-pro')
+    end,
+  },
+
+  --- onedarkpro
+  {
+    'olimorris/onedarkpro.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {},
+    config = function(_, opts)
+      require('onedarkpro').setup(opts)
+      vim.cmd.colorscheme('onedark_dark')
+    end,
+  },
+
+  --- nvimgelion
+  {
+    'nyngwang/nvimgelion',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    config = function()
+      vim.cmd.colorscheme('nvimgelion')
+    end,
+  },
+
+  --- one_monokai
+  {
+    'cpea2506/one_monokai.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      colors = {
+        -- bg = '#282c34',
+        bg = '#161819'
+      },
+      -- transparent = true,
+    },
+    config = function(_, opts)
+      require('one_monokai').setup(opts)
+      vim.cmd.colorscheme('one_monokai')
+    end,
+  },
+
+  --- midnight
+  {
+    'dasupradyumna/midnight.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+
+    },
+    config = function(_, opts)
+      require('midnight').setup(opts)
+      vim.cmd.colorscheme('midnight')
+    end,
+  },
+
+  --- oxocarbon
+  {
+    'nyoom-engineering/oxocarbon.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    config = function()
+      vim.cmd.colorscheme('oxocarbon')
+      vim.cmd.highlight('IndentLine guifg=#20302C')
+      -- vim.cmd.highlight('IndentLineCurrent guifg=#F9CB40')
+      -- vim.cmd.highlight('IndentLineCurrent guifg=#698210')
+      vim.cmd.highlight('IndentLineCurrent guifg=#597D4A')
     end,
   },
 }
