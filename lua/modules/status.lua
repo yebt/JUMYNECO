@@ -106,6 +106,26 @@ end
 --   return '[ ' .. names .. ' ]'
 -- end
 
+function WinBar()
+  local fmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.:gs%\\(\\.\\?[^/]\\)[^/]*/%\\1/%')
+ -- %<%f %h%m%r%w%y%#Normal#
+  --
+  if fmod == '' then
+    fmod = '[No Name]'
+  elseif fmod == 'Starter' then
+      fmod = ' [Starter] '
+  else
+    local ft_icon, ft_color = require('nvim-web-devicons').get_icon_color(fmod)
+    if ft_icon ~= nil then
+      vim.api.nvim_set_hl(0, 'WinBarDI', { bg = ft_color, fg = '#000000' })
+      local colors_space = '%#WinBarDI# ' .. ft_icon .. ' %#WinBar#'
+      fmod =   colors_space .. " " .. fmod 
+    end
+    fmod = "%<" .. fmod .. ' %h%m%r%w%y'
+  end
+
+  return "" .. fmod .. "%#Normal#"
+end
 --
 local stts_str = padding
 
@@ -140,3 +160,4 @@ tabline_str = '%0*%#TabLine#%#TabLineSel#> %<%f %#Constant#%h%m%r %0*'
 --
 opt.statusline = stts_str
 opt.tabline = tabline_str
+opt.winbar = '%{%v:lua.WinBar()%}'
