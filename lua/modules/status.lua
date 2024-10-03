@@ -5,7 +5,7 @@ local tabline_str = ''
 
 --
 local padding = '%#Normal# %0*' -- xpadding
-local separator = '%='          -- separator
+local separator = '%=' -- separator
 
 --
 function append_v(v, chrl, chrr, vl)
@@ -60,9 +60,15 @@ local format_summary_diff = function(data)
   if not summary then
     return
   end
-  if summary.add > 0 then table.insert(t, '+' .."%#DiffAdd#" .. summary.add .. '%#Normal#') end
-  if summary.change > 0 then table.insert(t, '~' .."%#DiffChange#" .. summary.change .. '%#Normal#') end
-  if summary.delete > 0 then table.insert(t, '-' .."%#DiffDelete#" .. summary.delete .. '%#Normal#') end
+  if summary.add > 0 then
+    table.insert(t, '+' .. '%#DiffAdd#' .. summary.add .. '%#Normal#')
+  end
+  if summary.change > 0 then
+    table.insert(t, '~' .. '%#DiffChange#' .. summary.change .. '%#Normal#')
+  end
+  if summary.delete > 0 then
+    table.insert(t, '-' .. '%#DiffDelete#' .. summary.delete .. '%#Normal#')
+  end
   vim.b[data.buf].minidiff_summary_string_2 = table.concat(t, ' ')
 end
 vim.api.nvim_create_autocmd('User', { pattern = 'MiniDiffUpdated', callback = format_summary_diff })
@@ -77,13 +83,13 @@ vim.api.nvim_create_autocmd('User', { pattern = 'MiniGitUpdated', callback = for
 
 function MiniGitSt()
   if vim.b.minigit_summary_string_2 then
-    local str = " ["
-        .. '%#Constant#'
-        .. (vim.b.minigit_summary_string_2 or '')
-        .. "%#Normal#"
-        .. (vim.b.minidiff_summary_string_2 and ' ' .. vim.b.minidiff_summary_string_2 or '')
-        .. ']'
-        .. "%#Normal#"
+    local str = ' ['
+      .. '%#Constant#'
+      .. (vim.b.minigit_summary_string_2 or '')
+      .. '%#Normal#'
+      .. (vim.b.minidiff_summary_string_2 and ' ' .. vim.b.minidiff_summary_string_2 or '')
+      .. ']'
+      .. '%#Normal#'
     return str
   end
   return ''
@@ -108,50 +114,67 @@ end
 
 function WinBar()
   local fmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.:gs%\\(\\.\\?[^/]\\)[^/]*/%\\1/%')
- -- %<%f %h%m%r%w%y%#Normal#
+  -- %<%f %h%m%r%w%y%#Normal#
   --
   if fmod == '' then
     fmod = '[No Name]'
   elseif fmod == 'Starter' then
-      fmod = ' [Starter] '
+    fmod = ' [Starter] '
   else
     local ft_icon, ft_color = require('nvim-web-devicons').get_icon_color(fmod)
     if ft_icon ~= nil then
       vim.api.nvim_set_hl(0, 'WinBarDI', { bg = ft_color, fg = '#000000' })
       local colors_space = '%#WinBarDI# ' .. ft_icon .. ' %#WinBar#'
-      fmod =   colors_space .. " " .. fmod 
+      fmod = colors_space .. ' ' .. fmod
     end
-    fmod = "%<" .. fmod .. ' %h%m%r%w%y'
+    fmod = '%<' .. fmod .. ' %h%m%r%w%y'
   end
 
-  return "" .. fmod .. "%#Normal#"
+  return '' .. fmod .. '%#Normal#'
 end
+
+function LspClients()
+  local lsps = vim.lsp.get_clients()
+  local lspcstr = ''
+  for _, cl in ipairs(lsps) do
+    lspcstr = lspcstr .. cl.name .. ','
+  end
+  vim.schedule(function()
+    lspcstr = '󰿘 [ ' .. lspcstr:sub(1, -2) .. ' ]'
+    vim.b.lsp_client_str = lspcstr
+    vim.cmd('redrawstatus')
+  end)
+end
+
+vim.api.nvim_create_autocmd({ 'LspAttach' }, {
+  callback = LspClients,
+})
+
 --
 local stts_str = padding
-
-    .. '%#Normal#%{%v:lua.MiniGitSt()%}%0*'
-    -- .. "%1*%{ v:lua.append_v(get(b:,'gitsigns_head',''),'  [', ']')}%0*"
-    -- .. "%1*%{ v:lua.append_v(get(b:,'minigit_summary_string',''),'  [', ']')}%0*"
-    -- .. "%1*%{ v:lua.append_v(get(b:,'minidiff_summary_string',''),'  [', ']')}%0*"
-    -- .. "%##%{ get(b:,'minidiff_summary_string_2','')}%0*"
-
-    -- .. "%1*%{ v:lua.append_v(get(b:,'walo_git_head_cwd',''),'  [', ']')}%0*"
-    -- .. "%{ get(g:, 'walo_git_head_cwd','') }!"
-    .. ''
-    -- .. '%#Constant#'
-    -- .. ' %<%f '
-    -- .. '%h%m%r'
-    -- .. '%{v:lua.guard_status_w() }'
-    .. separator
-    -- diagnostic
-    -- servers
-    .. "%1*%{ v:lua.append_v(get(b:,'lsp_clients',''),' 󰿘 [', ']')}%0*"
-    .. separator
-    --.. '%2*%{v:lua.Lazyupdates()}%0*' -- Updates
-    .. '%#WarningMsg#%{v:lua.lazyupdates()}%0*'
-    .. ' %2l/%L:%c '
-    .. '%{ mode() }'
-    .. padding
+  .. '%#Normal#%{%v:lua.MiniGitSt()%}%0*'
+  -- .. "%1*%{ v:lua.append_v(get(b:,'gitsigns_head',''),'  [', ']')}%0*"
+  -- .. "%1*%{ v:lua.append_v(get(b:,'minigit_summary_string',''),'  [', ']')}%0*"
+  -- .. "%1*%{ v:lua.append_v(get(b:,'minidiff_summary_string',''),'  [', ']')}%0*"
+  -- .. "%##%{ get(b:,'minidiff_summary_string_2','')}%0*"
+  -- .. "%1*%{ v:lua.append_v(get(b:,'walo_git_head_cwd',''),'  [', ']')}%0*"
+  -- .. "%{ get(g:, 'walo_git_head_cwd','') }!"
+  .. ''
+  -- .. '%#Constant#'
+  -- .. ' %<%f '
+  -- .. '%h%m%r'
+  -- .. '%{v:lua.guard_status_w() }'
+  .. separator
+  -- diagnostic
+  -- servers
+  -- .. "%1*%{ v:lua.append_v(get(b:,'lsp_clients',''),' 󰿘 [', ']')}%0*"
+  .. "%1*%{%get(b:, 'lsp_client_str', '')%}%0*"
+  .. separator
+  --.. '%2*%{v:lua.Lazyupdates()}%0*' -- Updates
+  .. '%#WarningMsg#%{v:lua.lazyupdates()}%0*'
+  .. ' %2l/%L:%c '
+  .. '%{ mode() }'
+  .. padding
 
 --
 tabline_str = ''
