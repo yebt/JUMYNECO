@@ -121,6 +121,8 @@ local function colorize_cmp(opts)
       bg = blend('#58B5A8', alpha_points, bgPmenu),
       fg = '#58B5A8',
     })
+
+    vim.api.nvim_set_hl(0, 'CmpItemKindSupermaven', { fg = '#6CC644' })
   else
     vim.api.nvim_set_hl(0, 'CmpItemKindField', { fg = '#EED8DA', bg = '#B5585F' })
     vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { fg = '#EED8DA', bg = '#B5585F' })
@@ -147,6 +149,8 @@ local function colorize_cmp(opts)
     vim.api.nvim_set_hl(0, 'CmpItemKindInterface', { fg = '#D8EEEB', bg = '#58B5A8' })
     vim.api.nvim_set_hl(0, 'CmpItemKindColor', { fg = '#D8EEEB', bg = '#58B5A8' })
     vim.api.nvim_set_hl(0, 'CmpItemKindTypeParameter', { fg = '#D8EEEB', bg = '#58B5A8' })
+
+    vim.api.nvim_set_hl(0, 'CmpItemKindSupermaven', { fg = '#6CC644' })
   end
 end
 

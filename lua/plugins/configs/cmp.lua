@@ -1,10 +1,10 @@
 return function()
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
   local cmp = require('cmp')
-
   local use_path_icon = false
   local use_kind_icons = false
   local use_atom_view = false
+  local use_tailwind_tools = false
 
   local nwd = require('nvim-web-devicons')
 
@@ -70,6 +70,7 @@ return function()
     Event = '',
     Operator = '󰆕',
     TypeParameter = '󰅲',
+    Supermaven = '󰫺',
   }
 
   cmp.setup({
@@ -93,8 +94,35 @@ return function()
     formatting = {
       fields = use_atom_view and { 'kind', 'abbr', 'menu' } or nil,
       format = function(entry, vim_item)
-        if not use_atom_view then
+        if (not use_atom_view) and not use_kind_icons and not use_tailwind_tools then
           return vim_item
+        end
+
+        if use_kind_icons then
+          -- Kind icons
+          vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
+          -- Source
+          vim_item.menu = ({
+            buffer = '[Bff]',
+            nvim_lsp = '[LSP]',
+            luasnip = '[Lsp]',
+            nvim_lua = '[Lua]',
+            snippets = '[Snp]',
+            latex_symbols = '[LTX]',
+            supermaven = '[SM]',
+            path = '[Path]',
+          })[entry.source.name]
+
+          return vim_item
+        end
+
+        if use_tailwind_tools then
+          return require('lspkind').cmp_format({
+            symbol_map = {
+              Supermaven = '󰫺',
+            },
+            before = require('tailwind-tools.cmp').lspkind_format,
+          })(entry, vim_item)
         end
 
         local vicon = nil
@@ -155,14 +183,19 @@ return function()
       end, { 'i', 's' }),
     }),
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      -- { name = 'nvim_lsp_signature_help' },
+      {
+        name = 'nvim_lsp',
+      },
       { name = 'snippets' },
+      { name = 'supermaven' },
+      -- { name = 'nvim_lsp_signature_help' },
       -- { name = 'vsnip' }, -- For vsnip users.
       -- { name = 'luasnip' }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
-    }, {
+
+      -- }, {
+
       {
         name = 'buffer',
         option = {
@@ -182,11 +215,33 @@ return function()
       },
       { name = 'path' },
     }),
+    performance = {
+      -- -- debounce = 60,
+      -- debounce = 60,
+      -- -- throttle = 30,
+      -- throttle = 10,
+      -- -- fetching_timeout = 500,
+      -- fetching_timeout = 1,
+      -- -- confirm_resolve_timeout = 80,
+      -- async_budget = 2,
+      -- -- async_budget = 100,
+      -- -- max_view_entries = 200,
+      -- -- max_view_entries = 100
+      -- max_view_entries = 5
+    },
+
+    -- performance = {
+    --   trigger_debounce_time = 500,
+    --   throttle = 550,
+    --   fetching_timeout = 80,
+    -- },
   })
 
   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
   if use_atom_view then
     require('plugins.configs.cmp_color')
+  else
+    vim.api.nvim_set_hl(0, 'CmpItemKindSupermaven', { fg = '#6CC644' })
   end
 end
