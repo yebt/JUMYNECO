@@ -8,6 +8,8 @@ return {
       'williamboman/mason.nvim',
       --- Bridge
       'williamboman/mason-lspconfig.nvim',
+      --- Schemes
+      'b0o/schemastore.nvim',
     },
     event = { 'VeryLazy' },
     config = require('plugins.configs.lspc'),
