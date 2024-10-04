@@ -115,7 +115,7 @@ return function()
         name = 'nvim_lsp',
       },
       { name = 'snippets' },
-      { name = 'supermaven' },
+      -- { name = 'supermaven' },
       -- { name = 'nvim_lsp_signature_help' },
       -- { name = 'vsnip' }, -- For vsnip users.
       -- { name = 'luasnip' }, -- For luasnip users.
