@@ -8,11 +8,12 @@ return function()
   --- Move to dedicated opts call
   -- msnslpc.setup()
 
+  vim.diagnostic.config({
+    update_in_insert = true,
+  })
 
-
-
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   local default_server_ops = {
     capabilities = capabilities,
@@ -28,9 +29,8 @@ return function()
   default_server_ops.capabilities.workspace = {
     didChangeWatchedFiles = {
       dynamicRegistration = true,
-    }
+    },
   }
-
 
   msnslpc.setup_handlers({
     -- The first entry (without a key) will be the default handler
@@ -166,6 +166,139 @@ return function()
     -- ['rust_analyzer'] = function()
     --   require('rust-tools').setup({})
     -- end,
+
+    -- ['vtsls'] = function(sn)
+    --   lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+    --
+    --     -- explicitly add default filetypes, so that we can extend
+    --     -- them in related extras
+    --     filetypes = {
+    --       'javascript',
+    --       'javascriptreact',
+    --       'javascript.jsx',
+    --       'typescript',
+    --       'typescriptreact',
+    --       'typescript.tsx',
+    --     },
+    --     settings = {
+    --       complete_function_calls = true,
+    --       vtsls = {
+    --         enableMoveToFileCodeAction = true,
+    --         autoUseWorkspaceTsdk = true,
+    --         experimental = {
+    --           completion = {
+    --             enableServerSideFuzzyMatch = true,
+    --           },
+    --         },
+    --       },
+    --       typescript = {
+    --         updateImportsOnFileMove = { enabled = 'always' },
+    --         suggest = {
+    --           completeFunctionCalls = true,
+    --         },
+    --         inlayHints = {
+    --           enumMemberValues = { enabled = true },
+    --           functionLikeReturnTypes = { enabled = true },
+    --           parameterNames = { enabled = 'literals' },
+    --           parameterTypes = { enabled = true },
+    --           propertyDeclarationTypes = { enabled = true },
+    --           variableTypes = { enabled = false },
+    --         },
+    --       },
+    --     },
+    --   }))
+    --   local name = 'vtsls'
+    --   vim.api.nvim_create_autocmd('LspAttach', {
+    --     callback = function(args)
+    --       local buffer = args.buf ---@type number
+    --       local client = vim.lsp.get_client_by_id(args.data.client_id)
+    --       if client and (not name or client.name == name) then
+    --         vim.notify('vtsls --- ')
+    --         client.commands['_typescript.moveToFileRefactoring'] = function(command, ctx)
+    --           ---@type string, string, lsp.Range
+    --           local action, uri, range = table.unpack(command.arguments)
+    --
+    --           local function move(newf)
+    --             client.request('workspace/executeCommand', {
+    --               command = command.command,
+    --               arguments = { action, uri, range, newf },
+    --             })
+    --           end
+    --
+    --           local fname = vim.uri_to_fname(uri)
+    --           client.request('workspace/executeCommand', {
+    --             command = 'typescript.tsserverRequest',
+    --             arguments = {
+    --               'getMoveToRefactoringFileSuggestions',
+    --               {
+    --                 file = fname,
+    --                 startLine = range.start.line + 1,
+    --                 startOffset = range.start.character + 1,
+    --                 endLine = range['end'].line + 1,
+    --                 endOffset = range['end'].character + 1,
+    --               },
+    --             },
+    --           }, function(_, result)
+    --             ---@type string[]
+    --             local files = result.body.files
+    --             table.insert(files, 1, 'Enter new path...')
+    --             vim.ui.select(files, {
+    --               prompt = 'Select move destination:',
+    --               format_item = function(f)
+    --                 return vim.fn.fnamemodify(f, ':~:.')
+    --               end,
+    --             }, function(f)
+    --               if f and f:find('^Enter new path') then
+    --                 vim.ui.input({
+    --                   prompt = 'Enter move destination:',
+    --                   default = vim.fn.fnamemodify(fname, ':h') .. '/',
+    --                   completion = 'file',
+    --                 }, function(newf)
+    --                   return newf and move(newf)
+    --                 end)
+    --               elseif f then
+    --                 move(f)
+    --               end
+    --             end)
+    --           end)
+    --         end
+    --       end
+    --     end,
+    --   })
+    --
+    --   -- lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+    --   --
+    --   -- }))
+    -- end,
+
+    ['astro'] = function(sn)
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+
+        filetypes = {
+          'astro',
+          'typescript',
+          'javascript',
+          -- 'typescriptreact', 'javascriptreact',
+          -- 'svelte', 'svelte.svelte', 'vue', 'vue.vue',
+          -- 'astro-markdown', 'astro-markdown.md',
+          -- 'astro-html', 'astro-html.astro',
+        },
+        init_options = {
+          updateImportsOnFileMove = { enabled = 'always' },
+          suggest = {
+            completeFunctionCalls = true,
+          },
+          inlayHints = {
+            enumMemberValues = { enabled = true },
+            functionLikeReturnTypes = { enabled = true },
+            parameterNames = { enabled = 'literals' },
+            parameterTypes = { enabled = true },
+            propertyDeclarationTypes = { enabled = true },
+            variableTypes = { enabled = false },
+          },
+        },
+      }))
+    end,
   })
 
   -- Set up lspconfig.
