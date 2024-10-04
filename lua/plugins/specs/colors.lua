@@ -14,7 +14,11 @@
 -- local color = 'nvimgelion'
 -- local color = 'one_monokai.nvim'
 -- local color = 'midnight.nvim'
-local color = 'oxocarbon.nvim'
+-- local color = 'oxocarbon.nvim'
+-- local color = 'github-theme'
+-- local color = 'onedark.nvim'
+local color = 'nordic.nvim'
+-- local color = 'nightfox.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
@@ -330,7 +334,7 @@ return {
     opts = {
       colors = {
         -- bg = '#282c34',
-        bg = '#161819'
+        bg = '#161819',
       },
       -- transparent = true,
     },
@@ -346,9 +350,7 @@ return {
     lazy = false,
     priority = 1000,
     cond = isColor,
-    opts = {
-
-    },
+    opts = {},
     config = function(_, opts)
       require('midnight').setup(opts)
       vim.cmd.colorscheme('midnight')
@@ -369,4 +371,233 @@ return {
       vim.cmd.highlight('IndentLineCurrent guifg=#597D4A')
     end,
   },
+
+  --- github-nvim-theme
+  {
+    'projekt0n/github-nvim-theme',
+    name = 'github-theme',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      options = {
+        -- Compiled file's destination location
+        compile_path = vim.fn.stdpath('cache') .. '/github-theme',
+        compile_file_suffix = '_compiled', -- Compiled file suffix
+        hide_end_of_buffer = false, -- Hide the '~' character at the end of the buffer for a cleaner look
+        hide_nc_statusline = false, -- Override the underline style for non-active statuslines
+        transparent = false, -- Disable setting bg (make neovim's background transparent)
+        terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+        dim_inactive = false, -- Non focused panes set to alternative background
+        module_default = true, -- Default enable value for modules
+        styles = { -- Style to be applied to different syntax groups
+          comments = 'italic', -- Value is any valid attr-list value `:help attr-list`
+          functions = 'NONE',
+          keywords = 'NONE',
+          variables = 'NONE',
+          conditionals = 'NONE',
+          constants = 'NONE',
+          numbers = 'NONE',
+          operators = 'NONE',
+          strings = 'NONE',
+          types = 'NONE',
+        },
+        inverse = { -- Inverse highlight for different types
+          match_paren = true,
+          visual = true,
+          search = true,
+        },
+        darken = { -- Darken floating windows and sidebar-like windows
+          floats = true,
+          sidebars = {
+            enable = true,
+            list = {}, -- Apply dark background to specific windows
+          },
+        },
+        modules = { -- List of various plugins and additional options
+          -- ...
+        },
+      },
+      palettes = {},
+      specs = {},
+      groups = {},
+    },
+    config = function(_, opts)
+      require('github-theme').setup(opts)
+      vim.cmd.colorscheme('github_dark_high_contrast')
+    end,
+  },
+
+  --- onedark nvim
+  {
+    'navarasu/onedark.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      -- Main options --
+      style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+      transparent = false, -- Show/hide background
+      term_colors = true, -- Change terminal color as per the selected theme style
+      ending_tildes = true, -- Show the end-of-buffer tildes. By default they are hidden
+      cmp_itemkind_reverse = true, -- reverse item kind highlights in cmp menu
+
+      -- toggle theme style ---
+      toggle_style_key = '<leader>tt', -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+      toggle_style_list = { 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light' }, -- List of styles to toggle between
+
+      -- Change code style ---
+      -- Options are italic, bold, underline, none
+      -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+      code_style = {
+        comments = 'italic',
+        keywords = 'none',
+        functions = 'none',
+        strings = 'none',
+        variables = 'none',
+      },
+
+      -- Lualine options --
+      lualine = {
+        transparent = false, -- lualine center bar transparency
+      },
+
+      -- Custom Highlights --
+      colors = {}, -- Override default colors
+      highlights = {}, -- Override highlight groups
+
+      -- Plugins Config --
+      diagnostics = {
+        darker = true, -- darker colors for diagnostic
+        undercurl = true, -- use undercurl instead of underline for diagnostics
+        background = true, -- use background color for virtual text
+      },
+    },
+    config = function(_, opts)
+      require('onedark').setup(opts)
+      -- vim.cmd.colorscheme('onedark')
+      require('onedark').load()
+    end,
+  },
+
+  --- nodic.nvim
+  {
+    'AlexvZyl/nordic.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {
+      -- This callback can be used to override the colors used in the base palette.
+      on_palette = function(palette) end,
+      -- This callback can be used to override the colors used in the extended palette.
+      after_palette = function(palette) end,
+      -- This callback can be used to override highlights before they are applied.
+      on_highlight = function(highlights, palette) end,
+      -- Enable bold keywords.
+      bold_keywords = true,
+      -- Enable italic comments.
+      italic_comments = true,
+      -- Enable editor background transparency.
+      transparent = {
+        -- Enable transparent background.
+        bg = false,
+        -- Enable transparent background for floating windows.
+        float = false,
+      },
+      -- Enable brighter float border.
+      bright_border = false,
+      -- Reduce the overall amount of blue in the theme (diverges from base Nord).
+      reduced_blue = true,
+      -- Swap the dark background with the normal one.
+      swap_backgrounds = false,
+      -- Cursorline options.  Also includes visual/selection.
+      cursorline = {
+        -- Bold font in cursorline.
+        bold = false,
+        -- Bold cursorline number.
+        bold_number = true,
+        -- Available styles: 'dark', 'light'.
+        theme = 'dark',
+        -- Blending the cursorline bg with the buffer bg.
+        blend = 0.85,
+      },
+      noice = {
+        -- Available styles: `classic`, `flat`.
+        style = 'classic',
+      },
+      telescope = {
+        -- Available styles: `classic`, `flat`.
+        style = 'flat',
+      },
+      leap = {
+        -- Dims the backdrop when using leap.
+        dim_backdrop = false,
+      },
+      ts_context = {
+        -- Enables dark background for treesitter-context window
+        dark_background = true,
+      },
+    },
+    config = function(_, opts)
+      local nrd = require('nordic')
+      nrd.setup(opts)
+      nrd.load()
+    end,
+  },
+
+  --- Night fox
+  {
+    'EdenEast/nightfox.nvim',
+    priority = 1000,
+    cond = isColor,
+    lazy = false,
+    opts = {
+      options = {
+        -- Compiled file's destination location
+        compile_path = vim.fn.stdpath('cache') .. '/nightfox',
+        compile_file_suffix = '_compiled', -- Compiled file suffix
+        transparent = false, -- Disable setting background
+        terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+        dim_inactive = false, -- Non focused panes set to alternative background
+        module_default = true, -- Default enable value for modules
+        colorblind = {
+          enable = false, -- Enable colorblind support
+          simulate_only = false, -- Only show simulated colorblind colors and not diff shifted
+          severity = {
+            protan = 0, -- Severity [0,1] for protan (red)
+            deutan = 0, -- Severity [0,1] for deutan (green)
+            tritan = 0, -- Severity [0,1] for tritan (blue)
+          },
+        },
+        styles = { -- Style to be applied to different syntax groups
+          comments = 'NONE', -- Value is any valid attr-list value `:help attr-list`
+          conditionals = 'NONE',
+          constants = 'NONE',
+          functions = 'NONE',
+          keywords = 'NONE',
+          numbers = 'NONE',
+          operators = 'NONE',
+          strings = 'NONE',
+          types = 'NONE',
+          variables = 'NONE',
+        },
+        inverse = { -- Inverse highlight for different types
+          match_paren = false,
+          visual = false,
+          search = false,
+        },
+        modules = { -- List of various plugins and additional options
+          -- ...
+        },
+      },
+      palettes = {},
+      specs = {},
+      groups = {},
+    },
+    config = function(_,opts)
+      require('nightfox').setup(opts)
+      vim.cmd.colorscheme('carbonfox')
+    end,
+  },
+
 }
