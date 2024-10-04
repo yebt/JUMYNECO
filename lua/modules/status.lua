@@ -113,10 +113,11 @@ end
 -- end
 
 function WinBar()
+  local tmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':t')
   local fmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.:gs%\\(\\.\\?[^/]\\)[^/]*/%\\1/%')
   -- %<%f %h%m%r%w%y%#Normal#
   --
-  if fmod == '' then
+  if tmod == '' then
     fmod = '[No Name]'
   elseif fmod == 'Starter' then
     fmod = ' [Starter] '
@@ -133,8 +134,8 @@ function WinBar()
   return '' .. fmod .. '%#Normal#'
 end
 
-function LspClients()
-  local lsps = vim.lsp.get_clients()
+function LspClients(args)
+  local lsps = vim.lsp.get_clients({ bufnr = args.buf or 0 })
   local lspcstr = ''
   for _, cl in ipairs(lsps) do
     lspcstr = lspcstr .. cl.name .. ','
