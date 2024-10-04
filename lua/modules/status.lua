@@ -113,11 +113,12 @@ end
 -- end
 
 function WinBar()
-  local tmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':t')
-  local fmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':~:.:gs%\\(\\.\\?[^/]\\)[^/]*/%\\1/%')
+  -- local tmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':t')
+  local bname = vim.api.nvim_buf_get_name(0)
+  local fmod = vim.fn.fnamemodify(bname, ':~:.:gs%\\(\\.\\?[^/]\\)[^/]*/%\\1/%')
   -- %<%f %h%m%r%w%y%#Normal#
   --
-  if tmod == '' then
+  if bname == '' then
     fmod = '[No Name]'
   elseif fmod == 'Starter' then
     fmod = ' [Starter] '
