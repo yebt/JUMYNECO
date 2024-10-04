@@ -60,13 +60,13 @@ local format_summary_diff = function(data)
   if not summary then
     return
   end
-  if summary.add > 0 then
+  if summary.add and summary.add > 0 then
     table.insert(t, '+' .. '%#DiffAdd#' .. summary.add .. '%#Normal#')
   end
-  if summary.change > 0 then
+  if summary.change and summary.change > 0 then
     table.insert(t, '~' .. '%#DiffChange#' .. summary.change .. '%#Normal#')
   end
-  if summary.delete > 0 then
+  if summary.delete and summary.delete > 0 then
     table.insert(t, '-' .. '%#DiffDelete#' .. summary.delete .. '%#Normal#')
   end
   vim.b[data.buf].minidiff_summary_string_2 = table.concat(t, ' ')
