@@ -8,22 +8,29 @@ return function()
   --- Move to dedicated opts call
   -- msnslpc.setup()
 
+
+
+
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 
   local default_server_ops = {
     capabilities = capabilities,
   }
+
   --- Add foldingRange to capabilities
-  default_server_ops.textDocument = {
-    foldingRange = {
-      dynamicRegistration = false,
-      lineFoldingOnly = true,
-    },
+  default_server_ops.capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
   }
 
-  local function make_opts(nops)
-    return vim.tbl_extend('force', default_server_ops, nops)
-  end
+  --- Add discover new files in capabilities
+  default_server_ops.capabilities.workspace = {
+    didChangeWatchedFiles = {
+      dynamicRegistration = true,
+    }
+  }
+
 
   msnslpc.setup_handlers({
     -- The first entry (without a key) will be the default handler
