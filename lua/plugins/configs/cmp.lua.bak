@@ -3,7 +3,7 @@ return function()
   local cmp = require('cmp')
   local use_path_icon = false
   local use_kind_icons = false
-  local use_atom_view = false
+  local use_atom_view = true
   local use_tailwind_tools = false
 
   local nwd = require('nvim-web-devicons')
