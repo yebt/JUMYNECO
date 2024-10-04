@@ -100,4 +100,103 @@ return {
     },
     config = require('plugins.configs.quickerc'),
   },
+
+  --- Buffer switcher
+  -- {
+  --   'mong8se/buffish.nvim',
+  --   cmd = { 'Buffish' },
+  --
+  -- },
+
+  {
+    'leath-dub/snipe.nvim',
+    keys = {
+      {
+        'gb',
+        function()
+          require('snipe').open_buffer_menu()
+        end,
+        desc = 'Open Snipe buffer menu',
+      },
+    },
+    opts = {
+      ui = {
+        max_width = -1, -- -1 means dynamic width
+        -- Where to place the ui window
+        -- Can be any of "topleft", "bottomleft", "topright", "bottomright", "center", "cursor" (sets under the current cursor pos)
+        position = 'bottomright',
+      },
+      hints = {
+        -- Charaters to use for hints (NOTE: make sure they don't collide with the navigation keymaps)
+        dictionary = 'sadflewcmpghio',
+      },
+      navigate = {
+        -- When the list is too long it is split into pages
+        -- `[next|prev]_page` options allow you to navigate
+        -- this list
+        next_page = 'J',
+        prev_page = 'K',
+
+        -- You can also just use normal navigation to go to the item you want
+        -- this option just sets the keybind for selecting the item under the
+        -- cursor
+        under_cursor = '<cr>',
+
+        -- In case you changed your mind, provide a keybind that lets you
+        -- cancel the snipe and close the window.
+        cancel_snipe = '<esc>',
+      },
+      -- Define the way buffers are sorted by default
+      -- Can be any of "default" (sort buffers by their number) or "last" (sort buffers by last accessed)
+      sort = 'default',
+    },
+  },
+
+  --- Buffertag
+  -- {
+  --   'b0o/incline.nvim',
+  --   event = 'VeryLazy',
+  --   init = function()
+  --     vim.opt.laststatus = 3
+  --     vim.opt.showtabline = 0
+  --   end,
+  --   config = require('plugins.configs.inclinec'),
+  -- },
+
+  --- UI
+  {
+    'prichrd/netrw.nvim',
+    ft = 'netrw',
+    dependencies = {
+      'nvim-web-devicons'
+    },
+    opts = {
+      -- File icons to use when `use_devicons` is false or if
+      -- no icon is found for the given file type.
+      icons = {
+        symlink = '󰒖',
+        directory = '󰉋',
+        file = '󰈔',
+      },
+      -- Uses mini.icon or nvim-web-devicons if true, otherwise use the file icon specified above
+      use_devicons = true,
+      mappings = {
+        -- Function mappings receive an object describing the node under the cursor
+        ['p'] = function(payload)
+          print(vim.inspect(payload))
+        end,
+        -- String mappings are executed as vim commands
+        ['<Leader>p'] = ":echo 'hello world'<CR>",
+      },
+    },
+    init = function ()
+      -- vim.g.netrw_browse_split = 4
+      vim.g.netrw_browse_split = 2
+	    vim.g.netrw_winsize   = 30
+      vim.g.netrw_liststyle = 3
+      -- vim.g.netrw_banner = 1
+      vim.g.netrw_hide = 1
+      vim.g.netrw_keepdir = 1
+    end
+  },
 }
