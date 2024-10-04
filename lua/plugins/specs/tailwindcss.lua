@@ -1,0 +1,28 @@
+return {
+  -- -- tailwind-tools.lua
+  -- {
+  --   'luckasRanarison/tailwind-tools.nvim',
+  --   name = 'tailwind-tools',
+  --   build = ':UpdateRemotePlugins',
+  --   dependencies = {
+  --     'nvim-treesitter/nvim-treesitter',
+  --     'nvim-telescope/telescope.nvim', -- optional
+  --     'neovim/nvim-lspconfig', -- optional
+  --     'williamboman/mason.nvim',
+  --     'williamboman/mason-lspconfig.nvim',
+  --   },
+  --   cmd = {
+  --     "TailwindConcealEnable",
+  --     "TailwindConcealDisable",
+  --     "TailwindConcealToggle",
+  --     "TailwindColorEnable",
+  --     "TailwindColorDisable",
+  --     "TailwindColorToggle",
+  --     "TailwindSort",
+  --     "TailwindSortSelection",
+  --     "TailwindNextClass",
+  --     "TailwindPrevClass",
+  --   },
+  --   config = require("plugins.configs.tailwindtoolsc")
+  -- },
+}
