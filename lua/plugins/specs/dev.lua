@@ -15,13 +15,14 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      "luckasRanarison/tailwind-tools.nvim",
-      "onsails/lspkind-nvim",
+      -- "luckasRanarison/tailwind-tools.nvim",
+      -- "onsails/lspkind-nvim",
 
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
+
       --- snippets
       {
         'garymjr/nvim-snippets',
@@ -39,7 +40,7 @@ return {
       },
     },
     event = { 'InsertEnter', 'VeryLazy' },
-    config = require('plugins.configs.cmp'),
+    config = require('plugins.configs.cmpc'),
   },
 
   -- Automatically add closing tags for HTML and JSX
