@@ -248,6 +248,7 @@ local options = {
      -- 'noinsert',
      -- 'noselect',
      -- 'fuzzy' -- is not in nvim 10
+    'popup'
    },
    -- pumheight = 15,
 }
