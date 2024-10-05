@@ -104,6 +104,12 @@ return {
         desc = 'Search the fiels in path',
       },
       {
+        '<M-C-p>',
+        '<CMD>Pick files tool="git"<CR>',
+        silent = true,
+        desc = 'Search the fiels in path with git',
+      },
+      {
         '<leader>b',
         function()
           if MiniPick.registry.bufferlist then

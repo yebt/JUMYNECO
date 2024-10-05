@@ -1,52 +1,11 @@
-# Just My Neovim Config Files
+# Make a better
 
-## TODO:
+## Adapt the configurations
 
-Plugins and function to integrate
+https://github.com/glepnir/nvim
 
-### Needed
+## Nice plugins
 
-Plugins Managment
+- https://github.com/nvimdev/template.nvim
+- https://github.com/nvimdev/dbsession.nvim
 
-- [x] Lazy
-
-Needed for work
-
-- [-] Colorscheme
-  - [x] Night owl
-  - 0xstepit/flow.nvim
-- [x] Autopairs
-- [x] Treesetter
-- [x] Autocompletion
-- [ ] LSP
-
-Better programming
-
-- [ ] Code action
- - [ ] rachartier/tiny-code-action.nvim
-
-Usage
-
-- [x] Flash
-- [x] Picker
-- [x] Telescope
-- [x] FZF
-- [x] Sessions
-  - [ ] Persistence
-  - [x] Minisessions
-- [ ] Buffer
-  -  [ ] https://github.com/leath-dub/snipe.nvim
-- [ ] LSP
-- [ ] Formatter and linter
-    - [ ] Guard
-    - [ ] stevearc/conform.nvim
-View
-
-- [x] Dressing
-- [x] Makrdown
-  - [x] https://github.com/OXY2DEV/markview.nvim
-
-Additional
-
-- [ ] Templates for a new files
-  - [ ] For php use the PSR namespace

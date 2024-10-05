@@ -8,7 +8,64 @@ return {
   },
 
   --- Visit tracker
-  { 'echasnovski/mini.visits', event = { 'LazyFile', 'VeryLazy' }, version = false, opts = {} },
+  {
+    'echasnovski/mini.visits',
+    event = { 'LazyFile', 'VeryLazy' },
+    version = false,
+    opts = {},
+    -- config = function()
+    --   local make_select_path = function(select_global, recency_weight)
+    --     local visits = require('mini.visits')
+    --     local sort = visits.gen_sort.default({ recency_weight = recency_weight })
+    --     local select_opts = { sort = sort }
+    --     return function()
+    --       local cwd = select_global and '' or vim.fn.getcwd()
+    --       visits.select_path(cwd, select_opts)
+    --     end
+    --   end
+    --
+    --   local map = function(lhs, desc, ...)
+    --     vim.keymap.set('n', lhs, make_select_path(...), { desc = desc })
+    --   end
+    --
+    --   -- Adjust LHS and description to your liking
+    --   map('<Leader>vr', 'Select recent (all)', true, 1)
+    --   map('<Leader>vR', 'Select recent (cwd)', false, 1)
+    --   map('<Leader>vy', 'Select frecent (all)', true, 0.5)
+    --   map('<Leader>vY', 'Select frecent (cwd)', false, 0.5)
+    --   map('<Leader>vf', 'Select frequent (all)', true, 0)
+    --   map('<Leader>vF', 'Select frequent (cwd)', false, 0)
+    --
+    --   local map_vis = function(keys, call, desc)
+    --     local rhs = '<Cmd>lua require("mini.visits").' .. call .. '<CR>'
+    --     vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
+    --   end
+    --
+    --   map_vis('vv', 'add_label()', 'Add label')
+    --   map_vis('vV', 'remove_label()', 'Remove label')
+    --   map_vis('vl', 'select_label("", "")', 'Select label (all)')
+    --   map_vis('vL', 'select_label()', 'Select label (cwd)')
+    --
+    --   map_vis('vv', 'add_label("core")', 'Add to core')
+    --   map_vis('vV', 'remove_label("core")', 'Remove from core')
+    --   map_vis('vc', 'select_path("", { filter = "core" })', 'Select core (all)')
+    --   map_vis('vC', 'select_path(nil, { filter = "core" })', 'Select core (cwd)')
+    --
+    --   -- Iterate based on recency
+    --   local map_iterate_core = function(lhs, direction, desc)
+    --     local opts = { filter = 'core', sort = sort_latest, wrap = true }
+    --     local rhs = function()
+    --       require("mini.visits").iterate_paths(direction, vim.fn.getcwd(), opts)
+    --     end
+    --     vim.keymap.set('n', lhs, rhs, { desc = desc })
+    --   end
+    --
+    --   map_iterate_core('[{', 'last', 'Core label (earliest)')
+    --   map_iterate_core('[[', 'forward', 'Core label (earlier)')
+    --   map_iterate_core(']]', 'backward', 'Core label (later)')
+    --   map_iterate_core(']}', 'first', 'Core label (latest)')
+    -- end,
+  },
 
   --- Starter view
   {
@@ -101,55 +158,72 @@ return {
     config = require('plugins.configs.quickerc'),
   },
 
-  --- Buffer switcher
+  --- buffer swhitc
   -- {
-  --   'mong8se/buffish.nvim',
-  --   cmd = { 'Buffish' },
+  --   'leath-dub/snipe.nvim',
+  --   keys = {
+  --     {
+  --       'gb',
+  --       function()
+  --         require('snipe').open_buffer_menu()
+  --       end,
+  --       desc = 'Open Snipe buffer menu',
+  --     },
+  --   },
+  --   opts = {
+  --     ui = {
+  --       max_width = -1, -- -1 means dynamic width
+  --       -- Where to place the ui window
+  --       -- Can be any of "topleft", "bottomleft", "topright", "bottomright", "center", "cursor" (sets under the current cursor pos)
+  --       position = 'center',
+  --     },
+  --     hints = {
+  --       -- Charaters to use for hints (NOTE: make sure they don't collide with the navigation keymaps)
+  --       dictionary = 'sadflewcmpghio',
+  --     },
+  --     navigate = {
+  --       -- When the list is too long it is split into pages
+  --       -- `[next|prev]_page` options allow you to navigate
+  --       -- this list
+  --       next_page = 'J',
+  --       prev_page = 'K',
   --
+  --       -- You can also just use normal navigation to go to the item you want
+  --       -- this option just sets the keybind for selecting the item under the
+  --       -- cursor
+  --       under_cursor = '<cr>',
+  --
+  --       -- In case you changed your mind, provide a keybind that lets you
+  --       -- cancel the snipe and close the window.
+  --       cancel_snipe = '<esc>',
+  --     },
+  --     -- Define the way buffers are sorted by default
+  --     -- Can be any of "default" (sort buffers by their number) or "last" (sort buffers by last accessed)
+  --     -- sort = 'default',
+  --     sort = 'last',
+  --   },
   -- },
 
   {
-    'leath-dub/snipe.nvim',
+    'glepnir/flybuf.nvim',
+    cmd = 'FlyBuf',
     keys = {
       {
         'gb',
-        function()
-          require('snipe').open_buffer_menu()
-        end,
+        ':FlyBuf<CR>',
         desc = 'Open Snipe buffer menu',
       },
     },
     opts = {
-      ui = {
-        max_width = -1, -- -1 means dynamic width
-        -- Where to place the ui window
-        -- Can be any of "topleft", "bottomleft", "topright", "bottomright", "center", "cursor" (sets under the current cursor pos)
-        position = 'bottomright',
-      },
-      hints = {
-        -- Charaters to use for hints (NOTE: make sure they don't collide with the navigation keymaps)
-        dictionary = 'sadflewcmpghio',
-      },
-      navigate = {
-        -- When the list is too long it is split into pages
-        -- `[next|prev]_page` options allow you to navigate
-        -- this list
-        next_page = 'J',
-        prev_page = 'K',
-
-        -- You can also just use normal navigation to go to the item you want
-        -- this option just sets the keybind for selecting the item under the
-        -- cursor
-        under_cursor = '<cr>',
-
-        -- In case you changed your mind, provide a keybind that lets you
-        -- cancel the snipe and close the window.
-        cancel_snipe = '<esc>',
-      },
-      -- Define the way buffers are sorted by default
-      -- Can be any of "default" (sort buffers by their number) or "last" (sort buffers by last accessed)
-      sort = 'default',
+      hotkey = 'asdfghwertyuiopzcvbnm', -- hotkye
+      border = 'single', -- border
+      quit = 'q', -- quit flybuf window
+      mark = 'l', -- mark as delet or cancel delete
+      delete = 'x', -- delete marked buffers or buffers which cursor in
     },
+    config = function(_, opts)
+      require('flybuf').setup(opts)
+    end,
   },
 
   --- Buffertag
@@ -163,12 +237,12 @@ return {
   --   config = require('plugins.configs.inclinec'),
   -- },
 
-  --- UI
+  --- UI for netrw
   {
     'prichrd/netrw.nvim',
     ft = 'netrw',
     dependencies = {
-      'nvim-web-devicons'
+      'nvim-web-devicons',
     },
     opts = {
       -- File icons to use when `use_devicons` is false or if
@@ -189,14 +263,14 @@ return {
         ['<Leader>p'] = ":echo 'hello world'<CR>",
       },
     },
-    init = function ()
+    init = function()
       -- vim.g.netrw_browse_split = 4
       vim.g.netrw_browse_split = 2
-	    vim.g.netrw_winsize   = 30
+      vim.g.netrw_winsize = 30
       vim.g.netrw_liststyle = 3
       -- vim.g.netrw_banner = 1
       vim.g.netrw_hide = 1
       vim.g.netrw_keepdir = 1
-    end
+    end,
   },
 }
