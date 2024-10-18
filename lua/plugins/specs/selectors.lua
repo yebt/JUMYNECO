@@ -64,7 +64,7 @@ return {
       {
         '<C-p>',
         function()
-          MiniPick.builtin.files({
+          MiniPick.registry.full_files({
             -- tool = 'rg',
           }, {
             window = {
