@@ -16,7 +16,7 @@ return {
     'hrsh7th/nvim-cmp',
     dependencies = {
       -- "luckasRanarison/tailwind-tools.nvim",
-      -- "onsails/lspkind-nvim",
+      "onsails/lspkind-nvim", -- icons
 
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lsp',
