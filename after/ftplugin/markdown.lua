@@ -52,3 +52,27 @@ end
 vim.keymap.set('n', 'o', SetupEmptyBrackets, { noremap = true, silent = false })
 
 vim.keymap.set('n', '<leader>tt', ToggleCheckbox, { desc = 'toggle todo mark' })
+
+function InsertLink()
+
+  vim.ui.select(
+    {'clipboard', 'empty'},
+    {
+      prompt = 'Select link type: ',
+    },
+    function(choice)
+      if choice == 'clipboard' then
+        vim.cmd('normal i[mi]("+pa)`id`i')
+        vim.cmd('startinsert')
+      elseif choice == 'empty' then
+        vim.cmd('normal i[]()')
+        vim.cmd('startinsert')
+      end
+    end
+  )
+
+end
+vim.keymap.set('i', '<M-i>', InsertLink, { desc = 'Inser link', silent = true })
+-- vim.keymap.set('i', '<M-i>', '[<C-o>mi](<C-o>"+p)<ESC>`id`ia', { desc = 'Inser link' })
+-- vim.keymap.set('i', '<M-I>', '![<C-o>mi](<C-o>"+p)<ESC>`id`ia', { desc = 'Inser link' })
+
