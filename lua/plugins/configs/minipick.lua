@@ -53,6 +53,21 @@ return function()
       -- Whether to cache matches (more speed and memory on repeated prompts)
       use_cache = true,
     },
+
+    source = {
+      -- items = nil,
+      items = vim.fn.readdir('.'),
+      name = nil,
+      cwd = nil,
+
+      match = nil,
+      show = nil,
+      preview = nil,
+
+      choose = nil,
+      choose_marked = nil,
+    },
+
     -- Window related options
     window = {
       -- Float window config (table or callable returning it)
@@ -100,6 +115,32 @@ return function()
       return
     end
     return mp.registry[chosen_picker_name]()
+  end
+
+  mp.registry.full_files = function(local_opts, opts)
+    local_opts = vim.tbl_deep_extend('force', { tool = nil }, local_opts or {})
+
+    -- local tool = local_opts.tool or H.files_get_tool()
+    -- local show = H.get_config().source.show or H.show_with_icons
+    local tool = 'rg'
+    -- local show = mp.default_show
+    local show_with_icons = function(buf_id, items, query)
+      mp.default_show(buf_id, items, query, { show_icons = true })
+    end
+    local show = show_with_icons
+
+    local default_opts = { source = { name = string.format('All Files 󰱼 (%s)', tool), show = show } }
+    opts = vim.tbl_deep_extend('force', default_opts, opts or {})
+    local command = {
+      'rg',
+      '--files',
+      '--no-follow',
+      '--color=never',
+      '--hidden',
+      '--glob=!.git/*',
+    }
+
+    return mp.builtin.cli({ command = command }, opts)
   end
 
   mp.registry.bufferlist = function()
@@ -212,7 +253,7 @@ return function()
       dir = parts[1] .. ' `' .. (parts[2] or ' ') .. '`'
       local name = (dir:gsub('%%', '/'):gsub(homed, '~'))
       branch = branch and (' _[' .. branch:gsub('%%', '/') .. ']_') or ''
-      return "   "..name .. branch
+      return '   ' .. name .. branch
     end
 
     for session_name, session in pairs(detected) do
@@ -248,7 +289,9 @@ return function()
 
         local lines = {
           -- '**name**: `' .. item._session.name .. '`',
-          '**name**: `' .. sname .. '`',
+          '**name**: `'
+            .. sname
+            .. '`',
           '**path**: `' .. dirname .. '`',
           '**branch**: `' .. branchname .. '`',
           '**date**: `' .. os.date('%Y-%m-%d %H:%M:%S', item._mt) .. '`',
