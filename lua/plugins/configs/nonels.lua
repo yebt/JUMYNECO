@@ -81,7 +81,9 @@ return function()
   })
 
   local function overwrite_format2(options)
-    options = options or {}
+    options = options or {
+      -- timeout_ms = 3000,
+    }
     local bufnr = options.bufnr or api.nvim_get_current_buf()
     local method = 'textDocument/formatting'
     -- local clients = vim.lsp.get_active_clients({
@@ -194,7 +196,9 @@ return function()
 
   -- vim.keymap.set('n', function(args) end, { silent = true, desc = 'None ls Format' })
   vim.keymap.set('n', '<leader>gq', function()
-    overwrite_format2()
+    overwrite_format2({
+      async = true,
+    })
     -- vim.lsp.buf.format()
     -- local clients_in_buf = vim.lsp.get_clients({
     --   method = 'textDocument/formatting',
