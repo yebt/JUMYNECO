@@ -42,6 +42,7 @@
     "Media query screen xl": {
         "prefix": "@media-s-xl",
         "body": [
+            "/* xl */",
             "@media screen and (min-width: 1280px) {",
             "\t$1",
             "}"
