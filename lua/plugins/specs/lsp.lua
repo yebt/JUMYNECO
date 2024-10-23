@@ -91,6 +91,7 @@ return {
     },
     keys = {
       { '<leader>gq', desc = 'None ls format' },
+      { '<leader>f', desc = 'None ls format' },
     },
     config = require('plugins.configs.nonels'),
   },

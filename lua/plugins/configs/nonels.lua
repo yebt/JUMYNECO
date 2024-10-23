@@ -195,6 +195,12 @@ return function()
   end
 
   -- vim.keymap.set('n', function(args) end, { silent = true, desc = 'None ls Format' })
+  vim.keymap.set('n', '<leader>f', function()
+    overwrite_format2({
+      async = true,
+    })
+  end, { silent = true, desc = 'None ls Format' })
+
   vim.keymap.set('n', '<leader>gq', function()
     overwrite_format2({
       async = true,
