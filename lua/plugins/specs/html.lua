@@ -20,9 +20,10 @@ return {
     }
   },
 
-  {
-    'leafOfTree/vim-matchtag',
-    lazy = false,
-    -- event = { 'LazyFile', 'VeryLazy' },
-  }
+  -- NOTE: this plugin is not working cause error in mini.files
+  -- {
+  --   'leafOfTree/vim-matchtag',
+  --   lazy = false,
+  --   -- event = { 'LazyFile', 'VeryLazy' },
+  -- }
 }
