@@ -241,7 +241,8 @@ return {
           local ok, mf = pcall(require, 'mini.files')
           if not mf.close() then
             -- MiniFiles.open()
-            mf.open(vim.api.nvim_buf_get_name(0), true)
+            -- mf.open(vim.api.nvim_buf_get_name(0), true)
+            MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
           end
         end,
         silent = true,

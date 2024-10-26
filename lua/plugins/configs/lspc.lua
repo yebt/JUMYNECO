@@ -270,6 +270,28 @@ return function()
     --   --
     --   -- }))
     -- end,
+    ['vtsls'] = function(sn)
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                --- Used fot typescript in vue projects
+                {
+                  name = '@vue/typescript-plugin',
+                  location = require('mason-registry').get_package('vue-language-server'):get_install_path()
+                    .. '/node_modules/@vue/language-server',
+                  languages = { 'vue' },
+                  configNamespace = 'typescript',
+                  enableForWorkspaceTypeScriptVersions = true,
+                },
+              },
+            },
+          },
+        },
+      }))
+    end,
 
     ['astro'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
