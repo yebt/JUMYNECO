@@ -251,6 +251,10 @@ local options = {
     'popup'
    },
    -- pumheight = 15,
+
+  -- adds actions
+  modeline = true,
+  exrc = true,
 }
 
 --- VARS GLOBAL LOOP
