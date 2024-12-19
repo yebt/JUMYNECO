@@ -1,13 +1,8 @@
 -- local color = 'night-owl.nvim'
--- local color = 'obscure.nvim'
--- local color = 'porcelain.nvim'
 -- local color = 'vitesse.nvim'
 -- local color = 'newpaper.nvim'
 -- local color = 'hyper.nvim'
--- local color = 'alduin.nvim'
 -- local color = 'obscure.nvim'
--- local color = 'monokai-nightasty.nvim'
--- local color = 'ronny.nvim'
 -- local color = 'aquarium-vim'
 -- local color = 'monokai-pro.nvim'
 -- local color = 'onedarkpro.nvim'
@@ -16,9 +11,17 @@
 -- local color = 'midnight.nvim'
 -- local color = 'oxocarbon.nvim'
 -- local color = 'github-theme'
--- local color = 'onedark.nvim'
-local color = 'nordic.nvim'
 -- local color = 'nightfox.nvim'
+-- local color = 'finale.nvim'
+-- local color = 'luma.nvim'
+--
+-- local color = 'obscure.nvim'
+-- local color = 'porcelain.nvim'
+local color = 'monokai-nightasty.nvim'
+-- local color = 'ronny.nvim'
+-- local color = 'alduin.nvim'
+-- local color = 'nordic.nvim'
+-- local color = 'onedark.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
@@ -215,6 +218,10 @@ return {
     config = function(_, opts)
       require('monokai-nightasty').setup(opts)
       vim.cmd.colorscheme('monokai-nightasty')
+      vim.cmd.highlight('IndentLine guifg=#123456')
+      vim.cmd.highlight('IndentLineCurrent guifg=#125750')
+      vim.cmd.highlight('FoldColumn guifg=#666A62')
+      -- vim.cmd.highlight('LspReferenceText guibg=#1F282E gui=underline')
     end,
   },
 
@@ -594,10 +601,38 @@ return {
       specs = {},
       groups = {},
     },
-    config = function(_,opts)
+    config = function(_, opts)
       require('nightfox').setup(opts)
       vim.cmd.colorscheme('carbonfox')
     end,
   },
 
+  {
+    'https://gitlab.com/bartekjaszczak/finale-nvim',
+    name = 'finale.nvim',
+    lazy = false,
+    cond = isColor,
+    priority = 1000,
+    config = function()
+      -- Activate the theme
+      vim.cmd.colorscheme('finale')
+    end,
+  },
+
+  {
+    'https://gitlab.com/bartekjaszczak/luma-nvim',
+    name = 'luma.nvim',
+    priority = 1000,
+    lazy = false,
+    cond = isColor,
+    config = function()
+      require('luma').setup({
+        theme = 'dark', -- "dark" or "light" theme
+        contrast = 'medium', -- "low", "medium" or "high" contrast
+      })
+
+      -- Activate the theme
+      vim.cmd.colorscheme('luma')
+    end,
+  },
 }
