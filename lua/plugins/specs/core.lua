@@ -30,7 +30,8 @@ return {
   --- Comments
   {
     'folke/ts-comments.nvim',
-    event = 'VeryLazy',
+    lazy=false,
+    -- event = 'VeryLazy',
     opts = {
       lang = {
         astro = '<!-- %s -->',
@@ -93,6 +94,5 @@ return {
       },
     },
   },
-
 
 }
