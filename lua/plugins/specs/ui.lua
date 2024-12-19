@@ -209,7 +209,7 @@ return {
     cmd = 'FlyBuf',
     keys = {
       {
-        'gb',
+        '<Tab><Tab>',
         ':FlyBuf<CR>',
         desc = 'Open Snipe buffer menu',
       },
