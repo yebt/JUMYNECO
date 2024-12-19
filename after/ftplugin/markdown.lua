@@ -54,25 +54,65 @@ vim.keymap.set('n', 'o', SetupEmptyBrackets, { noremap = true, silent = false })
 vim.keymap.set('n', '<leader>tt', ToggleCheckbox, { desc = 'toggle todo mark' })
 
 function InsertLink()
-
-  vim.ui.select(
-    {'clipboard', 'empty'},
-    {
-      prompt = 'Select link type: ',
-    },
-    function(choice)
-      if choice == 'clipboard' then
-        vim.cmd('normal i[mi]("+pa)`id`i')
-        vim.cmd('startinsert')
-      elseif choice == 'empty' then
-        vim.cmd('normal i[]()')
-        vim.cmd('startinsert')
-      end
+  vim.ui.select({ 'clipboard', 'empty' }, {
+    prompt = 'Select link type: ',
+  }, function(choice)
+    if choice == 'clipboard' then
+      vim.cmd('normal i[mi]("+pa)`id`i')
+      vim.cmd('startinsert')
+    elseif choice == 'empty' then
+      vim.cmd('normal i[]()')
+      vim.cmd('startinsert')
     end
-  )
-
+  end)
 end
-vim.keymap.set('i', '<M-i>', InsertLink, { desc = 'Inser link', silent = true })
+
+local function create_code_block()
+  local line = vim.fn.getline('.')
+  -- local language = vim.fn.input('Enter language: ')
+  vim.ui.input({
+    prompt = 'Enter language: ',
+    default = 'txt',
+  }, function(language)
+    if language ~= nil then
+      local lines = {
+        '```' .. language,
+        '',
+        '```',
+      }
+      vim.api.nvim_put(lines, 'l', true, false)
+      -- Move the cursor to the middle of the code block
+      local row = vim.api.nvim_win_get_cursor(0)[1] -- Get current row
+      vim.api.nvim_win_set_cursor(0, { row + 1, 0 })
+    end
+  end)
+end
+
+
+-- Define una función para manejar el comportamiento
+local function insert_or_wrap()
+    local mode = vim.fn.mode()
+    if mode == 'i' then
+        -- En modo Insert, insertar ** y posicionar el cursor en medio
+        -- vim.api.nvim_put({ '**' }, 'c', true, true)
+        -- the false is to not put the content after the cursor, put before cursor like write
+        vim.api.nvim_put({ '****' }, 'c', false, true)
+        vim.cmd('normal! 2h')
+    elseif mode == 'v' then
+    end
+end
+
+vim.keymap.set('i', '<M-b>', create_code_block, { desc = 'Insert Code Block', silent = true })
+
+vim.keymap.set('i', '<C-l>', InsertLink, { desc = 'Inser link', silent = true })
+
+vim.keymap.set( 'i' , '<C-b>', '****h', { noremap = true, silent = true })
+vim.keymap.set( 'v' , '<C-b>', '"zc****hh"zp', { noremap = true, silent = true })
+
+vim.keymap.set('i', '<M-i>', '__i', { noremap = true, silent = true })
+vim.keymap.set({ 'v' }, '<M-i>', '"zc__h"zp', { noremap = true, silent = true })
+
+
+
 -- vim.keymap.set('i', '<M-i>', '[<C-o>mi](<C-o>"+p)<ESC>`id`ia', { desc = 'Inser link' })
 -- vim.keymap.set('i', '<M-I>', '![<C-o>mi](<C-o>"+p)<ESC>`id`ia', { desc = 'Inser link' })
-
