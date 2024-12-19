@@ -58,6 +58,7 @@ map('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Move Down' })
 map('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 
 --- Basic surround
+-- :vmap \q c()<ESC>P
 map('x', '<C-s>', actions.surround, { silent = true, expr = true, desc = 'Add surround to selection' })
 
 --- Replace cursor word
