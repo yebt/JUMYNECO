@@ -1,0 +1,32 @@
+{
+    "stricttypes": {
+        "prefix": "stricttypes",
+        "body": [
+            "declare(strict_types=1);",
+            ""
+        ],
+        "description": "Class definition"
+    },
+    "<?": {
+        "prefix": "<?",
+        "body": [
+            "<?php",
+            "",
+            "$0",
+            ""
+        ],
+        "description": "PHP tag"
+    },
+    "<?stricttypes": {
+        "prefix": "<?s",
+        "body": [
+            "<?php",
+            "",
+            "declare(strict_types=1);",
+            "",
+            "$0",
+            ""
+        ],
+        "description": "PHP tag"
+    }
+}
