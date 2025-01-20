@@ -24,20 +24,33 @@ return {
       'hrsh7th/cmp-path',
 
       --- snippets
+      -- {
+      --   'garymjr/nvim-snippets',
+      --   dependencies = {
+      --     'rafamadriz/friendly-snippets',
+      --   },
+      --   opts = {
+      --     create_cmp_source = true,
+      --     friendly_snippets = true,
+      --     search_paths = {
+      --       --- ~/.config/nvim/snippets
+      --       vim.fn.stdpath('config') .. '/snippets',
+      --     },
+      --   },
+      -- },
+
+      --# mini snippets
       {
-        'garymjr/nvim-snippets',
-        dependencies = {
-          'rafamadriz/friendly-snippets',
-        },
-        opts = {
-          create_cmp_source = true,
-          friendly_snippets = true,
-          search_paths = {
-            --- ~/.config/nvim/snippets
-            vim.fn.stdpath('config') .. '/snippets',
-          },
-        },
+        "abeldekat/cmp-mini-snippets",
+        dependencies = "echasnovski/mini.snippets",
       },
+      {
+        "echasnovski/mini.snippets",
+        dependencies = "rafamadriz/friendly-snippets",
+        event = "InsertEnter",
+        config = require("plugins.configs.minisnipc"),
+      },
+
     },
     event = { 'InsertEnter', 'VeryLazy' },
     config = require('plugins.configs.cmpc'),
