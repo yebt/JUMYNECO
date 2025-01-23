@@ -233,7 +233,7 @@ return function()
   -- })
 
   local formattingSources = {
-    buffer  = '[Bff]',
+    buffer = '[Bff]',
     nvim_lsp = '[LSP]',
     luasnip = '[LSnp]',
     nvim_lua = '[Lua]',
@@ -246,7 +246,11 @@ return function()
   cmp.setup({
     completion = {
       -- Trigger autocompletion with any input
-      keyword_pattern = [[.*]],
+      -- keyword_pattern = [[.*]],
+      -- keyword_pattern = [[.*]],
+      -- keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\|[/*]\w*\)]],
+      -- keyword_pattern = [[[a-zA-Z0-9_/.*-]+]],
+      keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     },
     preselect = cmp.PreselectMode.Item,
     mapping = cmp.mapping.preset.insert({
@@ -259,7 +263,6 @@ return function()
       ['<CR>'] = cmp.mapping.confirm({ select = false }),
       ['<C-y>'] = cmp.mapping.confirm({ select = true }),
       -- snippets
-
     }),
     snippet = {
       expand = function(args)
@@ -310,24 +313,40 @@ return function()
     view = {
       docs = {
         auto_open = true,
-      }
+      },
     },
     formatting = {
       format = function(entry, vim_item)
         vim_item.menu = formattingSources[entry.source.name] or '[???]'
         return vim_item
-      end
+      end,
     },
     matching = {
-      disallow_fuzzy_matching            = false,
-      disallow_fullfuzzy_matching        = false,
-      disallow_partial_fuzzy_matching    = false,
-      disallow_partial_matching          = false,
-      disallow_prefix_unmatching         = false,
+      disallow_fuzzy_matching = false,
+      disallow_fullfuzzy_matching = false,
+      disallow_partial_fuzzy_matching = false,
+      disallow_partial_matching = false,
+      disallow_prefix_unmatching = false,
       disallow_symbol_nonprefix_matching = false,
     },
     experimental = {
-      ghost_text = true,
+      -- ghost_text = true,
+    },
+    performance = {
+      --     --- This is the interval used to group up completions from different sources for filtering and displaying
+      --     -- debounce = 60,
+      --     debounce = 60, -- ms before trigger
+      --     --- This is used to delay filtering and displaying completions.
+      --     -- throttle = 30,
+      --     throttle = 30,
+      --     -- fetching_timeout = 500,
+      --     fetching_timeout = 100,
+      --     -- confirm_resolve_timeout = 80,
+      --     confirm_resolve_timeout = 80,
+      --     -- async_budget = 1,
+      --     async_budget = 1,
+      --     -- max_view_entries = 200,
+      max_view_entries = 50,
     },
   })
 
