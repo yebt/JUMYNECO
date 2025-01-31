@@ -465,7 +465,7 @@ return function()
             -- { 'kind' }
             --
             { 'kind_icon' },
-            { 'label',           'label_description', gap = 1 },
+            { 'label', 'label_description', gap = 1 },
             { 'kind' },
             { 'source_name_flex' },
           },
@@ -489,10 +489,10 @@ return function()
               text = function(ctx)
                 local kIcon = nil
                 if ctx.source_name:lower() == 'path' then
-                  kIcon = " "
+                  kIcon = ' '
                   local icon, hl_group = require('nvim-web-devicons').get_icon(ctx.label)
                   if icon then
-                    kIcon = " " .. icon
+                    kIcon = ' ' .. icon
                   end
                   -- kIcon = icon
                 else
@@ -502,16 +502,15 @@ return function()
                 return kIcon .. ctx.icon_gap
               end,
               highlight = function(ctx)
-
-                local hlGroup =  'BlinkCmpKind' .. ctx.kind
+                local hlGroup = 'BlinkCmpKind' .. ctx.kind
                 if ctx.source_name:lower() == 'path' then
                   local icon, hl_group = require('nvim-web-devicons').get_icon(ctx.label)
                   if hl_group then
                     hlGroup = hl_group
                   end
                 else
-                  hlGroup = require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or
-                  ('CmpItemKind' .. ctx.kind:sub(1, 1):upper() .. ctx.kind:sub(2))
+                  hlGroup = require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx)
+                    or ('CmpItemKind' .. ctx.kind:sub(1, 1):upper() .. ctx.kind:sub(2))
                 end
                 return hlGroup
                 -- return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx)
@@ -528,8 +527,8 @@ return function()
               end,
               highlight = function(ctx)
                 return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx)
-                    -- or ('CmpItemKind' .. ctx.kind:sub(1, 1):upper() .. ctx.kind:sub(2))
-                    or ('BlinkCmpKind' .. ctx.kind)
+                  -- or ('CmpItemKind' .. ctx.kind:sub(1, 1):upper() .. ctx.kind:sub(2))
+                  or ('BlinkCmpKind' .. ctx.kind)
               end,
             },
 
@@ -685,6 +684,7 @@ return function()
         'path',
         'snippets',
         'buffer',
+        -- 'emoji',
       },
       -- Example dynamically picking providers based on the filetype and treesitter node:
       -- providers = function(ctx)
@@ -747,18 +747,18 @@ return function()
           --- *All* providers have the following options available
           --- NOTE: All of these options may be functions to get dynamic behavior
           --- See the type definitions for more information.
-          enabled = true,           -- Whether or not to enable the provider
-          async = true,             -- Whether we should wait for the provider to return before showing the completions
-          timeout_ms = 2000,        -- How long to wait for the provider to return before showing completions and treating it as asynchronous
-          transform_items = nil,    -- Function to transform the items before they're returned
+          enabled = true, -- Whether or not to enable the provider
+          async = true, -- Whether we should wait for the provider to return before showing the completions
+          timeout_ms = 2000, -- How long to wait for the provider to return before showing completions and treating it as asynchronous
+          transform_items = nil, -- Function to transform the items before they're returned
           should_show_items = true, -- Whether or not to show the items
-          max_items = nil,          -- Maximum number of items to display in the menu
-          min_keyword_length = 0,   -- Minimum number of characters in the keyword to trigger the provider
+          max_items = nil, -- Maximum number of items to display in the menu
+          min_keyword_length = 0, -- Minimum number of characters in the keyword to trigger the provider
           -- If this provider returns 0 items, it will fallback to these providers.
           -- If multiple providers falback to the same provider, all of the providers must return 0 items for it to fallback
           fallbacks = { 'buffer' },
           score_offset = 0, -- Boost/penalize the score of the items
-          override = nil,   -- Override the source's functions
+          override = nil, -- Override the source's functions
         },
         path = {
           name = 'Path',
@@ -803,17 +803,23 @@ return function()
             -- default to all visible buffers
             get_bufnrs = function()
               return vim
-                  .iter(vim.api.nvim_list_wins())
-                  :map(function(win)
-                    return vim.api.nvim_win_get_buf(win)
-                  end)
-                  :filter(function(buf)
-                    return vim.bo[buf].buftype ~= 'nofile'
-                  end)
-                  :totable()
+                .iter(vim.api.nvim_list_wins())
+                :map(function(win)
+                  return vim.api.nvim_win_get_buf(win)
+                end)
+                :filter(function(buf)
+                  return vim.bo[buf].buftype ~= 'nofile'
+                end)
+                :totable()
             end,
           },
         },
+        -- emoji = {
+        --   module = 'blink-emoji',
+        --   name = 'Emoji',
+        --   score_offset = 15, -- Tune by preference
+        --   opts = { insert = true }, -- Insert emoji (default) or complete its name
+        -- },
       },
     },
 

@@ -3,11 +3,11 @@
 --]]
 
 -- local copai = "supermaven-nvim"
+-- local copai = "codeium.nvim"
 local copai = ""
 
 local function isCopAI (plugin)
-  vim.notify(vim.inspect(plugin.name))
-  return plugin.name == copai
+  return plugin.name == (copai or nil)
 end
 return {
 
@@ -20,5 +20,15 @@ return {
     config = require('plugins.configs.smaven'),
   },
 
-  --
+  -- Codeium
+  {
+    'Exafunction/codeium.nvim',
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+    },
+    event = { 'InsertEnter' },
+    cond = isCopAI,
+    config = require('plugins.configs.codeiumc'),
+  }
 }
