@@ -95,4 +95,10 @@ return {
     },
   },
 
+  -- Better managment
+  {
+    'ThePrimeagen/vim-be-good',
+    cmd = 'VimBeGood',
+  }
+
 }

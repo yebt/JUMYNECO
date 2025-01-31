@@ -1,5 +1,13 @@
 local mroot = require('modules.root')
 local lcutl = require('lazy.core.util')
+local cmpok, cmp = pcall(require, 'cmp')
+if not cmpok then
+  cmp = {
+    visible = function()
+      return false
+    end,
+  }
+end
 
 local M = {}
 
@@ -260,7 +268,7 @@ function M.words.setup(opts)
         if not ({ M.words.get() })[2] then
           if ev.event:find('CursorMoved') then
             vim.lsp.buf.clear_references()
-          elseif not require('cmp').visible() then
+          elseif not cmp.visible() then
             vim.lsp.buf.document_highlight()
           end
         end

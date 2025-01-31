@@ -1,3 +1,6 @@
+
+-- local completions = "nvim-cmp"
+local completions = "blink.cmp"
 return {
 
   --- Autopairs
@@ -14,6 +17,9 @@ return {
   --- Completions
   {
     'hrsh7th/nvim-cmp',
+    cond = function(el)
+      return completions == el.name
+    end,
     dependencies = {
       -- "luckasRanarison/tailwind-tools.nvim",
       "onsails/lspkind-nvim", -- icons
@@ -55,6 +61,21 @@ return {
     event = { 'InsertEnter', 'VeryLazy' },
     config = require('plugins.configs.cmpc'),
   },
+  {
+    'saghen/blink.cmp',
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      -- 'hrsh7th/nvim-cmp',
+    },
+    cond = function(el)
+      return completions == el.name
+    end,
+    -- event = { 'InsertEnter', 'VeryLazy' },
+    lazy = false,
+    -- version = 'v0.*', -- pre built binaries
+    build = 'cargo build --release',
+    config = require('plugins.configs.blinkc'),
+  },
 
   -- Automatically add closing tags for HTML and JSX
   {
@@ -64,8 +85,8 @@ return {
     opts = {
       opts = {
         -- Defaults
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
         enable_close_on_slash = true, -- Auto close on trailing </
       },
       -- Also override individual filetype configs, these take priority.
@@ -84,14 +105,6 @@ return {
   --   'mattn/emmet-vim',
   --   event = 'VeryLazy',
   -- },
-
-  --- AI
-  {
-    'supermaven-inc/supermaven-nvim',
-    --  event = 'VeryLazy',
-    event = { 'InsertEnter' },
-    config = require('plugins.configs.smaven'),
-  },
 
   --- Runner
   {
@@ -119,7 +132,7 @@ return {
       'OverseerClearCache',
     },
     keys = {
-      { 'ø', ':OverseerRun<CR>' },
+      { 'ø',     ':OverseerRun<CR>' },
       { '<C-j>', ':OverseerToggle<CR>' },
     },
   },
