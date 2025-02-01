@@ -190,12 +190,4 @@ return {
     },
   },
 
-  --- Squeletons
-  {
-    'cvigilv/esqueleto.nvim',
-    cmd ={
-      'EsqueletoNew'
-    },
-    config = require("lua.plugins.configs.esqueletoc")
-  }
 }
