@@ -73,7 +73,7 @@ return {
     lazy = false,
     -- version = 'v0.*', -- pre built binaries
     build = 'cargo build --release',
-    init = require("plugins.inits.blinki"),
+    init = require('plugins.inits.blinki'),
     -- init = function()
     -- end,
     config = require('plugins.configs.blinkc'),
@@ -139,4 +139,16 @@ return {
     },
   },
 
+  ---
+  {
+    'yebt/stencil.nvim',
+    dev = true,
+    -- cmd = {
+    --   'Stencil'
+    -- }
+    lazy = false,
+    config = function ()
+      require("stncl").setup({})
+    end
+  },
 }
