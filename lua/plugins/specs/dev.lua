@@ -73,60 +73,9 @@ return {
     lazy = false,
     -- version = 'v0.*', -- pre built binaries
     build = 'cargo build --release',
-    init = function()
-      -- Make an event to set change when a colorscheme is set
-      local function vanshl(name, opts)
-        vim.api.nvim_set_hl(0, name, opts or {})
-      end
-
-      vim.api.nvim_create_autocmd('ColorScheme', {
-        pattern = '*',
-        callback = function()
-          -- vim.cmd.colorscheme('obscure')
-          -- Customization for Pmenu
-          vanshl('PmenuSel', { bg = '#282C34', fg = 'NONE' })
-          vanshl('Pmenu', { fg = '#C5CDD9', bg = '#22252A' })
-
-          vanshl('CmpItemAbbrDeprecated', { fg = '#7E8294', bg = 'NONE', strikethrough = true })
-          vanshl('CmpItemAbbrMatch', { fg = '#82AAFF', bg = 'NONE', bold = true })
-          vanshl('CmpItemAbbrMatchFuzzy', { fg = '#82AAFF', bg = 'NONE', bold = true })
-          vanshl('CmpItemMenu', { fg = '#C792EA', bg = 'NONE', italic = true })
-
-          vanshl('CmpItemKindField', { fg = '#EED8DA', bg = '#B5585F' })
-          vanshl('CmpItemKindProperty', { fg = '#EED8DA', bg = '#B5585F' })
-          vanshl('CmpItemKindEvent', { fg = '#EED8DA', bg = '#B5585F' })
-
-          vanshl('CmpItemKindText', { fg = '#C3E88D', bg = '#9FBD73' })
-          vanshl('CmpItemKindEnum', { fg = '#C3E88D', bg = '#9FBD73' })
-          vanshl('CmpItemKindKeyword', { fg = '#C3E88D', bg = '#9FBD73' })
-
-          vanshl('CmpItemKindConstant', { fg = '#FFE082', bg = '#D4BB6C' })
-          vanshl('CmpItemKindConstructor', { fg = '#FFE082', bg = '#D4BB6C' })
-          vanshl('CmpItemKindReference', { fg = '#FFE082', bg = '#D4BB6C' })
-
-          vanshl('CmpItemKindFunction', { fg = '#EADFF0', bg = '#A377BF' })
-          vanshl('CmpItemKindStruct', { fg = '#EADFF0', bg = '#A377BF' })
-          vanshl('CmpItemKindClass', { fg = '#EADFF0', bg = '#A377BF' })
-          vanshl('CmpItemKindModule', { fg = '#EADFF0', bg = '#A377BF' })
-          vanshl('CmpItemKindOperator', { fg = '#EADFF0', bg = '#A377BF' })
-
-          vanshl('CmpItemKindVariable', { fg = '#C5CDD9', bg = '#7E8294' })
-          vanshl('CmpItemKindFile', { fg = '#C5CDD9', bg = '#7E8294' })
-
-          vanshl('CmpItemKindUnit', { fg = '#F5EBD9', bg = '#D4A959' })
-          vanshl('CmpItemKindSnippet', { fg = '#F5EBD9', bg = '#D4A959' })
-          vanshl('CmpItemKindFolder', { fg = '#F5EBD9', bg = '#D4A959' })
-
-          vanshl('CmpItemKindMethod', { fg = '#DDE5F5', bg = '#6C8ED4' })
-          vanshl('CmpItemKindValue', { fg = '#DDE5F5', bg = '#6C8ED4' })
-          vanshl('CmpItemKindEnumMember', { fg = '#DDE5F5', bg = '#6C8ED4' })
-
-          vanshl('CmpItemKindInterface', { fg = '#D8EEEB', bg = '#58B5A8' })
-          vanshl('CmpItemKindColor', { fg = '#D8EEEB', bg = '#58B5A8' })
-          vanshl('CmpItemKindTypeParameter', { fg = '#D8EEEB', bg = '#58B5A8' })
-        end,
-      })
-    end,
+    init = require("plugins.inits.blinki"),
+    -- init = function()
+    -- end,
     config = require('plugins.configs.blinkc'),
   },
 
