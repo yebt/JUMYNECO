@@ -143,10 +143,10 @@ return {
   {
     'yebt/stencil.nvim',
     dev = true,
-    -- cmd = {
-    --   'Stencil'
-    -- }
-    lazy = false,
+    cmd = {
+      'Stencil'
+    },
+    -- lazy = false,
     config = function ()
       require("stncl").setup({})
     end
