@@ -157,10 +157,10 @@ return {
     'yebt/file-resolver.nvim',
     dev = true,
     keys = {
-      { '<leader>gR', ':lua require("file-resolver.nvim").resolve_file()<CR>' },
+      { '<leader>gR', ':lua require("file-resolver").resolve_file()<CR>' },
     },
     config = function()
-      local fr = require('fr')
+      local fr = require('file-resolver')
       fr.setup({})
       fr.register_resolver('TypeScript Aliases', function(line, file_path)
         local match = line:match('from%s+[\'"](@[%w_/]+)[\'"]')
