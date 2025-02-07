@@ -7,6 +7,8 @@ return function()
   local function vanshl(name, opts)
     vim.api.nvim_set_hl(0, name, opts or {})
   end
+
+  -- Event to set colors in the pmenu
   vim.api.nvim_create_autocmd('ColorScheme', {
     pattern = '*',
     callback = function()
@@ -14,7 +16,9 @@ return function()
         return
       end
 
-      vanshl('PmenuSel', { bg = '#282C34', fg = 'NONE' })
+      -- vanshl('PmenuSel', { bg = '#282C34', fg = 'NONE' })
+      -- vanshl('PmenuSel', { bg = '#EF3054', fg = 'NONE' })
+      vanshl('PmenuSel', { bg = 'NONE', fg = 'NONE', bold = true, reverse = true })
       vanshl('Pmenu', { fg = '#C5CDD9', bg = '#22252A' })
 
       vanshl('CmpItemAbbrDeprecated', { fg = '#7E8294', bg = 'NONE', strikethrough = true })
