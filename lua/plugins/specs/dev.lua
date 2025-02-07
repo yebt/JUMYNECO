@@ -139,16 +139,35 @@ return {
     },
   },
 
-  ---
+  --- Templates
   {
     'yebt/stencil.nvim',
     dev = true,
     cmd = {
-      'Stencil'
+      'Stencil',
     },
     -- lazy = false,
-    config = function ()
-      require("stncl").setup({})
-    end
+    config = function()
+      require('stncl').setup({})
+    end,
+  },
+
+  --- Resolver
+  {
+    'yebt/file-resolver.nvim',
+    dev = true,
+    keys = {
+      { '<leader>gR', ':lua require("file-resolver.nvim").resolve_file()<CR>' },
+    },
+    config = function()
+      local fr = require('fr')
+      fr.setup({})
+      fr.register_resolver('TypeScript Aliases', function(line, file_path)
+        local match = line:match('from%s+[\'"](@[%w_/]+)[\'"]')
+        if match then
+          return vim.fn.getcwd() .. '/src/' .. match:gsub('@', '')
+        end
+      end)
+    end,
   },
 }

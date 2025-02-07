@@ -1,8 +1,8 @@
---[[
---]]
 -- config
 local usePath = true
 
+-- exaplmes
+-- icons
 local default_kind_icons = {
   Text = '󰉿',
   Method = '󰊕',
