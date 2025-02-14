@@ -1,4 +1,3 @@
-
 return {
   --- Iterator
   {
@@ -50,8 +49,8 @@ return {
       vim.api.nvim_create_autocmd('ColorScheme', {
         pattern = '*',
         callback = function()
-          vim.api.nvim_set_hl(0, 'IndentLine',  {fg="#6C6460"})
-          vim.api.nvim_set_hl(0, 'IndentLineCurrent',  {fg="#B07B4C"})
+          vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#6C6460' })
+          vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#B07B4C' })
           -- vim.cmd.highlight('link IndentLine IndentBlanklineChar')
           -- vim.cmd.highlight('link IndentLineCurrent IndentBlanklineContextChar')
         end,
@@ -327,5 +326,42 @@ return {
     keys = {
       { 'gS', desc = 'SplitJoin Toggle' },
     },
+  },
+
+  --- Surround
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup({
+        -- Configuration here, or leave empty to use defaults
+        aliases = {
+          ['a'] = '>',
+          ['b'] = ')',
+          ['B'] = '}',
+          ['r'] = ']',
+          ['q'] = { '"', "'", '`' },
+          ['s'] = { '}', ']', ')', '>', '"', "'", '`' },
+        },
+        highlight = {
+          duration = 0,
+        },
+        move_cursor = 'begin',
+        keymaps = {
+          insert = '<C-g>s',
+          insert_line = '<C-g>S',
+          normal = 'ys',
+          normal_cur = 'yss',
+          normal_line = 'yS',
+          normal_cur_line = 'ySS',
+          visual = '<C-s>',
+          visual_line = '<C-s>',
+          delete = 'ds',
+          change = 'cs',
+          change_line = 'cS',
+        },
+      })
+    end,
   },
 }
