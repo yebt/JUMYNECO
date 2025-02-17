@@ -63,20 +63,22 @@ return {
     'saghen/blink.cmp',
     dependencies = {
       'rafamadriz/friendly-snippets',
+      'echasnovski/mini.icons',
       -- 'moyiz/blink-emoji.nvim',
       -- 'hrsh7th/nvim-cmp',
     },
     cond = function(el)
       return completions == el.name
     end,
-    -- event = { 'InsertEnter', 'VeryLazy' },
-    lazy = false,
+    event = { 'InsertEnter', 'VeryLazy' },
+    -- lazy = false,
     -- version = 'v0.*', -- pre built binaries
     build = 'cargo build --release',
     init = require('plugins.inits.blinki'),
     -- init = function()
     -- end,
-    config = require('plugins.configs.blinkc'),
+    -- config = require('plugins.configs.blinkc'),
+    config = require('plugins.configs.blinkc2'),
   },
 
   -- Automatically add closing tags for HTML and JSX
@@ -170,4 +172,14 @@ return {
       end)
     end,
   },
+
+  --- Project Instructions
+  -- {
+  --   'yebt/project-instructions.nvim',
+  --   dev = true,
+  --   lazy = false,
+  --   config = function()
+  --     require('project-instructions').setup({})
+  --   end
+  -- }
 }
