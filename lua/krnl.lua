@@ -10,6 +10,8 @@ vim.g.maplocal = ' '
 require('config.options')
 --- Load maps
 require('config.keymaps')
+-- Load colors
+require('modules.colors')
 
 if not without_args then
   --- Load autocmds
