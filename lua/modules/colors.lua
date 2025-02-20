@@ -8,7 +8,6 @@
 vim.api.nvim_create_autocmd('ColorScheme', {
   pattern = '*',
   callback = function()
-    vim.notify('ColorScheme')
     vim.api.nvim_set_hl_ns_fast(0)
     vim.api.nvim_set_hl(0, 'MatchParen', { bold = true, underline = true, reverse = true })
     ---
