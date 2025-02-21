@@ -1,5 +1,6 @@
 return function()
   local lspc = require('lspconfig')
+  local util = require('lspconfig.util')
   local msn = require('mason')
   local msnslpc = require('mason-lspconfig')
 
@@ -19,7 +20,6 @@ return function()
   end
   -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 
   local default_server_ops = {
     capabilities = capabilities,
@@ -70,6 +70,7 @@ return function()
         },
       }))
     end,
+
     ['pyright'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
         settings = {
@@ -111,6 +112,7 @@ return function()
         },
       }))
     end,
+
     -- ['tailwindcss'] = function(sn)
     --   -- lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
     --   --   flags = { debounce_text_changes = 300 },
@@ -141,6 +143,7 @@ return function()
     --   --   },
     --   -- }))
     -- end,
+
     ['emmet_language_server'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
         filetypes = {
@@ -277,7 +280,7 @@ return function()
     --   -- }))
     -- end,
     ['vtsls'] = function(sn)
-      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+      local opts = vim.tbl_extend('force', default_server_ops, {
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         settings = {
           vtsls = {
@@ -287,7 +290,7 @@ return function()
                 {
                   name = '@vue/typescript-plugin',
                   location = require('mason-registry').get_package('vue-language-server'):get_install_path()
-                    .. '/node_modules/@vue/language-server',
+                      .. '/node_modules/@vue/language-server',
                   languages = { 'vue' },
                   configNamespace = 'typescript',
                   enableForWorkspaceTypeScriptVersions = true,
@@ -296,7 +299,11 @@ return function()
             },
           },
         },
-      }))
+        single_file_support = false, -- disable for a no project
+        -- not include deno
+        root_dir = util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
+      })
+      lspc[sn].setup(opts)
     end,
 
     ['astro'] = function(sn)
