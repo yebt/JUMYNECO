@@ -1,5 +1,5 @@
 return function()
-  local use_colors = true
+  local use_colors = false
   local color_mode = 'bg'
   -- local color_mode = 'fg'
 
