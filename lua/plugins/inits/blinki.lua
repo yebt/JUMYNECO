@@ -1,5 +1,5 @@
 return function()
-  local use_colors = false
+  local use_colors = true
   local color_mode = 'bg'
   -- local color_mode = 'fg'
 
@@ -13,6 +13,13 @@ return function()
     pattern = '*',
     callback = function()
       if not use_colors then
+        return
+      end
+
+      -- check if cmp colors are set
+      -- local cmp_colors = vim.api.nvim_get_hl_by_name('CmpItemKind', true)
+      local cmp_test_colors = vim.api.nvim_get_hl(0, { name = 'CmpItemKind' })
+      if  cmp_test_colors.fg  then
         return
       end
 
