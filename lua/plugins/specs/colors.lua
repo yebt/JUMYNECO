@@ -32,8 +32,12 @@
 -- local color = 'finale-nvim'
 -- local color = 'luma'
 -- local color = 'night-owl'
-local color = 'citruszest'
+-- local color = 'citruszest'
 
+-- local color = 'one_monokai.nvim'
+-- local color = 'nekonight'
+-- local color = 'kanagawa.nvim'
+local color = 'tokyonight.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
@@ -51,7 +55,7 @@ local makeColor = function(specs)
     priority = 1000,
     lazy = false,
     cond = isColor,
-    config = function(_,opts)
+    config = function(_, opts)
       --vim.notify(vim.inspect(opts))
       require(module).setup(opts or {})
       vim.cmd.colorscheme(colorscheme)
@@ -127,7 +131,7 @@ return {
   makeColor({
     'ellisonleao/gruvbox.nvim',
     name = 'gruvbox.nvim',
-    module = "gruvbox",
+    module = 'gruvbox',
     colorscheme = 'gruvbox',
     opts = {
       terminal_colors = true, -- add neovim terminal colors
@@ -147,7 +151,7 @@ return {
       invert_tabline = true,
       invert_intend_guides = false,
       inverse = true, -- invert background for search, diffs, statuslines and errors
-      contrast = '',  -- can be "hard", "soft" or empty string
+      contrast = '', -- can be "hard", "soft" or empty string
       palette_overrides = {},
       overrides = {},
       dim_inactive = true,
@@ -157,45 +161,220 @@ return {
 
   --- Finale
   makeColor({
-    "https://gitlab.com/bartekjaszczak/finale-nvim",
-    name = "finale-nvim",
+    'https://gitlab.com/bartekjaszczak/finale-nvim',
+    name = 'finale-nvim',
     config = function()
-      vim.cmd.colorscheme("finale")
-    end
+      vim.cmd.colorscheme('finale')
+    end,
   }),
 
   --- Luma
   makeColor({
-    "https://gitlab.com/bartekjaszczak/luma-nvim",
-    name = "luma",
+    'https://gitlab.com/bartekjaszczak/luma-nvim',
+    name = 'luma',
     opts = {
-      theme = "dark",             -- "dark" or "light" theme
-      contrast = "low"         -- "low", "medium" or "high" contrast
-    }
+      theme = 'dark', -- "dark" or "light" theme
+      contrast = 'low', -- "low", "medium" or "high" contrast
+    },
   }),
 
   --- Night owl
   makeColor({
     'oxfist/night-owl.nvim',
-    name="night-owl",
+    name = 'night-owl',
     opts = {
       bold = true,
       italics = true,
       underline = true,
       undercurl = true,
       transparent_background = false,
-    }
+    },
   }),
 
   --- citruz
   makeColor({
     'zootedb0t/citruszest.nvim',
     name = 'citruszest',
-    opts = {
-
-    }
+    opts = {},
     -- colorscheme = 'citruszest'
-  })
+  }),
+
+  -- Onedark
+  makeColor({
+    'navarasu/onedark.nvim',
+    name = 'onedark.nvim',
+    module = 'onedark',
+    opts = {
+      style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+      transparent = false, -- Show/hide background
+      term_colors = true, -- Change terminal color as per the selected theme style
+      ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+      cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+
+      -- toggle theme style ---
+      toggle_style_key = '<leader>ts', -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+      toggle_style_list = { 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light' }, -- List of styles to toggle between
+
+      -- Change code style ---
+      -- Options are italic, bold, underline, none
+      -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+      code_style = {
+        comments = 'italic',
+        keywords = 'bold',
+        functions = 'none',
+        strings = 'italic',
+        variables = 'none',
+      },
+
+      -- Custom Highlights --
+      colors = {
+        bg0 = '#1e1e1e',
+        bg1 = '#272727',
+      }, -- Override default colors
+      highlights = {}, -- Override highlight groups
+
+      -- Plugins Config --
+      diagnostics = {
+        darker = true, -- darker colors for diagnostic
+        undercurl = true, -- use undercurl instead of underline for diagnostics
+        background = true, -- use background color for virtual text
+      },
+    },
+  }),
+
+  -- Onedark pro
+  makeColor({
+    'olimorris/onedarkpro.nvim',
+    name = 'onedarkpro.nvim',
+    module = 'onedarkpro',
+    colorscheme = 'onedark',
+    opts = {
+      colors = {
+        dark = { bg = '#1e1e1e' }, -- yellow
+      },
+    },
+  }),
+
+  -- one monokai
+  makeColor({
+    'cpea2506/one_monokai.nvim',
+    name = 'one_monokai.nvim',
+    module = 'one_monokai',
+    colorscheme = 'one_monokai',
+    opts = {
+      transparent = false,
+      colors = {
+        -- bg = "#282c34",
+        bg = '#1e1e1e',
+      },
+      themes = function(colors)
+        return {}
+      end,
+      italics = true,
+    },
+  }),
+
+  -- Neko night
+  makeColor({
+    'neko-night/nvim',
+    name = 'nekonight',
+    module = 'nekonight',
+    colorscheme = 'nekonight-moon',
+    opts = {
+      style = 'moon', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+      light_style = 'day', -- The theme is used when the background is set to light
+      transparent = false, -- Enable this to disable setting the background color
+      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+      styles = {
+        -- Style to be applied to different syntax groups
+        -- Value is any valid attr-list value for `:help nvim_set_hl`
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = {},
+        variables = {},
+        -- Background styles. Can be "dark", "transparent" or "normal"
+        sidebars = 'dark', -- style for sidebars, see below
+        floats = 'dark', -- style for floating windows
+      },
+      day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+      dim_inactive = false, -- dims inactive windows
+      lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+    },
+  }),
+
+  --- Kanagawa
+  makeColor({
+    'rebelot/kanagawa.nvim',
+    name = 'kanagawa.nvim',
+    module = 'kanagawa',
+    colorscheme = 'kanagawa',
+    opts = {
+      -- compile = true, -- enable compiling the colorscheme
+      undercurl = true, -- enable undercurls
+      commentStyle = { italic = true },
+      functionStyle = {},
+      keywordStyle = { italic = true },
+      statementStyle = { bold = true },
+      typeStyle = {},
+      transparent = false, -- do not set background color
+      dimInactive = true, -- dim inactive window `:h hl-NormalNC`
+      terminalColors = true, -- define vim.g.terminal_color_{0,17}
+      colors = { -- add/modify theme and palette colors
+        palette = {},
+        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+      },
+      overrides = function(colors) -- add/modify highlights
+        local theme = colors.theme
+        return {
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
+          PmenuSel = { fg = 'NONE', bg = theme.ui.bg_p2 },
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+
+          NormalFloat = { bg = 'none' },
+          FloatBorder = { bg = 'none' },
+          FloatTitle = { bg = 'none' },
+        }
+      end,
+      theme = 'wave', -- Load "wave" theme when 'background' option is not set
+      background = { -- map the value of 'background' option to a theme
+        dark = 'wave', -- try "dragon" !
+        light = 'lotus',
+      },
+    },
+  }),
+
+  -- tokyonight
+  makeColor({
+    'folke/tokyonight.nvim',
+    name = 'tokyonight.nvim',
+    module = 'tokyonight',
+    colorscheme = 'tokyonight',
+    opts = {
+      style = 'night', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+      light_style = 'day', -- The theme is used when the background is set to light
+      transparent = false, -- Enable this to disable setting the background color
+      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+      styles = {
+        -- Style to be applied to different syntax groups
+        -- Value is any valid attr-list value for `:help nvim_set_hl`
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = {},
+        variables = {},
+        -- Background styles. Can be "dark", "transparent" or "normal"
+        sidebars = 'dark', -- style for sidebars, see below
+        floats = 'transparent', -- style for floating windows
+      },
+      day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+      dim_inactive = true, -- dims inactive windows
+      lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+      on_colors = function(colors)
+        colors.bg = '#111111'
+        colors.bg_highlight = '#272725'
+      end,
+    },
+  }),
 
   --
   --
