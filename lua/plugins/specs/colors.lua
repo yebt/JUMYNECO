@@ -32,12 +32,12 @@
 -- local color = 'finale-nvim'
 -- local color = 'luma'
 -- local color = 'night-owl'
--- local color = 'citruszest'
+local color = 'citruszest'
 
 -- local color = 'one_monokai.nvim'
 -- local color = 'nekonight'
 -- local color = 'kanagawa.nvim'
-local color = 'tokyonight.nvim'
+-- local color = 'tokyonight.nvim'
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
@@ -195,7 +195,19 @@ return {
   makeColor({
     'zootedb0t/citruszest.nvim',
     name = 'citruszest',
-    opts = {},
+    opts = {
+      option = {
+        transparent = false, -- Enable/Disable transparency
+        bold = true,
+        italic = true,
+      },
+      -- Override default highlight style in this table
+      -- E.g If you want to override `Constant` highlight style
+      style = {
+        -- This will change Constant foreground color and make it bold.
+        -- Constant = { fg = '#FFFFFF', bold = true },
+      },
+    },
     -- colorscheme = 'citruszest'
   }),
 
@@ -351,7 +363,7 @@ return {
     module = 'tokyonight',
     colorscheme = 'tokyonight',
     opts = {
-      style = 'night', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+      style = 'storm', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
       light_style = 'day', -- The theme is used when the background is set to light
       transparent = false, -- Enable this to disable setting the background color
       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
@@ -372,6 +384,16 @@ return {
       on_colors = function(colors)
         colors.bg = '#111111'
         colors.bg_highlight = '#272725'
+        -- colors.bg_dark = '#16161e'
+        -- colors.bg_dark1 = '#0C0E14'
+        -- colors.bg_float = '#16161e'
+        -- colors.bg_highlight = '#292e42'
+        -- colors.bg_popup = '#16161e'
+        -- colors.bg_search = '#3d59a1'
+        -- colors.bg_sidebar = '#16161e'
+        -- colors.bg_statusline = '#16161e'
+        -- colors.bg_visual = '#283457'
+        -- colors.black = '#15161e'
       end,
     },
   }),
