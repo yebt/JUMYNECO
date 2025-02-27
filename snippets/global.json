@@ -7,5 +7,9 @@
   "Complex":      {
     "prefix": "co",
     "body": [ "T1=${1:$RANDOM}", "T3=${3:$1_${2:$1}}", "T2=$2" ]
+  },
+  "now": {
+    "prefix": "now",
+    "body": "${1:`date +%Y-%m-%d`}"
   }
 }
