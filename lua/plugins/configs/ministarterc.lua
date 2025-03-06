@@ -1,4 +1,5 @@
 return function()
+  local unpack =  table.unpack or unpack
   local uv = vim.uv or vim.loop
 
   --- ST
@@ -69,7 +70,8 @@ return function()
     local inx = 0
     for session_name, session in pairs(detected_session) do
       inx = inx + 1
-      local dir, branch = table.unpack(vim.split(session_name, '%%', { plain = true }))
+      -- local dir, branch = table.unpack(vim.split(session_name, '%%', { plain = true }))
+      local dir, branch = unpack(vim.split(session_name, '%%', { plain = true }))
       local name = dir:gsub('%%', '/'):gsub(home_dir, '~')
       name = replace_alias(name)
       branch = branch and ' [' .. branch:gsub('%%', '/') .. ']' or ''
