@@ -11,10 +11,10 @@ local options = {
   virtualedit = 'block', --
 
   -- Sizes -- Removed cause is used in the toggler map
-  -- winwidth = 60,
-  -- winminwidth = 10,
-  -- winheight=30,
-  -- winminheight = 20,
+  winwidth = 140,
+  winminwidth = 20,
+  winheight=20,
+  winminheight = 10,
 
   -- Tab
   expandtab = true, -- convert tabs  in spaces
