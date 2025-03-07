@@ -38,7 +38,12 @@
 -- local color = 'ash.nvim'
 -- local color = 'oldtale.nvim'
 -- local color = 'morta'
-local color = 'vague'
+-- local color = 'vague'
+local color = 'hybrid'
+-- local color = 'miasma'
+-- local color = 'sonokai'
+-- local color = 'tokyodark'
+-- local color = 'cyberdream'
 
 -- local color = 'one_monokai.nvim'
 -- local color = 'nekonight'
@@ -546,6 +551,84 @@ return {
         delta = '#f3be7c',
       },
     },
+  }),
+
+  -- Hybrid
+  makeColor({
+    'HoNamDuong/hybrid.nvim',
+    name = 'hybrid',
+    opts = {
+      terminal_colors = true,
+      undercurl = true,
+      underline = true,
+      bold = true,
+      italic = {
+        strings = true,
+        emphasis = true,
+        comments = true,
+        folds = true,
+      },
+      strikethrough = true,
+      inverse = true,
+      transparent = false,
+      overrides = function(highlights, colors) end,
+    },
+  }),
+
+  -- Miasma
+  makeColor({
+    'xero/miasma.nvim',
+    name = 'miasma',
+    config = function()
+      vim.cmd.colorscheme('miasma')
+    end,
+  }),
+
+  -- Sonokai
+  makeColor({
+    'sainnhe/sonokai',
+    name = 'sonokai',
+    config = function()
+      -- 'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`,
+      vim.g.sonokai_style = 'shusia'
+      vim.g.sonokai_dim_inactive_windows = 1
+      vim.g.sonokai_float_style = 'dim'
+      vim.g.sonokai_diagnostic_line_highlight = 1
+      -- --  `'grey'`, `'colored'`, `'highlighted'`
+      -- vim.g.sonokai_diagnostic_virtual_text = 'grey'
+      -- vim.g.sonokai_better_performance = 1
+      vim.cmd.colorscheme('sonokai')
+    end,
+  }),
+
+  -- tokyodark
+  makeColor({
+    'tiagovla/tokyodark.nvim',
+    name = 'tokyodark',
+    opts = {
+      transparent_background = false, -- set background to transparent
+      gamma = 1.00, -- adjust the brightness of the theme
+      styles = {
+        comments = { italic = true }, -- style for comments
+        keywords = { italic = true }, -- style for keywords
+        identifiers = { italic = true }, -- style for identifiers
+        functions = {}, -- style for functions
+        variables = {}, -- style for variables
+      },
+      custom_highlights = {} or function(highlights, palette)
+        return {}
+      end, -- extend highlights
+      custom_palette = {} or function(palette)
+        return {}
+      end, -- extend palette
+      terminal_colors = true, -- enable terminal colors
+    },
+  }),
+
+  -- Cyberdream
+  makeColor({
+    'scottmckendry/cyberdream.nvim',
+    name = 'cyberdream',
   }),
 
   --,
