@@ -201,6 +201,44 @@ return {
       Operator = 'OPR',
       TypeParameter = 'TPR',
     },
+    -- @ſ€¶ŧ←↓→øþæßðđŋħł~«»¢„“”µ
+    -- Ω§¢®Ŧ¥↑ıØÞÆẞÐªŊĦŁ<>©‚‘’º
+    -- @S€¶Ŧ←↓→ØÞÆẞÐĐŊĦŁ«»¢„“”
+    -- ℂℍℕℙℚℝℤℬℭℊℐℓℜℏℋℑℛℯℒℰΩℳ℮ℴ
+    -- ∀∂∃∄∅∆∇∈∉∋∏∑−∓∗√∝∞∟∠∣∥∧∨∩∪∫∬∭∮∯∰∱∲∳∴∵∶∷∸∹∺∻∼∽∾≀≁≂≃≄≅≆≇
+    --
+    text_compact = {
+      Text = '¶',
+      Method = 'M',
+      Function = 'ƒ',
+      Constructor = 'ℂ',
+
+      Field = 'ǂ',
+      Variable = 'V',
+      Property = 'P',
+
+      Class = 'C',
+      Interface = 'I',
+      Struct = 'S',
+      Module = 'µ',
+
+      Unit = 'ℕ',
+      Value = '#',
+      Enum = '∈',
+      EnumMember = '∊',
+
+      Keyword = 'K',
+      Constant = 'π',
+
+      Snippet = '@',
+      Color = '∇',
+      File = '§',
+      Reference = '→',
+      Folder = '/',
+      Event = '℥',
+      Operator = '÷',
+      TypeParameter = 'T',
+    },
     cmp = {
       Text = '  ',
       Method = '  ',
@@ -286,6 +324,6 @@ return {
       Event = '󰠠',
       Operator = '󱨄',
       TypeParameter = '󰬛',
-    }
-  }
+    },
+  },
 }
