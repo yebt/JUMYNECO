@@ -87,7 +87,8 @@ return function()
           --       -- treesitter = {},
           treesitter = { 'lsp' },
           columns = {
-            { 'kind_icon' },
+            -- { 'kind_icon' },
+            { 'kind_icon_pad' },
             -- { 'kind_mini_icon' },
             -- { 'kink_dev_icon' },
             { 'label', 'label_description', gap = 1 },
@@ -96,6 +97,16 @@ return function()
             -- { 'source_name_flex' },
           },
           components = {
+            kind_icon_pad = {
+              ellipsis = false,
+              text = function(ctx)
+                return ' ' .. ctx.kind_icon .. ' ' .. ctx.icon_gap
+              end,
+              highlight = function(ctx)
+                return ctx.kind_hl
+              end,
+            },
+
             --         item_idx = {
             --           text = function(ctx)
             --             return ctx.idx == 10 and '0' or ctx.idx >= 10 and ' ' or tostring(ctx.idx)
@@ -223,9 +234,11 @@ return function()
       --   -- BlinkCmpLabelDescription
       --   -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       --   -- Adjusts spacing to ensure icons are aligned
-      nerd_font_variant = 'normal',
+      -- nerd_font_variant = 'normal',
+      nerd_font_variant = 'mono',
       --   kind_icons = custom_icons.kind.v4,
-      kind_icons = custom_icons.kind.default,
+      -- kind_icons = custom_icons.kind.default,
+      kind_icons = custom_icons.kind.text_compact,
     },
   }
   blinkcmp.setup(opts)
