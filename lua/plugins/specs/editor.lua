@@ -262,6 +262,42 @@ return {
     config = require('plugins.configs.minifilesc'),
   },
 
+  --- Files 2
+  -- {
+  --   'X3eRo0/dired.nvim',
+  --   -- event = "VeryLazy",
+  --   cmd = {
+  --     'Dired',
+  --     'DiredRename',
+  --     'DiredDelete',
+  --     'DiredMark',
+  --     'DiredDeleteRange',
+  --     'DiredDeleteMarked',
+  --     'DiredMarkRange',
+  --     'DiredGoBack',
+  --     'DiredGoUp',
+  --     'DiredCopy',
+  --     'DiredCopyRange',
+  --     'DiredCopyMarked',
+  --     'DiredMove',
+  --     'DiredMoveRange',
+  --     'DiredMoveMarked',
+  --     'DiredPaste',
+  --     'DiredEnter',
+  --     'DiredCreate',
+  --     'DiredToggleHidden',
+  --     'DiredToggleSortOrder',
+  --     'DiredToggleColors',
+  --     'DiredToggleIcons',
+  --     'DiredToggleHideDetails',
+  --     'DiredQuit',
+  --   },
+  --   dependencies = {
+  --     'MunifTanjim/nui.nvim',
+  --   },
+  --   config = require('plugins.configs.dirednvimc'),
+  -- },
+
   --- Aliner
   {
     'godlygeek/tabular',
