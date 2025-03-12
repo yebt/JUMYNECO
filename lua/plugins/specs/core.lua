@@ -27,7 +27,7 @@ return {
     config = require('plugins.configs.treesitterc'),
   },
 
-  --- Comments
+  --- TS Comments
   {
     'folke/ts-comments.nvim',
     lazy=false,
