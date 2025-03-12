@@ -21,14 +21,25 @@ return {
   },
 
   -- Codeium
+  -- {
+  --   'Exafunction/codeium.nvim',
+  --   dependencies = {
+  --       "nvim-lua/plenary.nvim",
+  --       "hrsh7th/nvim-cmp",
+  --   },
+  --   event = { 'InsertEnter' },
+  --   cond = isCopAI,
+  --   config = require('plugins.configs.codeiumc'),
+  -- }
+
+  --- Codeium nvim (without cmp)
   {
-    'Exafunction/codeium.nvim',
+    "Exafunction/codeium.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
     },
     event = { 'InsertEnter' },
     cond = isCopAI,
-    config = require('plugins.configs.codeiumc'),
+    config = require('plugins.configs.codeiumc2'),
   }
 }
