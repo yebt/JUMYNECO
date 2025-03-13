@@ -1,0 +1,11 @@
+<script setup lang="ts">
+    {{_cursor_}}
+</script>
+
+<template>
+    <div></div>
+</template>
+
+<style scoped>
+</style>
+
