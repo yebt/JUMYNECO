@@ -338,6 +338,12 @@ return {
     cmd = { 'Rest' },
     init = require('plugins.inits.resti'),
   },
+  --- Resty
+  -- {
+  --   'lima1909/resty.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim' },
+  --   cmd = { 'Resty' },
+  -- },
 
   -- Comment managment
   -- {
