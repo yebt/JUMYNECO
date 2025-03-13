@@ -36,6 +36,7 @@ return {
     cmd = { 'LspInstall', 'LspUninstall' },
     opts = {
       ensure_installed = { 'lua_ls' },
+      automatic_installation = true,
     },
   },
 
