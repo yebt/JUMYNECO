@@ -2,9 +2,10 @@
 --This file contains the AI agents and things
 --]]
 
-local copai = "supermaven-nvim"
+-- local copai = "supermaven-nvim"
 -- local copai = "codeium.nvim"
--- local copai = ""
+
+local copai = ""
 
 local function isCopAI (plugin)
   return plugin.name == (copai or nil)
