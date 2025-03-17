@@ -184,7 +184,7 @@ return {
   --- Templates
   {
     'yebt/stencil.nvim',
-    dev = true,
+    -- dev = true,
     cmd = {
       'Stencil',
     },
@@ -195,23 +195,23 @@ return {
   },
 
   --- Resolver
-  {
-    'yebt/file-resolver.nvim',
-    dev = true,
-    keys = {
-      { '<leader>gR', ':lua require("file-resolver").resolve_file()<CR>' },
-    },
-    config = function()
-      local fr = require('file-resolver')
-      fr.setup({})
-      fr.register_resolver('TypeScript Aliases', function(line, file_path)
-        local match = line:match('from%s+[\'"](@[%w_/]+)[\'"]')
-        if match then
-          return vim.fn.getcwd() .. '/src/' .. match:gsub('@', '')
-        end
-      end)
-    end,
-  },
+  -- {
+  --   'yebt/file-resolver.nvim',
+  --   dev = true,
+  --   keys = {
+  --     { '<leader>gR', ':lua require("file-resolver").resolve_file()<CR>' },
+  --   },
+  --   config = function()
+  --     local fr = require('file-resolver')
+  --     fr.setup({})
+  --     fr.register_resolver('TypeScript Aliases', function(line, file_path)
+  --       local match = line:match('from%s+[\'"](@[%w_/]+)[\'"]')
+  --       if match then
+  --         return vim.fn.getcwd() .. '/src/' .. match:gsub('@', '')
+  --       end
+  --     end)
+  --   end,
+  -- },
 
   --- Project Instructions
   -- {
