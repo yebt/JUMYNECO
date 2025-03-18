@@ -75,6 +75,20 @@ return {
         end,
         desc = "Neotest stop"
       },
+      {
+        '<leader>tS',
+        function()
+          require("neotest").summary.toggle()
+        end,
+        desc = "Neotest summary toggle"
+      },
+      {
+        '<leader>to',
+        function ()
+          require('neotest').output.open({short=false, auto_close=true})
+        end,
+        desc = "Neotest summary open output"
+      }
     },
     config = require("plugins.configs.neotestc")
   }
