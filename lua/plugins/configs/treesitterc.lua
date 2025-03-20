@@ -41,19 +41,30 @@ return function()
   vim.wo.foldmethod = 'expr'
   vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-  -- try to install blade parser
+  -- PARSERS
   local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-  parser_config.blade = {
+
+  -- -- try to install blade parser
+  -- parser_config.blade = {
+  --   install_info = {
+  --     url = "https://github.com/EmranMR/tree-sitter-blade",
+  --     files = { "src/parser.c" },
+  --     branch = "main",
+  --   },
+  --   filetype = "blade"
+  -- }
+  -- -- auto command for set *.blade.php to blade filetype
+  -- vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  --   pattern = { "*.blade.php" },
+  --   command = "set filetype=blade",
+  -- })
+
+  -- Try to install tree-sitter-smarty
+  parser_config.smarty = {
     install_info = {
-      url = "https://github.com/EmranMR/tree-sitter-blade",
+      url = "https://github.com/Kibadda/tree-sitter-smarty",
       files = { "src/parser.c" },
       branch = "main",
     },
-    filetype = "blade"
   }
-  -- auto command for set *.blade.php to blade filetype
-  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-    pattern = { "*.blade.php" },
-    command = "set filetype=blade",
-  })
 end
