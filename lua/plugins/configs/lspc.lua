@@ -162,6 +162,8 @@ return function()
           'php',
           'vue',
           'jsx',
+          'smarty',
+          'twig',
         },
         init_options = {
           showAbbreviationSuggestions = true,
