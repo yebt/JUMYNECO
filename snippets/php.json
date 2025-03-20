@@ -28,5 +28,13 @@
             ""
         ],
         "description": "PHP tag"
+    },
+    "anonymousFunctions" : {
+        "prefix": "func",
+        "body": [
+            "function($1){",
+            "\t$0",
+            "}"
+        ]
     }
 }
