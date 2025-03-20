@@ -1,5 +1,5 @@
 return function()
-  require('Comment').setup({
+  local opts = {
     ---Add a space b/w comment and the line
     padding = true,
     ---Whether the cursor should stay at its position
@@ -37,10 +37,27 @@ return function()
     },
     ---Function to call before (un)comment
     pre_hook = nil,
+    -- pre_hook = function(ctx)
+    --   local commentstring = require("ts-comments.comments").get(vim.bo.filetype)
+    --   return commentstring
+    -- end,
     ---Lines to be ignored while (un)comment
     ignore = nil,
     -- pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
     ---Function to call after (un)comment
     post_hook = nil,
-  })
+  }
+  -- local ok, tscc = pcall(require, 'ts-comments.comments')
+  -- if ok then
+  --   opts.pre_hook = function (ctx)
+  --     return tscc.get(vim.bo.filetype)
+  --   end
+  -- end
+
+  local okt, ntcc = pcall(require, 'ts_context_commentstring.integrations.comment_nvim');
+  if  okt then
+    opts.post_hook =  ntcc.create_pre_hook()
+  end
+
+  require('Comment').setup(opts)
 end

@@ -4,6 +4,9 @@ return function()
   local msn = require('mason')
   local msnslpc = require('mason-lspconfig')
 
+  local emmet_filetypes = { 'css', 'eruby', 'html', 'htmldjango', 'javascriptreact', 'less', 'pug', 'sass', 'scss',
+    'typescriptreact', 'htmlangular', 'blade', 'php', 'vue', 'jsx', 'smarty', 'tpl', 'twig', }
+
   --- Move to dedicated opts call
   -- msn.setup()
   --- Move to dedicated opts call
@@ -146,25 +149,17 @@ return function()
 
     ['emmet_language_server'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-        filetypes = {
-          'css',
-          'eruby',
-          'html',
-          'htmldjango',
-          'javascriptreact',
-          'less',
-          'pug',
-          'sass',
-          'scss',
-          'typescriptreact',
-          'htmlangular',
-          'blade',
-          'php',
-          'vue',
-          'jsx',
-          'smarty',
-          'twig',
+        filetypes = emmet_filetypes,
+        init_options = {
+          showAbbreviationSuggestions = true,
+          -- showExpandedAbbreviation = 'always',
+          showSuggestionsAsSnippets = true,
         },
+      }))
+    end,
+    ['emmet_ls'] = function(sn)
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        filetypes = emmet_filetypes,
         init_options = {
           showAbbreviationSuggestions = true,
           -- showExpandedAbbreviation = 'always',
