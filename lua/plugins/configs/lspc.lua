@@ -298,7 +298,8 @@ return function()
         },
         single_file_support = false, -- disable for a no project
         -- not include deno
-        root_dir = util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
+        root_dir = not vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) and
+            util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
       })
       lspc[sn].setup(opts)
     end,
