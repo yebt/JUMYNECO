@@ -273,4 +273,8 @@ return {
       vim.g.netrw_keepdir = 1
     end,
   },
+
+
+  -- TODO: future plugin view
+  -- - https://github.com/b0o/incline.nvim
 }
