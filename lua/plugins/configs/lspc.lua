@@ -308,13 +308,31 @@ return function()
         "ts=typescript"
       }
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        init_options = {
+          lint = true,
+          unstable = true,
+          suggest = {
+            imports = {
+              hosts = {
+                ["https://deno.land"] = true,
+                ["https://cdn.nest.land"] = true,
+                ["https://crux.land"] = true,
+              },
+            },
+          },
+        },
         settings = {
           deno = {
             enable = true,
+            lint=true,
             suggest = {
+              autoImports=true,
               imports = {
+                autoDiscover = true,
                 hosts = {
-                  ["https://deno.land"] = true
+                  ["https://deno.land"] = true,
+                  ["https://nest.land"] = true,
+                  ["https://crux.land/"] = true,
                 }
               }
             }
