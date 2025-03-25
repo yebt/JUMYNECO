@@ -303,6 +303,26 @@ return function()
       })
       lspc[sn].setup(opts)
     end,
+    ['denols'] = function(sn)
+      vim.g.markdown_fenced_languages = {
+        "ts=typescript"
+      }
+      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+        settings = {
+          deno = {
+            enable = true,
+            suggest = {
+              imports = {
+                hosts = {
+                  ["https://deno.land"] = true
+                }
+              }
+            }
+          }
+        }
+
+      }))
+    end,
 
     ['astro'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
