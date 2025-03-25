@@ -1,0 +1,6 @@
+{
+  "async arrow function": {
+    "prefix": "aa",
+    "body": "async (${1:arguments}) => {\n\t${0}\n}"
+  }
+}
