@@ -275,7 +275,12 @@ return function()
       name = 'F Sessions',
       items = fitems,
       choose = function(item)
-        vim.notify(vim.inspect(item))
+        vim.schedule(function()
+          minisessions.read(item._session.name, {
+            force = true,
+            verbose = true,
+          })
+        end)
       end,
       show = function(buf_id, itemsl, query)
         vim.treesitter.start(buf_id, 'markdown')
@@ -291,8 +296,8 @@ return function()
         local lines = {
           -- '**name**: `' .. item._session.name .. '`',
           '**name**: `'
-            .. sname
-            .. '`',
+          .. sname
+          .. '`',
           '**path**: `' .. dirname .. '`',
           '**branch**: `' .. branchname .. '`',
           '**date**: `' .. os.date('%Y-%m-%d %H:%M:%S', item._mt) .. '`',
@@ -302,7 +307,8 @@ return function()
         vim.treesitter.start(buf_id, 'markdown')
       end,
     }
-    local chosen_picker_session = mp.start({ source = source })
+    -- local chosen_picker_session = mp.start({ source = source })
+    mp.start({ source = source })
 
     -- local items = vim.tbl_keys(minisessions.detected)
     -- local fitems = {}
