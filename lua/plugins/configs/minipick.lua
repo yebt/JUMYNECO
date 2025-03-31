@@ -1,4 +1,5 @@
 return function()
+  local unpack = table.unpack or unpack
   local mp = require('mini.pick')
   local opts = {
     delay = {
@@ -248,7 +249,7 @@ return function()
 
     local homed = vim.fn.expand('~')
     local function process_item(el)
-      local dir, branch = table.unpack(vim.split(el, '%%', { plain = true }))
+      local dir, branch = unpack(vim.split(el, '%%', { plain = true }))
       local parts = vim.split(dir, ' ', { plain = true })
       dir = parts[1] .. ' `' .. (parts[2] or ' ') .. '`'
       local name = (dir:gsub('%%', '/'):gsub(homed, '~'))
@@ -281,7 +282,7 @@ return function()
         mp.default_show(buf_id, itemsl, query, { show_icons = false })
       end,
       preview = function(buf_id, item)
-        local dir, branch = table.unpack(vim.split(item._session_name, '%%', { plain = true }))
+        local dir, branch = unpack(vim.split(item._session_name, '%%', { plain = true }))
         local parts = vim.split(dir, ' ', { plain = true })
         local sname = parts[1]
         local dirname = (parts[2] or ''):gsub('%%', '/')
@@ -309,7 +310,7 @@ return function()
 
     -- local homed = vim.fn.expand('~')
     -- local function process_item(el)
-    --   local dir, branch = table.unpack(vim.split(el, '%%', { plain = true }))
+    --   local dir, branch = unpack(vim.split(el, '%%', { plain = true }))
     --   local parts = vim.split(dir, ' ', { plain = true })
     --   dir = parts[1] .. ' `' .. (parts[2] or ' ') .. '`'
     --   local name = (dir:gsub('%%', '/'):gsub(homed, '~'))

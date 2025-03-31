@@ -1,5 +1,6 @@
 local co, api, iter = coroutine, vim.api, vim.iter
 local p, hl = require('modules.modeline.provider'), api.nvim_set_hl
+local unpack = table.unpack or unpack
 
 local function stl_format(name, val)
   return ('%%#ModeLine%s#%s%%*'):format(name, val)
