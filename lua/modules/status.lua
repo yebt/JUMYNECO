@@ -112,16 +112,25 @@ end
 --   return '[ ' .. names .. ' ]'
 -- end
 
+local winbarPairs = {
+  [ '' ] = 'NO NAME',
+  [ 'Starter'] = '[Starter]',
+  [ 'ministarter'] = '[Mini Starter]',
+}
 function WinBar()
   -- local tmod = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':t')
   local bname = vim.api.nvim_buf_get_name(0)
   local fmod = vim.fn.fnamemodify(bname, ':~:.:gs%\\(\\.\\?[^/]\\)[^/]*/%\\1/%')
+  local fileType = vim.o.filetype
   -- %<%f %h%m%r%w%y%#Normal#
   --
-  if bname == '' then
-    fmod = '[No Name]'
-  elseif fmod == 'Starter' then
-    fmod = ' [Starter] '
+  local elName = winbarPairs[bname] or winbarPairs[fmod] or winbarPairs[fileType] or nil
+  if elName then
+    fmod = elName
+  -- if bname == '' then
+  --   fmod = '[No Name]'
+  -- elseif fmod == 'Starter' then
+  --   fmod = ' [Starter] '
   else
     local ft_icon, ft_color = require('nvim-web-devicons').get_icon_color(fmod)
     if ft_icon ~= nil then
