@@ -112,6 +112,8 @@ vim.keymap.set( 'v' , '<C-b>', '"zc****hh"zp', { noremap = true, silent = true 
 vim.keymap.set('i', '<M-i>', '__i', { noremap = true, silent = true })
 vim.keymap.set({ 'v' }, '<M-i>', '"zc__h"zp', { noremap = true, silent = true })
 
+vim.keymap.set('i', '<M-m>', '``i', { noremap = true, silent = true })
+vim.keymap.set({ 'v' }, '<M-m>', '"zc``h"zp', { noremap = true, silent = true })
 
 
 -- vim.keymap.set('i', '<M-i>', '[<C-o>mi](<C-o>"+p)<ESC>`id`ia', { desc = 'Inser link' })
