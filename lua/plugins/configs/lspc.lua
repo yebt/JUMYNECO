@@ -307,39 +307,57 @@ return function()
       vim.g.markdown_fenced_languages = {
         "ts=typescript"
       }
-      lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-        init_options = {
-          lint = true,
-          unstable = true,
-          suggest = {
-            imports = {
-              hosts = {
-                ["https://deno.land"] = true,
-                ["https://cdn.nest.land"] = true,
-                ["https://crux.land"] = true,
+      -- Try some
+      lspc[sn].setup({
+        capabilities = default_server_ops.capabilities,
+        root_dir = util.root_pattern('deno.json', 'deno.jsonc', '.git'),
+        settings = {
+          deno = {
+            enable = true,
+            suggest = {
+              imports = {
+                hosts = {
+                  ['https://deno.land'] = true,
+                },
               },
             },
           },
         },
-        settings = {
-          deno = {
-            enable = true,
-            lint=true,
-            suggest = {
-              autoImports=true,
-              imports = {
-                autoDiscover = true,
-                hosts = {
-                  ["https://deno.land"] = true,
-                  ["https://nest.land"] = true,
-                  ["https://crux.land/"] = true,
-                }
-              }
-            }
-          }
-        }
-
-      }))
+      })
+      -- Last
+      -- lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
+      --   -- init_options = {
+      --   --   lint = true,
+      --   --   unstable = true,
+      --   --   suggest = {
+      --   --     imports = {
+      --   --       hosts = {
+      --   --         ["https://deno.land"] = true,
+      --   --         ["https://cdn.nest.land"] = true,
+      --   --         ["https://crux.land"] = true,
+      --   --       },
+      --   --     },
+      --   --   },
+      --   -- },
+      --   settings = {
+      --     deno = {
+      --       enable = true,
+      --       lint=true,
+      --       suggest = {
+      --         autoImports=true,
+      --         imports = {
+      --           autoDiscover = true,
+      --           hosts = {
+      --             ["https://deno.land"] = true,
+      --             ["https://nest.land"] = true,
+      --             ["https://crux.land/"] = true,
+      --           }
+      --         }
+      --       }
+      --     }
+      --   }
+      --
+      -- }))
     end,
 
     ['astro'] = function(sn)
