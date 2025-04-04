@@ -12,6 +12,19 @@ return {
       })
     end,
   },
+  -- Better version with rainbow
+  -- {
+  --   'saghen/blink.pairs',
+  --   -- version = "*", -- (recommended) only required with prebuilt binaries
+  --
+  --   -- download Binaries
+  --   -- dependencies = 'saghen/blink.download',
+  --   -- Or
+  --   build = 'cargo build --release', -- build from source
+  --
+  --   event = { 'InsertEnter', 'VeryLazy' },
+  --   config = require('plugins.configs.blinkpairsc')
+  -- },
 
   --- Completions
   {
@@ -103,7 +116,6 @@ return {
           require('luasnip.loaders.from_vscode').lazy_load({
             paths = { vim.fn.stdpath('config') .. '/snippets' },
           })
-
         end,
       },
     },
@@ -129,8 +141,8 @@ return {
     opts = {
       opts = {
         -- Defaults
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
         enable_close_on_slash = true, -- Auto close on trailing </
       },
       -- Also override individual filetype configs, these take priority.
@@ -176,7 +188,7 @@ return {
       'OverseerClearCache',
     },
     keys = {
-      { 'ø', ':OverseerRun<CR>' },
+      { 'ø',     ':OverseerRun<CR>' },
       { '<C-j>', ':OverseerToggle<CR>' },
     },
   },
