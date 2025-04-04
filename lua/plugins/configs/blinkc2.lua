@@ -10,7 +10,8 @@ return function()
 
   local opts = {
     keymap = {
-      ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      ['<C-space>'] = { 'show_and_insert', 'show_documentation', 'hide_documentation' },
       ['<C-y>'] = { 'select_and_accept' },
 
       ['<C-p>'] = { 'select_prev', 'fallback' },
@@ -71,7 +72,7 @@ return function()
       },
       list = {
         --     max_items = 200,
-        selection = { preselect = false, auto_insert = true },
+        selection = { preselect = true, auto_insert = false },
         --     cycle = {
         --       from_bottom = true,
         --       from_top = true,
