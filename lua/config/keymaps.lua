@@ -99,7 +99,9 @@ map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Commen
 
 --- Remove buffer
 map('n', '<M-c>', actions.brem2, { silent = true, desc = 'Delete buffer' })
-map('n', '<M-C>', '<cr>bd<cr>', { silent = true, desc = 'Delete buffer' })
+map('n', '<M-C>', ':bd<cr>', { silent = true, desc = 'Delete buffer' })
+map('n', '<C-K><C-W>', ':%bd<cr>', { silent = true, desc = 'Delete all buffers' })
+map('n', '<C-K><C-Q>', ':%bd|e#<cr>', { silent = true, desc = 'Delete all other buffers' })
 
 --- Toggler Wrap
 map('n', '<M-z>w', '<cmd>set wrap!<CR>', { silent = true, desc = 'Toggle wrap' })
