@@ -303,6 +303,7 @@ return function()
       })
       lspc[sn].setup(opts)
     end,
+
     ['denols'] = function(sn)
       vim.g.markdown_fenced_languages = {
         "ts=typescript"
@@ -388,6 +389,33 @@ return function()
         },
       }))
     end,
+
+    ['intelephense'] = function(sn)
+      local itlps_capabilities = default_server_ops.capabilities
+      lspc[sn].setup({
+        capabilities = itlps_capabilities,
+        settings = {
+          intelephense = {
+            diagnostics = {
+              enable = true
+            },
+            format = {
+              enable = true
+            }
+          }
+        }
+        -- settings = {
+        --   intelephense = {
+        --     diagnostics = {
+        --       enable = true
+        --     },
+        --     format = {
+        --       enable = true
+        --     }
+        --   }
+        -- }
+      })
+    end
   })
 
   -- Set up lspconfig.
