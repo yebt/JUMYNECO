@@ -1,5 +1,6 @@
 return {
   --- Notifycations
+  -- NOTE: could be taked by snaks
   {
     'echasnovski/mini.notify',
     version = false,
