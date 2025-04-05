@@ -92,6 +92,7 @@ return function()
     --   name = options.name,
     --   method = method,
     -- })
+
     local clients = vim.lsp.get_clients({
       id = options.id,
       bufnr = bufnr,
@@ -194,15 +195,99 @@ return function()
     end
   end
 
+  local function overwrite_format3(opts)
+    opts = opts or {}
+
+    local buffer_filetype = vim.bo.filetype
+    local default_frmtr_client = vim.g['default_formatter_' .. buffer_filetype] or nil
+
+    local frmt_lsp_method = 'textDocument/formatting';
+
+    local frmt_lsp_clients = vim.lsp.get_clients({
+      bufnr = 0, -- actual buffer
+      method = frmt_lsp_method
+    })
+
+    if #frmt_lsp_clients == 0 then
+      vim.notify('[LSP] Format request failed, not formatting server available')
+      return
+    end
+
+    -- Check default
+    if default_frmtr_client then
+      local def_client_name = default_frmtr_client
+      local def_client = vim.lsp.get_clients({ name = def_client_name })[1] or nil
+      if def_client then
+        vim.lsp.buf.format {
+          buf = 0,
+          async = true,
+          id = def_client.id
+        }
+        return
+      end
+    end
+
+    local copy_cliets = vim.deepcopy(frmt_lsp_clients)
+    table.insert(copy_cliets, { name = 'All' })
+    table.insert(copy_cliets, { name = "Select a default" })
+
+    local function applyFormat(allow_default)
+      allow_default = allow_default or true
+
+      local frmt_lsp_clients_to_select = allow_default and copy_cliets or frmt_lsp_clients
+
+      vim.ui.select(frmt_lsp_clients_to_select, {
+        prompt = "Select a fomatter:",
+        format_item = function(itm)
+          return itm.name
+        end
+      }, function(choise)
+        if choise then
+          if choise.name == 'All' then
+            vim.lsp.buf.format({
+              bufnr = 0,
+              async = true,
+            })
+          elseif choise.name == "Select a default" then
+            applyFormat(false)
+          else
+            if not allow_default then
+              -- select the default
+              vim.g['default_formatter_' .. buffer_filetype] = choise.name
+            end
+
+            vim.lsp.buf.format({
+              bufnr = 0,
+              async = true,
+              id = choise.id
+            })
+          end
+          -- if choise.
+        end
+      end)
+    end
+
+    if #frmt_lsp_clients > 1 then
+      applyFormat()
+    else
+      vim.notify('[LSP] formatting ' .. frmt_lsp_clients[1].name)
+      -- just 1 client
+      vim.lsp.buf.format({
+        bufnr = 0, -- actual buffer
+        async = true,
+      })
+    end
+  end
+
   -- vim.keymap.set('n', function(args) end, { silent = true, desc = 'None ls Format' })
   vim.keymap.set('n', '<leader>f', function()
-    overwrite_format2({
+    overwrite_format3({
       async = true,
     })
   end, { silent = true, desc = 'None ls Format' })
 
   vim.keymap.set('n', '<leader>gq', function()
-    overwrite_format2({
+    overwrite_format3({
       async = true,
     })
     -- vim.lsp.buf.format()
