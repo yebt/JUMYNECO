@@ -50,10 +50,19 @@ local color = 'hybrid'
 -- local color = 'kanagawa.nvim'
 -- local color = 'tokyonight.nvim'
 
+-- OK:
+-- desert, habamax, murphy, sorbet, unokai, zabatzu, wildcharm
+-- industry
+local fallbackColorscheme = 'sorbet'
+
 --- check if the plugin is the color you want
 local isColor = function(plugin)
   -- vim.notify(plugin.name)
   return plugin.name == color
+end
+
+if not color then
+  vim.cmd.colorscheme(fallbackColorscheme)
 end
 
 --  Make a color plugin
