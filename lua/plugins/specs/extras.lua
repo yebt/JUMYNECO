@@ -1,4 +1,31 @@
 return {
+
+  --
+  -- {
+  --   'nvimdev/dired.nvim',
+  --   cmd = { 'Dired' },
+  --   opts = {
+  --     show_hidden = true,
+  --     normal_when_fits = true,
+  --     file_dir_based = true,
+  --     shortcuts = 'sdfhlwertyuopzxcvbnmSDFGHLQWERTYUOPZXCVBNM', -- make sure > 25
+  --     keymaps = {
+  --       open = { i = '<CR>', n = '<CR>' },                      -- both on search and main buffer
+  --       up = { i = '<C-u>', n = '<C-u>' },                      -- both on search and main buffer
+  --       quit = { n = { 'q', '<ESC>' }, i = '<C-c>' },           -- both on search and main buffer
+  --       forward = { i = '<C-n>', n = 'j' },                     -- search buffer
+  --       backward = { i = '<C-p>', n = 'k' },                    -- search buffer
+  --       split = { n = 'gs', i = '<C-s>' },                      -- both on search and main buffer
+  --       vsplit = { n = 'gv', i = '<C-v>' },                     -- both on search and main buffer
+  --       switch = { i = '<C-j>', n = '<C-j>' },                  -- both on search and main buffer
+  --       execute = '<C-s>',                                      -- main buffer
+  --     },
+  --   },
+  --   config = function (_,opts)
+  --     local drd = require("dired")
+  --   end
+  -- },
+
   --- Snacks
   -- {
   --   "folke/snacks.nvim",
