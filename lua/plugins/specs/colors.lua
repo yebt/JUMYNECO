@@ -39,7 +39,7 @@
 -- local color = 'oldtale.nvim'
 -- local color = 'morta'
 -- local color = 'vague'
-local color = 'hybrid'
+-- local color = 'hybrid'
 -- local color = 'miasma'
 -- local color = 'sonokai'
 -- local color = 'tokyodark'
@@ -53,17 +53,24 @@ local color = 'hybrid'
 -- OK:
 -- desert, habamax, murphy, sorbet, unokai, zabatzu, wildcharm
 -- industry
-local fallbackColorscheme = 'sorbet'
+-- local fallbackColorscheme = 'sorbet'
+
+local allowedColors = {
+  'hybrid',
+  'porcelain',
+  'kanagawa.nvim'
+}
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
-  -- vim.notify(plugin.name)
-  return plugin.name == color
+  local rslt = vim.tbl_contains(allowedColors, plugin.name)
+  vim.print({ plugin.name, rslt })
+  return rslt
 end
 
-if not color then
-  vim.cmd.colorscheme(fallbackColorscheme)
-end
+-- if not color then
+--   vim.cmd.colorscheme(fallbackColorscheme)
+-- end
 
 --  Make a color plugin
 local makeColor = function(specs)
@@ -75,10 +82,11 @@ local makeColor = function(specs)
     priority = 1000,
     lazy = false,
     cond = isColor,
-    config = function(_, opts)
-      --vim.notify(vim.inspect(opts))
+    config = function(plugin, opts)
       require(module).setup(opts or {})
-      vim.cmd.colorscheme(colorscheme)
+      if (plugin.name == allowedColors[1]) then
+        vim.cmd.colorscheme(colorscheme)
+      end
     end,
   })
   mixProps.config = specs.config or mixProps.config
@@ -171,7 +179,7 @@ return {
       invert_tabline = true,
       invert_intend_guides = false,
       inverse = true, -- invert background for search, diffs, statuslines and errors
-      contrast = '', -- can be "hard", "soft" or empty string
+      contrast = '',  -- can be "hard", "soft" or empty string
       palette_overrides = {},
       overrides = {},
       dim_inactive = true,
@@ -183,8 +191,10 @@ return {
   makeColor({
     'https://gitlab.com/bartekjaszczak/finale-nvim',
     name = 'finale-nvim',
-    config = function()
-      vim.cmd.colorscheme('finale')
+    config = function(plugin)
+      if (allowedColors[1] == plugin.name) then
+        vim.cmd.colorscheme('finale')
+      end
     end,
   }),
 
@@ -193,7 +203,7 @@ return {
     'https://gitlab.com/bartekjaszczak/luma-nvim',
     name = 'luma',
     opts = {
-      theme = 'dark', -- "dark" or "light" theme
+      theme = 'dark',   -- "dark" or "light" theme
       contrast = 'low', -- "low", "medium" or "high" contrast
     },
   }),
@@ -237,14 +247,14 @@ return {
     name = 'onedark.nvim',
     module = 'onedark',
     opts = {
-      style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
-      transparent = false, -- Show/hide background
-      term_colors = true, -- Change terminal color as per the selected theme style
-      ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+      style = 'warmer',             -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+      transparent = false,          -- Show/hide background
+      term_colors = true,           -- Change terminal color as per the selected theme style
+      ending_tildes = false,        -- Show the end-of-buffer tildes. By default they are hidden
       cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
 
       -- toggle theme style ---
-      toggle_style_key = '<leader>ts', -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+      toggle_style_key = '<leader>ts',                                                     -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
       toggle_style_list = { 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light' }, -- List of styles to toggle between
 
       -- Change code style ---
@@ -262,13 +272,13 @@ return {
       colors = {
         bg0 = '#1e1e1e',
         bg1 = '#272727',
-      }, -- Override default colors
+      },               -- Override default colors
       highlights = {}, -- Override highlight groups
 
       -- Plugins Config --
       diagnostics = {
-        darker = true, -- darker colors for diagnostic
-        undercurl = true, -- use undercurl instead of underline for diagnostics
+        darker = true,     -- darker colors for diagnostic
+        undercurl = true,  -- use undercurl instead of underline for diagnostics
         background = true, -- use background color for virtual text
       },
     },
@@ -313,9 +323,9 @@ return {
     module = 'nekonight',
     colorscheme = 'nekonight-moon',
     opts = {
-      style = 'moon', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
-      light_style = 'day', -- The theme is used when the background is set to light
-      transparent = false, -- Enable this to disable setting the background color
+      style = 'moon',         -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+      light_style = 'day',    -- The theme is used when the background is set to light
+      transparent = false,    -- Enable this to disable setting the background color
       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
       styles = {
         -- Style to be applied to different syntax groups
@@ -325,8 +335,8 @@ return {
         functions = {},
         variables = {},
         -- Background styles. Can be "dark", "transparent" or "normal"
-        sidebars = 'dark', -- style for sidebars, see below
-        floats = 'dark', -- style for floating windows
+        sidebars = 'dark',  -- style for sidebars, see below
+        floats = 'dark',    -- style for floating windows
       },
       day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
       dim_inactive = false, -- dims inactive windows
@@ -348,10 +358,10 @@ return {
       keywordStyle = { italic = true },
       statementStyle = { bold = true },
       typeStyle = {},
-      transparent = false, -- do not set background color
-      dimInactive = true, -- dim inactive window `:h hl-NormalNC`
+      transparent = false,   -- do not set background color
+      dimInactive = true,    -- dim inactive window `:h hl-NormalNC`
       terminalColors = true, -- define vim.g.terminal_color_{0,17}
-      colors = { -- add/modify theme and palette colors
+      colors = {             -- add/modify theme and palette colors
         palette = {},
         theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
       },
@@ -368,8 +378,8 @@ return {
           FloatTitle = { bg = 'none' },
         }
       end,
-      theme = 'wave', -- Load "wave" theme when 'background' option is not set
-      background = { -- map the value of 'background' option to a theme
+      theme = 'wave',  -- Load "wave" theme when 'background' option is not set
+      background = {   -- map the value of 'background' option to a theme
         dark = 'wave', -- try "dragon" !
         light = 'lotus',
       },
@@ -383,9 +393,9 @@ return {
     module = 'tokyonight',
     colorscheme = 'tokyonight',
     opts = {
-      style = 'storm', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
-      light_style = 'day', -- The theme is used when the background is set to light
-      transparent = false, -- Enable this to disable setting the background color
+      style = 'storm',        -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+      light_style = 'day',    -- The theme is used when the background is set to light
+      transparent = false,    -- Enable this to disable setting the background color
       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
       styles = {
         -- Style to be applied to different syntax groups
@@ -395,12 +405,12 @@ return {
         functions = {},
         variables = {},
         -- Background styles. Can be "dark", "transparent" or "normal"
-        sidebars = 'dark', -- style for sidebars, see below
+        sidebars = 'dark',      -- style for sidebars, see below
         floats = 'transparent', -- style for floating windows
       },
-      day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
-      dim_inactive = true, -- dims inactive windows
-      lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+      day_brightness = 0.3,     -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+      dim_inactive = true,      -- dims inactive windows
+      lualine_bold = false,     -- When `true`, section headers in the lualine theme will be bold
       on_colors = function(colors)
         colors.bg = '#111111'
         colors.bg_highlight = '#272725'
@@ -427,10 +437,10 @@ return {
     opts = {
       compile_path = vim.fn.stdpath('cache') .. '/ash',
 
-      transparent = false, -- transparent background
-      term_colors = true, -- terminal colors (e.g. g:terminal_color_x)
-      no_italic = false, -- disable italics
-      no_bold = false, -- disable bold
+      transparent = false,  -- transparent background
+      term_colors = true,   -- terminal colors (e.g. g:terminal_color_x)
+      no_italic = false,    -- disable italics
+      no_bold = false,      -- disable bold
       no_underline = false, -- disable underlines
 
       -- override highlight groups [function/table]
@@ -588,8 +598,10 @@ return {
   makeColor({
     'xero/miasma.nvim',
     name = 'miasma',
-    config = function()
-      vim.cmd.colorscheme('miasma')
+    config = function(plugin)
+      if (allowedColors[1] == plugin.name) then
+        vim.cmd.colorscheme('miasma')
+      end
     end,
   }),
 
@@ -597,7 +609,7 @@ return {
   makeColor({
     'sainnhe/sonokai',
     name = 'sonokai',
-    config = function()
+    config = function(plugin)
       -- 'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`,
       vim.g.sonokai_style = 'shusia'
       vim.g.sonokai_dim_inactive_windows = 1
@@ -606,7 +618,9 @@ return {
       -- --  `'grey'`, `'colored'`, `'highlighted'`
       -- vim.g.sonokai_diagnostic_virtual_text = 'grey'
       -- vim.g.sonokai_better_performance = 1
-      vim.cmd.colorscheme('sonokai')
+      if (allowedColors[1] == plugin.name) then
+        vim.cmd.colorscheme('sonokai')
+      end
     end,
   }),
 
@@ -615,21 +629,21 @@ return {
     'tiagovla/tokyodark.nvim',
     name = 'tokyodark',
     opts = {
-      transparent_background = false, -- set background to transparent
-      gamma = 1.00, -- adjust the brightness of the theme
+      transparent_background = false,    -- set background to transparent
+      gamma = 1.00,                      -- adjust the brightness of the theme
       styles = {
-        comments = { italic = true }, -- style for comments
-        keywords = { italic = true }, -- style for keywords
+        comments = { italic = true },    -- style for comments
+        keywords = { italic = true },    -- style for keywords
         identifiers = { italic = true }, -- style for identifiers
-        functions = {}, -- style for functions
-        variables = {}, -- style for variables
+        functions = {},                  -- style for functions
+        variables = {},                  -- style for variables
       },
       custom_highlights = {} or function(highlights, palette)
         return {}
       end, -- extend highlights
       custom_palette = {} or function(palette)
         return {}
-      end, -- extend palette
+      end,                    -- extend palette
       terminal_colors = true, -- enable terminal colors
     },
   }),
@@ -640,6 +654,13 @@ return {
     name = 'cyberdream',
   }),
 
+  makeColor({
+    'nvimdev/porcelain.nvim',
+    name = 'porcelain',
+    config = function()
+      vim.cmd.colorscheme('porcelain')
+    end
+  }),
   --,
   -- --- Obscure
   -- {
