@@ -60,11 +60,11 @@ local allowedColors = {
   'porcelain',
   'kanagawa.nvim'
 }
+local firstColor = allowedColors[1]
 
 --- check if the plugin is the color you want
 local isColor = function(plugin)
   local rslt = vim.tbl_contains(allowedColors, plugin.name)
-  vim.print({ plugin.name, rslt })
   return rslt
 end
 
@@ -73,7 +73,9 @@ end
 -- end
 
 --  Make a color plugin
-local makeColor = function(specs)
+local makeColor = function(specs, useSetup)
+  useSetup = useSetup or true
+
   local name = specs.name or specs[1]
   local module = specs.module or name
   local colorscheme = specs.colorscheme or module
@@ -82,14 +84,19 @@ local makeColor = function(specs)
     priority = 1000,
     lazy = false,
     cond = isColor,
-    config = function(plugin, opts)
+  })
+
+  mixProps.config = specs.props
+  if (not specs.config) then
+    mixProps.config = function(plugin, opts)
       require(module).setup(opts or {})
-      if (plugin.name == allowedColors[1]) then
+      if (plugin.name == firstColor) then
         vim.cmd.colorscheme(colorscheme)
       end
-    end,
-  })
-  mixProps.config = specs.config or mixProps.config
+    end
+  end
+
+  -- mixProps.config = specs.config or mixProps.config
   return mixProps
 end
 
@@ -192,7 +199,7 @@ return {
     'https://gitlab.com/bartekjaszczak/finale-nvim',
     name = 'finale-nvim',
     config = function(plugin)
-      if (allowedColors[1] == plugin.name) then
+      if (firstColor == plugin.name) then
         vim.cmd.colorscheme('finale')
       end
     end,
@@ -599,7 +606,7 @@ return {
     'xero/miasma.nvim',
     name = 'miasma',
     config = function(plugin)
-      if (allowedColors[1] == plugin.name) then
+      if (firstColor == plugin.name) then
         vim.cmd.colorscheme('miasma')
       end
     end,
@@ -618,7 +625,7 @@ return {
       -- --  `'grey'`, `'colored'`, `'highlighted'`
       -- vim.g.sonokai_diagnostic_virtual_text = 'grey'
       -- vim.g.sonokai_better_performance = 1
-      if (allowedColors[1] == plugin.name) then
+      if (firstColor == plugin.name) then
         vim.cmd.colorscheme('sonokai')
       end
     end,
@@ -657,8 +664,10 @@ return {
   makeColor({
     'nvimdev/porcelain.nvim',
     name = 'porcelain',
-    config = function()
-      vim.cmd.colorscheme('porcelain')
+    config = function(plugin)
+      if (plugin.name == firstColor) then
+        vim.cmd.colorscheme('porcelain')
+      end
     end
   }),
   --,
