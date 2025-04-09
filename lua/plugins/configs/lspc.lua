@@ -12,9 +12,9 @@ return function()
   --- Move to dedicated opts call
   -- msnslpc.setup()
 
-  vim.diagnostic.config({
-    update_in_insert = true,
-  })
+  -- vim.diagnostic.config({
+  --   update_in_insert = true,
+  -- })
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
