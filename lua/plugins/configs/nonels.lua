@@ -228,13 +228,22 @@ return function()
     end
 
     local copy_cliets = vim.deepcopy(frmt_lsp_clients)
-    table.insert(copy_cliets, { name = 'All' })
-    table.insert(copy_cliets, { name = "Select a default" })
+    table.insert(copy_cliets, { special = 'ALL', name = 'All' })
+    table.insert(copy_cliets, { special = 'SAD', name = "Select a default" })
+    vim.print(#copy_cliets)
+    vim.print(#frmt_lsp_clients)
 
     local function applyFormat(allow_default)
-      allow_default = allow_default or true
+
+      if (allow_default == nil) then
+        allow_default = true
+      end
 
       local frmt_lsp_clients_to_select = allow_default and copy_cliets or frmt_lsp_clients
+      vim.print({
+        allow_default = allow_default,
+        frmt_lsp_clients_to_select = #frmt_lsp_clients_to_select
+      })
 
       vim.ui.select(frmt_lsp_clients_to_select, {
         prompt = "Select a fomatter:",
@@ -243,17 +252,19 @@ return function()
         end
       }, function(choise)
         if choise then
-          if choise.name == 'All' then
+          if choise.special == 'All' then
             vim.lsp.buf.format({
               bufnr = 0,
               async = true,
             })
-          elseif choise.name == "Select a default" then
+          elseif choise.special == "SAD" then
             applyFormat(false)
           else
             if not allow_default then
               -- select the default
-              vim.g['default_formatter_' .. buffer_filetype] = choise.name
+              vim.schedule(function()
+                vim.g['default_formatter_' .. buffer_filetype] = choise.name
+              end)
             end
 
             vim.lsp.buf.format({
