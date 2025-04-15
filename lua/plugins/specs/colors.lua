@@ -58,7 +58,7 @@
 local allowedColors = {
   'hybrid',
   'porcelain',
-  'kanagawa.nvim'
+  'kanagawa.nvim',
 }
 local firstColor = allowedColors[1]
 
@@ -74,7 +74,10 @@ end
 
 --  Make a color plugin
 local makeColor = function(specs, useSetup)
-  useSetup = useSetup or true
+  if (specs == nil)then
+    useSetup = true
+  end
+  -- useSetup = useSetup or true
 
   local name = specs.name or specs[1]
   local module = specs.module or name
@@ -89,7 +92,9 @@ local makeColor = function(specs, useSetup)
   mixProps.config = specs.props
   if (not specs.config) then
     mixProps.config = function(plugin, opts)
-      require(module).setup(opts or {})
+      if useSetup then
+        require(module).setup(opts or {})
+      end
       if (plugin.name == firstColor) then
         vim.cmd.colorscheme(colorscheme)
       end
@@ -661,6 +666,7 @@ return {
     name = 'cyberdream',
   }),
 
+  -- Porcelain
   makeColor({
     'nvimdev/porcelain.nvim',
     name = 'porcelain',
@@ -670,6 +676,7 @@ return {
       end
     end
   }),
+
   --,
   -- --- Obscure
   -- {
