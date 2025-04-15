@@ -45,7 +45,7 @@ return {
     'nvimdev/lspsaga.nvim',
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons', -- optional
+      'nvim-tree/nvim-web-devicons',     -- optional
     },
     cmd = { 'Lspsaga' },
     -- event = "LazyFile",
@@ -92,8 +92,51 @@ return {
     },
     keys = {
       { '<leader>gq', desc = 'None ls format' },
-      { '<leader>f', desc = 'None ls format' },
+      { '<leader>f',  desc = 'None ls format' },
     },
     config = require('plugins.configs.nonels'),
   },
+
+  --- Namu
+  {
+    "bassamsdata/namu.nvim",
+    opts = {
+      -- Enable the modules you want
+      namu_symbols = {
+        enable = true,
+        options = {
+          AllowKinds = {
+            default = {
+              "Function",
+              "Method",
+              "Class",
+              "Module",
+              "Property",
+              "Variable",
+              "Constant",
+              "Enum",
+              "Interface",
+              "Field",
+              "Struct",
+            },
+          }
+        }, -- here you can configure namu
+      },
+      -- Optional: Enable other modules if needed
+      ui_select = {
+        enable = false
+      }, -- vim.ui.select() wrapper
+      colorscheme = {
+        enable = true,
+        options = {
+          -- NOTE: if you activate persist, then please remove any vim.cmd("colorscheme ...") in your config, no needed anymore
+          persist = true,      -- very efficient mechanism to Remember selected colorscheme
+          write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
+        },
+      },
+    },
+    cmd = {
+      "Namu"
+    }
+  }
 }
