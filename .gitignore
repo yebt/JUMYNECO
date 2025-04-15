@@ -3,3 +3,4 @@ lazy-lock.json
 sessions
 OLD/*
 lua/modules.bak
+plugin/namu_colorscheme_persist.lua
