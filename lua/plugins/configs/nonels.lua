@@ -230,20 +230,13 @@ return function()
     local copy_cliets = vim.deepcopy(frmt_lsp_clients)
     table.insert(copy_cliets, { special = 'ALL', name = 'All' })
     table.insert(copy_cliets, { special = 'SAD', name = "Select a default" })
-    vim.print(#copy_cliets)
-    vim.print(#frmt_lsp_clients)
 
     local function applyFormat(allow_default)
-
       if (allow_default == nil) then
         allow_default = true
       end
 
       local frmt_lsp_clients_to_select = allow_default and copy_cliets or frmt_lsp_clients
-      vim.print({
-        allow_default = allow_default,
-        frmt_lsp_clients_to_select = #frmt_lsp_clients_to_select
-      })
 
       vim.ui.select(frmt_lsp_clients_to_select, {
         prompt = "Select a fomatter:",
