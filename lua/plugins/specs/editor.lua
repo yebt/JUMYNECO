@@ -379,39 +379,88 @@ return {
   },
 
   --- Surround
+  -- {
+  --   'kylechui/nvim-surround',
+  --   version = '*', -- Use for stability; omit to use `main` branch for the latest features
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require('nvim-surround').setup({
+  --       -- Configuration here, or leave empty to use defaults
+  --       aliases = {
+  --         ['a'] = '>',
+  --         ['b'] = ')',
+  --         ['B'] = '}',
+  --         ['r'] = ']',
+  --         ['q'] = { '"', "'", '`' },
+  --         ['s'] = { '}', ']', ')', '>', '"', "'", '`' },
+  --       },
+  --       highlight = {
+  --         duration = 0,
+  --       },
+  --       move_cursor = 'begin',
+  --       keymaps = {
+  --         insert = '<C-g>s',
+  --         insert_line = '<C-g>S',
+  --         normal = 'ys',
+  --         normal_cur = 'yss',
+  --         normal_line = 'yS',
+  --         normal_cur_line = 'ySS',
+  --         visual = '<C-s>',
+  --         visual_line = '<C-s>',
+  --         delete = 'ds',
+  --         change = 'cs',
+  --         change_line = 'cS',
+  --       },
+  --     })
+  --   end,
+  -- },
+
+  -- Mini surround
   {
-    'kylechui/nvim-surround',
-    version = '*', -- Use for stability; omit to use `main` branch for the latest features
-    event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup({
-        -- Configuration here, or leave empty to use defaults
-        aliases = {
-          ['a'] = '>',
-          ['b'] = ')',
-          ['B'] = '}',
-          ['r'] = ']',
-          ['q'] = { '"', "'", '`' },
-          ['s'] = { '}', ']', ')', '>', '"', "'", '`' },
-        },
-        highlight = {
-          duration = 0,
-        },
-        move_cursor = 'begin',
-        keymaps = {
-          insert = '<C-g>s',
-          insert_line = '<C-g>S',
-          normal = 'ys',
-          normal_cur = 'yss',
-          normal_line = 'yS',
-          normal_cur_line = 'ySS',
-          visual = '<C-s>',
-          visual_line = '<C-s>',
-          delete = 'ds',
-          change = 'cs',
-          change_line = 'cS',
-        },
-      })
-    end,
+    'echasnovski/mini.surround',
+    version = '*',
+    event = "VeryLazy",
+    opts = {
+      -- Add custom surroundings to be used on top of builtin ones. For more
+      -- information with examples, see `:h MiniSurround.config`.
+      custom_surroundings = nil,
+
+      -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
+      highlight_duration = 500,
+
+      -- Module mappings. Use `''` (empty string) to disable one.
+      mappings = {
+        add = '<C-s>',        -- Add surrounding in Normal and Visual modes
+        delete = '',     -- Delete surrounding
+        find = '',       -- Find surrounding (to the right)
+        find_left = '',  -- Find surrounding (to the left)
+        highlight = '',  -- Highlight surrounding
+        replace = '',    -- Replace surrounding
+        update_n_lines = '', -- Update `n_lines`
+
+        suffix_last = '', -- Suffix to search with "prev" method
+        suffix_next = '', -- Suffix to search with "next" method
+      },
+
+      -- Number of lines within which surrounding is searched
+      n_lines = 20,
+
+      -- Whether to respect selection type:
+      -- - Place surroundings on separate lines in linewise mode.
+      -- - Place surroundings on each line in blockwise mode.
+      respect_selection_type = false,
+
+      -- How to search for surrounding (first inside current line, then inside
+      -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
+      -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
+      -- see `:h MiniSurround.config`.
+      search_method = 'cover',
+
+      -- Whether to disable showing non-error feedback
+      -- This also affects (purely informational) helper messages shown after
+      -- idle time if user input is required.
+      silent = false,
+    }
   },
+
 }
