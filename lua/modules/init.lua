@@ -9,10 +9,10 @@ mlsp.words.setup({ enabled = true })
 
 --------
 --- Border for signature help
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  -- Use a sharp border with `FloatBorder` highlights
-  border = 'rounded',
-})
+-- vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+--   -- Use a sharp border with `FloatBorder` highlights
+--   border = 'rounded',
+-- })
 
 --- Signs
 -- local signs = { Error = '󰅚 ', Warn = '󰀪 ', Hint = '󰌶 ', Info = ' ' }
@@ -23,13 +23,19 @@ local signs = { Error = '∃ ', Warn = 'W ', Hint = 'H ', Info = 'I ' }
 --   vim.diagnostic.config()
 -- end
 vim.diagnostic.config({
-  underline = true,
+  underline = {
+    -- Implicit true
+    severity = vim.diagnostic.severity.HINT
+  },
   virtual_text = {
-    current_line = true,
-    hl_mode = 'blend' -- replace, combine, blend
+    current_line = false,
+    source = "if_many",
+    -- 'replace'|'combine'|'blend'
+    hl_mode = "combine",
+    virt_text_hide = true
   },
   virtual_lines = {
-    current_line = true,
+    current_line = true
   },
   signs = {
     text = {
@@ -45,11 +51,20 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
     }
   },
-
-  -- float=true,
+  float = {
+    -- 'line'|'buffer'|'cursor'|'c'|'l'|'b'
+    scope = 'c',
+    -- bold, double, none, rounded, shadow, single, solid
+    border = "solid",
+  },
   update_in_insert = true,
-  --
+  jump = {
+    float = true,
+    wrap = true,
+  }
+
 })
+
 
 -- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
 --   local clientn = vim.lsp.get_client_by_id(ctx.client_id)
