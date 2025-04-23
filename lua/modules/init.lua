@@ -34,9 +34,9 @@ vim.diagnostic.config({
     hl_mode = "combine",
     virt_text_hide = true
   },
-  virtual_lines = {
-    current_line = true
-  },
+  -- virtual_lines = {
+  --   current_line = true
+  -- },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = signs.Error,
