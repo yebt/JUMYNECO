@@ -311,7 +311,9 @@ return function()
       -- Try some
       lspc[sn].setup({
         capabilities = default_server_ops.capabilities,
-        root_dir = util.root_pattern('deno.json', 'deno.jsonc', '.git'),
+        root_dir = false,
+        root_dir = vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) or false,
+        --     util.root_pattern('deno.json', 'deno.jsonc', '.git'),
         settings = {
           deno = {
             enable = true,
