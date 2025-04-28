@@ -364,6 +364,15 @@ return function()
       -- }))
     end,
 
+    -- NOTE: allow completion in cssls cause is like snippets
+    ['cssls'] = function(sn)
+      local lCapabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      lspc[sn].setup({
+        capabilities = lCapabilities
+      })
+    end,
+
     ['astro'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
 
