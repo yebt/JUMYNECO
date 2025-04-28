@@ -147,6 +147,7 @@ return function()
     --   -- }))
     -- end,
 
+    -- NOTE: this is a better option, show abrebiations here
     ['emmet_language_server'] = function(sn)
       lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
         filetypes = emmet_filetypes,
