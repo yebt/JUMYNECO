@@ -126,11 +126,11 @@ return {
     -- lazy = false,
     -- version = 'v0.*', -- pre built binaries
     build = 'cargo build --release',
-    init = require('plugins.inits.blinki'),
+    -- init = require('plugins.inits.blinki'),
     -- init = function()
     -- end,
     -- config = require('plugins.configs.blinkc'),
-    config = require('plugins.configs.blinkc2'),
+    config = require('plugins.configs.blinkc3'),
   },
 
   -- Automatically add closing tags for HTML and JSX
