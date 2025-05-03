@@ -59,8 +59,8 @@ return {
 
     config = function(_, opts)
       require('indentmini').setup(opts)
-          vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#6C6460' })
-          vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#B07B4C' })
+      -- vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#6C6460' })
+      -- vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#B07B4C' })
       -- vim.cmd.highlight('IndentLine guifg=#123456')
       -- Current indent line highlight
       -- vim.cmd.highlight('IndentLineCurrent guifg=#123456')
@@ -432,16 +432,16 @@ return {
 
       -- Module mappings. Use `''` (empty string) to disable one.
       mappings = {
-        add = '<C-s>',        -- Add surrounding in Normal and Visual modes
-        delete = '',     -- Delete surrounding
-        find = '',       -- Find surrounding (to the right)
-        find_left = '',  -- Find surrounding (to the left)
-        highlight = '',  -- Highlight surrounding
-        replace = '',    -- Replace surrounding
+        add = '<C-s>',       -- Add surrounding in Normal and Visual modes
+        delete = '',         -- Delete surrounding
+        find = '',           -- Find surrounding (to the right)
+        find_left = '',      -- Find surrounding (to the left)
+        highlight = '',      -- Highlight surrounding
+        replace = '',        -- Replace surrounding
         update_n_lines = '', -- Update `n_lines`
 
-        suffix_last = '', -- Suffix to search with "prev" method
-        suffix_next = '', -- Suffix to search with "next" method
+        suffix_last = '',    -- Suffix to search with "prev" method
+        suffix_next = '',    -- Suffix to search with "next" method
       },
 
       -- Number of lines within which surrounding is searched

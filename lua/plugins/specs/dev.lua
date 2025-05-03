@@ -118,6 +118,7 @@ return {
           })
         end,
       },
+      'niuiic/blink-cmp-rg.nvim',
     },
     cond = function(el)
       return completions == el.name

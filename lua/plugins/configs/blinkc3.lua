@@ -1,6 +1,5 @@
 local custom_icons = require('modules.icons')
-
-
+-- local
 return function()
   local blinkcmp = require('blink.cmp')
 
@@ -49,7 +48,7 @@ return function()
         min_width = 15,
         max_height = 10,
         border = 'shadow',
-        winblend = 10,
+        -- winblend = 10,
         winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
         scrolloff = 2,
         scrollbar = true,
@@ -60,8 +59,14 @@ return function()
           padding = 1,
           gap = 1,
           treesitter = { 'lsp' },
-          columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 }, { 'source_name' } },
+          columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 }, { 'kind' }, { 'source_name' } },
           components = {
+            kind_icon_gap = {
+              ellipsis = false,
+              text = function(ctx) return " " .. ctx.kind_icon .. ctx.icon_gap .. " " end,
+              -- Set the highlight priority to 20000 to beat the cursorline's default priority of 10000
+              highlight = function(ctx) return { { group = ctx.kind_hl, priority = 20000 } } end,
+            },
           }
         }
       },
@@ -129,6 +134,19 @@ return function()
       use_proximity = true,
       use_unsafe_no_lock = false,
       sorts = {
+
+        -- Deprioritize
+        function(a, b)
+          if (not a or not b)
+              or (a.source_id == nil or b.source_id == nil)
+              or (a.source_id == b.source_id)
+          then
+            return false
+          end
+
+          return b.source_id == 'ripgrep'
+        end,
+
         -- (optionally) always prioritize exact matches
         -- 'exact',
 
@@ -136,6 +154,7 @@ return function()
         -- function(item_a, item_b)
         --   return item_a.score > item_b.score
         -- end,
+        -- 'kind',
 
         'score',
         'sort_text',
@@ -144,7 +163,8 @@ return function()
 
     sources = {
       -- default = { 'lsp', 'path', 'snippets', 'buffer' },
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      -- default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'ripgrep' },
       min_keyword_length = 0,
       providers = {
 
@@ -184,34 +204,44 @@ return function()
           --   --
           --   -- get_bufnrs = vim.api.nvim_list_bufs,
           --
-          opts = {
-            get_bufnrs = function()
-              return vim.tbl_filter(function(bufnr)
-                return vim.bo[bufnr].buftype == ''
-              end, vim.api.nvim_list_bufs())
-            end
-          }
+          -- opts = {
+          --   get_bufnrs = function()
+          --     return vim.tbl_filter(function(bufnr)
+          --       return vim.bo[bufnr].buftype == ''
+          --     end, vim.api.nvim_list_bufs())
+          --   end
+          -- }
         },
 
-        lsp = { fallbacks = {} },
+        -- lsp = { fallbacks = {} },
 
-        -- buffer = {
-        --   module = 'blink.cmp.sources.buffer',
-        --   score_offset = 1,
-        --   opts = {
-        --     -- default to all visible buffers
-        --     get_bufnrs = vim.api.nvim_list_bufs,
-        --     -- get_bufnrs = function()
-        --     --   return vim
-        --     --       .iter(vim.api.nvim_list_wins())
-        --     --       :map(function(win) return vim.api.nvim_win_get_buf(win) end)
-        --     --       :filter(function(buf) return vim.bo[buf].buftype ~= 'nofile' end)
-        --     --       :totable()
-        --     -- end,
-        --     -- -- buffers when searching with `/` or `?`
-        --     -- get_search_bufnrs = function() return { vim.api.nvim_get_current_buf() } end,
-        --   }
-        -- },
+        ripgrep = {
+          module = "blink-cmp-rg",
+          name = "Ripgrep",
+          -- score_offset = -4,
+          -- options below are optional, these are the default values
+          ---@type blink-cmp-rg.Options
+          opts = {
+            -- `min_keyword_length` only determines whether to show completion items in the menu,
+            -- not whether to trigger a search. And we only has one chance to search.
+            prefix_min_len = 3,
+            get_command = function(context, prefix)
+              return {
+                "rg",
+                "--no-config",
+                "--json",
+                "--word-regexp",
+                "--ignore-case",
+                "--",
+                prefix .. "[\\w_-]+",
+                vim.fs.root(0, ".git") or vim.fn.getcwd(),
+              }
+            end,
+            get_prefix = function(context)
+              return context.line:sub(1, context.cursor[2]):match("[%w_-]+$") or ""
+            end,
+          },
+        }
       }
     },
 
@@ -219,7 +249,14 @@ return function()
       enabled = false,
     },
 
-    --
+    appearance = {
+      use_nvim_cmp_as_default = false,
+      -- mono, normal
+      nerd_font_variant = 'mono',
+      kind_icons = custom_icons.kind.text_compact
+    },
+
+
     -- -- snippets = {
     -- --   -- Function to use when expanding LSP provided snippets
     -- --   expand = function(snippet)

@@ -1,3 +1,4 @@
+
 return function()
   local use_colors = true
   local color_mode = 'bg'
