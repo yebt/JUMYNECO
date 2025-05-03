@@ -45,20 +45,22 @@ return {
       exclude = { 'markdown' },
       minlevel = 1,
     },
-    init = function()
-      vim.api.nvim_create_autocmd('ColorScheme', {
-        pattern = '*',
-        callback = function()
-          vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#6C6460' })
-          vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#B07B4C' })
-          -- vim.cmd.highlight('link IndentLine IndentBlanklineChar')
-          -- vim.cmd.highlight('link IndentLineCurrent IndentBlanklineContextChar')
-        end,
-      })
-    end,
+    -- init = function()
+    --   vim.api.nvim_create_autocmd('ColorScheme', {
+    --     pattern = '*',
+    --     callback = function()
+    --       vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#6C6460' })
+    --       vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#B07B4C' })
+    --       -- vim.cmd.highlight('link IndentLine IndentBlanklineChar')
+    --       -- vim.cmd.highlight('link IndentLineCurrent IndentBlanklineContextChar')
+    --     end,
+    --   })
+    -- end,
 
     config = function(_, opts)
       require('indentmini').setup(opts)
+          vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#6C6460' })
+          vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#B07B4C' })
       -- vim.cmd.highlight('IndentLine guifg=#123456')
       -- Current indent line highlight
       -- vim.cmd.highlight('IndentLineCurrent guifg=#123456')
