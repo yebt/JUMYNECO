@@ -136,16 +136,16 @@ return function()
       sorts = {
 
         -- Deprioritize
-        function(a, b)
-          if (not a or not b)
-              or (a.source_id == nil or b.source_id == nil)
-              or (a.source_id == b.source_id)
-          then
-            return false
-          end
-
-          return b.source_id == 'ripgrep'
-        end,
+        -- function(a, b)
+        --   -- if (not a or not b)
+        --   --     or (a.source_id == nil or b.source_id == nil)
+        --   --     or (a.source_id == b.source_id)
+        --   -- then
+        --   --   return false
+        --   -- end
+        --
+        --   return (a and a.source_id or nil) == 'ripgrep'
+        -- end,
 
         -- (optionally) always prioritize exact matches
         -- 'exact',
@@ -214,34 +214,130 @@ return function()
         },
 
         -- lsp = { fallbacks = {} },
+        --
 
         ripgrep = {
-          module = "blink-cmp-rg",
+          module = "blink-ripgrep",
           name = "Ripgrep",
-          -- score_offset = -4,
-          -- options below are optional, these are the default values
-          ---@type blink-cmp-rg.Options
+          score_offset = -100, -- Depriorize totaly
+          -- the options below are optional, some default values are shown
+          ---@module "blink-ripgrep"
+          ---@type blink-ripgrep.Options
           opts = {
-            -- `min_keyword_length` only determines whether to show completion items in the menu,
-            -- not whether to trigger a search. And we only has one chance to search.
+            -- For many options, see `rg --help` for an exact description of
+            -- the values that ripgrep expects.
+
+            -- the minimum length of the current word to start searching
+            -- (if the word is shorter than this, the search will not start)
             prefix_min_len = 3,
-            get_command = function(context, prefix)
-              return {
-                "rg",
-                "--no-config",
-                "--json",
-                "--word-regexp",
-                "--ignore-case",
-                "--",
-                prefix .. "[\\w_-]+",
-                vim.fs.root(0, ".git") or vim.fn.getcwd(),
-              }
-            end,
-            get_prefix = function(context)
-              return context.line:sub(1, context.cursor[2]):match("[%w_-]+$") or ""
-            end,
+
+            -- The number of lines to show around each match in the preview
+            -- (documentation) window. For example, 5 means to show 5 lines
+            -- before, then the match, and another 5 lines after the match.
+            context_size = 5,
+
+            -- The maximum file size of a file that ripgrep should include in
+            -- its search. Useful when your project contains large files that
+            -- might cause performance issues.
+            -- Examples:
+            -- "1024" (bytes by default), "200K", "1M", "1G", which will
+            -- exclude files larger than that size.
+            max_filesize = "1M",
+
+            -- Specifies how to find the root of the project where the ripgrep
+            -- search will start from. Accepts the same options as the marker
+            -- given to `:h vim.fs.root()` which offers many possibilities for
+            -- configuration. If none can be found, defaults to Neovim's cwd.
+            --
+            -- Examples:
+            -- - ".git" (default)
+            -- - { ".git", "package.json", ".root" }
+            project_root_marker = ".git",
+
+            -- Enable fallback to neovim cwd if project_root_marker is not
+            -- found. Default: `true`, which means to use the cwd.
+            project_root_fallback = true,
+
+            -- The casing to use for the search in a format that ripgrep
+            -- accepts. Defaults to "--ignore-case". See `rg --help` for all the
+            -- available options ripgrep supports, but you can try
+            -- "--case-sensitive" or "--smart-case".
+            search_casing = "--ignore-case",
+
+            -- (advanced) Any additional options you want to give to ripgrep.
+            -- See `rg -h` for a list of all available options. Might be
+            -- helpful in adjusting performance in specific situations.
+            -- If you have an idea for a default, please open an issue!
+            --
+            -- Not everything will work (obviously).
+            additional_rg_options = {},
+
+            -- When a result is found for a file whose filetype does not have a
+            -- treesitter parser installed, fall back to regex based highlighting
+            -- that is bundled in Neovim.
+            fallback_to_regex_highlighting = true,
+
+            -- Absolute root paths where the rg command will not be executed.
+            -- Usually you want to exclude paths using gitignore files or
+            -- ripgrep specific ignore files, but this can be used to only
+            -- ignore the paths in blink-ripgrep.nvim, maintaining the ability
+            -- to use ripgrep for those paths on the command line. If you need
+            -- to find out where the searches are executed, enable `debug` and
+            -- look at `:messages`.
+            ignore_paths = {
+              "node_modules",
+              "vendor"
+            },
+
+            -- Any additional paths to search in, in addition to the project
+            -- root. This can be useful if you want to include dictionary files
+            -- (/usr/share/dict/words), framework documentation, or any other
+            -- reference material that is not available within the project
+            -- root.
+            additional_paths = {},
+
+            -- Keymaps to toggle features on/off. This can be used to alter
+            -- the behavior of the plugin without restarting Neovim. Nothing
+            -- is enabled by default. Requires folke/snacks.nvim.
+            toggles = {
+              -- The keymap to toggle the plugin on and off from blink
+              -- completion results. Example: "<leader>tg"
+              on_off = nil,
+            },
+
+            -- Features that are not yet stable and might change in the future.
+            -- You can enable these to try them out beforehand, but be aware
+            -- that they might change. Nothing is enabled by default.
+            future_features = {
+              backend = {
+                -- The backend to use for searching. Defaults to "ripgrep".
+                -- Available options:
+                -- - "ripgrep", always use ripgrep
+                -- - "gitgrep", always use git grep
+                -- - "gitgrep-or-ripgrep", use git grep if possible, otherwise
+                --   ripgrep
+                use = "ripgrep",
+              },
+            },
+
+            -- Show debug information in `:messages` that can help in
+            -- diagnosing issues with the plugin.
+            debug = false,
           },
-        }
+          -- (optional) customize how the results are displayed. Many options
+          -- are available - make sure your lua LSP is set up so you get
+          -- autocompletion help
+          transform_items = function(_, items)
+            for _, item in ipairs(items) do
+              -- example: append a description to easily distinguish rg results
+              item.labelDetails = {
+                description = "(rg)",
+              }
+            end
+            return items
+          end,
+        },
+
       }
     },
 
@@ -256,216 +352,6 @@ return function()
       kind_icons = custom_icons.kind.text_compact
     },
 
-
-    -- -- snippets = {
-    -- --   -- Function to use when expanding LSP provided snippets
-    -- --   expand = function(snippet)
-    -- --     vim.snippet.expand(snippet)
-    -- --   end,
-    -- --   -- Function to use when checking if a snippet is active
-    -- --   active = function(filter)
-    -- --     return vim.snippet.active(filter)
-    -- --   end,
-    -- --   -- Function to use when jumping between tab stops in a snippet, where direction can be negative or positive
-    -- --   jump = function(direction)
-    -- --     vim.snippet.jump(direction)
-    -- --   end,
-    -- -- },
-    -- -- snippets = { preset = 'luasnip' },
-    -- snippets = { preset = 'luasnip' },
-    -- -- snippets = { preset = 'mini_snippets' },
-    --
-    -- -- -- enabled = function()
-    -- -- --   return vim.fn.getcmdtype() ~= ':'
-    -- -- -- end,
-    -- --
-    -- -- -- Disable cmdline
-    -- cmdline = {
-    --   enabled = false,
-    -- },
-    -- --
-    -- completion = {
-    --   --   -- 'prefix' will fuzzy match on the text before the cursor
-    --   --   -- 'full' will fuzzy match on the text before _and_ after the cursor
-    --   --   -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
-    --   keyword = { range = 'full' },
-    --   accept = {
-    --     -- Write completions to the `.` register
-    --     dot_repeat = true,
-    --     auto_brackets = { enabled = true },
-    --     create_undo_point = true,
-    --   },
-    --   list = {
-    --     --     max_items = 200,
-    --     selection = { preselect = true, auto_insert = false },
-    --     --     cycle = {
-    --     --       from_bottom = true,
-    --     --       from_top = true,
-    --     --     },
-    --   },
-    --   menu = {
-    --     auto_show = true,
-    --     --     -- nvim-cmp style menu
-    --     draw = {
-    --       align_to = 'label',
-    --       padding = 1,
-    --       gap = 2,
-    --       --       -- treesitter = {},
-    --       treesitter = { 'lsp' },
-    --       columns = {
-    --         -- { 'kind_icon' },
-    --         { 'kind_icon_pad' },
-    --         -- { 'kind_mini_icon' },
-    --         -- { 'kink_dev_icon' },
-    --         { 'label', 'label_description', gap = 1 },
-    --         { 'kind' },
-    --         -- -- { 'source_name' },
-    --         -- { 'source_name_flex' },
-    --       },
-    --       components = {
-    --         kind_icon_pad = {
-    --           ellipsis = false,
-    --           text = function(ctx)
-    --             return ' ' .. ctx.kind_icon .. ' ' .. ctx.icon_gap
-    --           end,
-    --           highlight = function(ctx)
-    --             return ctx.kind_hl
-    --           end,
-    --         },
-    --
-    --         --         item_idx = {
-    --         --           text = function(ctx)
-    --         --             return ctx.idx == 10 and '0' or ctx.idx >= 10 and ' ' or tostring(ctx.idx)
-    --         --           end,
-    --         --           highlight = 'BlinkCmpItemIdx', -- optional, only if you want to change its color
-    --         --         },
-    --         --         kind_mini_icon = {
-    --         --           ellipsis = false,
-    --         --           text = function(ctx)
-    --         --             local kind_icon = nil
-    --         --             if usePath and vim.tbl_contains({ 'Path' }, ctx.source_name) then
-    --         --               vim.notify(vim.inspect(ctx))
-    --         --               kind_icon, _, _ = require('mini.icons').get('file', ctx.label)
-    --         --             else
-    --         --               kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
-    --         --             end
-    --         --             return kind_icon
-    --         --           end,
-    --         --           -- Optionally, you may also use the highlights from mini.icons
-    --         --           highlight = function(ctx)
-    --         --             local hl = nil
-    --         --             if usePath and vim.tbl_contains({ 'Path' }, ctx.source_name) then
-    --         --               _, hl, _ = require('mini.icons').get('file', ctx.label)
-    --         --             else
-    --         --               _, hl, _ = require('mini.icons').get('lsp', ctx.label)
-    --         --             end
-    --         --             -- local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-    --         --             return hl
-    --         --           end,
-    --         --         },
-    --         --         kink_dev_icon = {
-    --         --           text = function(ctx)
-    --         --             local kIcon = nil
-    --         --             if ctx.source_name:lower() == 'path' then
-    --         --               kIcon = ' '
-    --         --               local icon, hl_group = require('nvim-web-devicons').get_icon(ctx.label)
-    --         --               if icon then
-    --         --                 kIcon = ' ' .. icon
-    --         --               end
-    --         --               -- kIcon = icon
-    --         --             else
-    --         --               kIcon = ctx.kind_icon
-    --         --             end
-    --         --             -- return " " .. ctx.kind_icon .. " " .. ctx.icon_gap
-    --         --             return kIcon .. ctx.icon_gap
-    --         --           end,
-    --         --           highlight = function(ctx)
-    --         --             local hlGroup = 'BlinkCmpKind' .. ctx.kind
-    --         --             if ctx.source_name:lower() == 'path' then
-    --         --               local icon, hl_group = require('nvim-web-devicons').get_icon(ctx.label)
-    --         --               if hl_group then
-    --         --                 hlGroup = hl_group
-    --         --               end
-    --         --             else
-    --         --               hlGroup = require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx)
-    --         --                 or ('CmpItemKind' .. ctx.kind:sub(1, 1):upper() .. ctx.kind:sub(2))
-    --         --             end
-    --         --             return hlGroup
-    --         --             -- return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx)
-    --         --             --     or ('CmpItemKind' .. ctx.kind:sub(1, 1):upper() .. ctx.kind:sub(2))
-    --         --             --     or 'BlinkCmpKind' .. ctx.kind
-    --         --           end,
-    --         --         },
-    --         --         source_name = {
-    --         --           width = { max = 30 },
-    --         --           text = function(ctx)
-    --         --             return ctx.source_name
-    --         --           end,
-    --         --           highlight = 'BlinkCmpSource',
-    --         --         },
-    --         -- source_name_flex = {
-    --         --   -- width ={},
-    --         --   text = function(ctx)
-    --         --     return '[' .. ctx.source_name:sub(1, 2) .. ']'
-    --         --   end,
-    --         --   highlight = 'BlinkCmpSource',
-    --         -- },
-    --         --         label = {
-    --         --           width = { fill = true, max = 60 },
-    --         --           text = function(ctx)
-    --         --             return ctx.label .. ctx.label_detail
-    --         --           end,
-    --         --           highlight = function(ctx)
-    --         --             -- label and label details
-    --         --             local highlights = {
-    --         --               { 0, #ctx.label, group = ctx.deprecated and 'BlinkCmpLabelDeprecated' or 'BlinkCmpLabel' },
-    --         --             }
-    --         --             if ctx.label_detail then
-    --         --               table.insert(
-    --         --                 highlights,
-    --         --                 { #ctx.label, #ctx.label + #ctx.label_detail, group = 'BlinkCmpLabelDetail' }
-    --         --               )
-    --         --             end
-    --         --
-    --         --             -- characters matched on the label by the fuzzy matcher
-    --         --             for _, idx in ipairs(ctx.label_matched_indices) do
-    --         --               table.insert(highlights, { idx, idx + 1, group = 'BlinkCmpLabelMatch' })
-    --         --             end
-    --         --
-    --         --             return highlights
-    --         --           end,
-    --         --         },
-    --         --         label_description = {
-    --         --           width = { max = 30 },
-    --         --           text = function(ctx)
-    --         --             return ctx.label_description
-    --         --           end,
-    --         --           highlight = 'BlinkCmpLabelDescription',
-    --         --         },
-    --       },
-    --     },
-    --   },
-    -- },
-    -- sources = {
-    --   -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
-    --   default = { 'lsp', 'path', 'snippets', 'buffer' },
-    -- },
-    -- --
-    -- signature = { enabled = true },
-    -- --
-    -- appearance = {
-    --   -- highlight_ns = vim.api.nvim_create_namespace('blink_cmp'),
-    --   -- use_nvim_cmp_as_default = false,
-    --   use_nvim_cmp_as_default = true,
-    --   --   -- BlinkCmpLabelDescription
-    --   --   -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-    --   --   -- Adjusts spacing to ensure icons are aligned
-    --   -- nerd_font_variant = 'normal',
-    --   nerd_font_variant = 'mono',
-    --   --   kind_icons = custom_icons.kind.v4,
-    --   -- kind_icons = custom_icons.kind.default,
-    --   kind_icons = custom_icons.kind.text_compact,
-    -- },
   }
   blinkcmp.setup(opts)
 end

@@ -75,10 +75,10 @@ return {
   {
     'saghen/blink.cmp',
     dependencies = {
+      --- Ads
       'rafamadriz/friendly-snippets',
       'echasnovski/mini.icons',
-      -- 'moyiz/blink-emoji.nvim',
-      -- 'hrsh7th/nvim-cmp',
+
       -- {
       --   'L3MON4D3/LuaSnip',
       --   -- follow latest release.
@@ -104,6 +104,8 @@ return {
       --     })
       --   end,
       -- },
+
+      --- Snippets
       {
         'L3MON4D3/LuaSnip',
         version = 'v2.*',
@@ -118,7 +120,9 @@ return {
           })
         end,
       },
-      'niuiic/blink-cmp-rg.nvim',
+
+      --- Comunity sources
+      "mikavilpas/blink-ripgrep.nvim",
     },
     cond = function(el)
       return completions == el.name
