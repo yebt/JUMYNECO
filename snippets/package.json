@@ -4,27 +4,15 @@
     "snippets": [
       {
         "language": [
-          "css"
-        ],
-        "path": "./css.json"
-      },
-      {
-        "language": [
           "python"
         ],
         "path": "./python.json"
       },
       {
         "language": [
-          "javascript"
+          "typescript"
         ],
-        "path": "./javascript.json"
-      },
-      {
-        "language": [
-          "php"
-        ],
-        "path": "./php.json"
+        "path": "./typescript.json"
       },
       {
         "language": [
@@ -34,9 +22,21 @@
       },
       {
         "language": [
-          "typescript"
+          "php"
         ],
-        "path": "./typescript.json"
+        "path": "./php.json"
+      },
+      {
+        "language": [
+          "javascript"
+        ],
+        "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "css"
+        ],
+        "path": "./css.json"
       },
       {
         "language": [
