@@ -349,7 +349,7 @@ return function()
       use_nvim_cmp_as_default = false,
       -- mono, normal
       nerd_font_variant = 'mono',
-      kind_icons = custom_icons.kind.text_compact
+      -- kind_icons = custom_icons.kind.text_compact
     },
 
   }
