@@ -62,8 +62,10 @@ return {
           DiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
 
           --- Dark completion
-          Pmenu                      = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
-          PmenuSel                   = { fg = "NONE", bg = theme.ui.bg_p2 },
+          -- Pmenu                      = { fg = theme.ui.shade0, bg = theme.ui.bg_dim }, -- add `blend = vim.o.pumblend` to enable transparency
+          Pmenu                      = { fg = theme.ui.shade0, bg = theme.ui.bg_m3 },
+          -- PmenuSel                   = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuSel                   = { fg = "NONE", bg = palette.waveBlue1 },
           PmenuSbar                  = { bg = palette.surimiOrange },
           PmenuThumb                 = { bg = theme.ui.bg_p2 },
 
