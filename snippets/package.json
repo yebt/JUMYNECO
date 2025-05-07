@@ -22,6 +22,12 @@
       },
       {
         "language": [
+          "vue"
+        ],
+        "path": "./vue.json"
+      },
+      {
+        "language": [
           "php"
         ],
         "path": "./php.json"

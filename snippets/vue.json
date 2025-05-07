@@ -1,0 +1,21 @@
+{
+  "Vue Single File Component Setup Composition API with Typescript Walo": {
+    "prefix": "vwbase-3-ts-setup",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "$0",
+      "</script>",
+      "",
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<style scoped>",
+      "",
+      "</style>"
+    ],
+    "description": "Base for Vue File Setup Composition API - Typescript"
+  }
+}

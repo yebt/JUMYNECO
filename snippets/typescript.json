@@ -2,5 +2,13 @@
   "async arrow function": {
     "prefix": "aa",
     "body": "async (${1:arguments}) => {\n\t${0}\n}"
+  },
+  "const arrow function assignment": {
+    "prefix": "cf",
+    "body": "const ${1:name} = (${2:arguments}) => {\n\treturn ${0}\n}"
+  },
+  "arrow function": {
+    "prefix": "af",
+    "body": "(${1:arguments}) => ${2:statement}"
   }
 }
