@@ -8,8 +8,10 @@ return {
       'williamboman/mason.nvim',
       --- Bridge
       'williamboman/mason-lspconfig.nvim',
-      --- Schemes
+      --- Schemes for the json,yml,tml lsp
       'b0o/schemastore.nvim',
+      --- Autocompletion system
+      'saghen/blink.cmp'
     },
     event = { 'VeryLazy' },
     config = require('plugins.configs.lspc'),
@@ -19,24 +21,21 @@ return {
   {
     'williamboman/mason.nvim',
     cmd = { 'Mason', 'MasonUpdate', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
-    opts = {
-      ui = {
-        icons = {
-          package_installed = '✓',
-          package_pending = '-',
-          package_uninstalled = '✗',
-        },
-      },
-    },
   },
 
   --- Bridge Mason and Nvm-LSPConfig
   {
     'williamboman/mason-lspconfig.nvim',
     cmd = { 'LspInstall', 'LspUninstall' },
-    opts = {
-      ensure_installed = { 'lua_ls' },
-      automatic_installation = true,
+  },
+
+  --- Debug Adapter Protocol
+  {
+    'mfussenegger/nvim-dap',
+    event = 'VeryLazy',
+    dependencies = {
+      "williamboman/mason.nvim",
+      "jay-babu/mason-nvim-dap.nvim",
     },
   },
 
@@ -98,45 +97,45 @@ return {
   },
 
   --- Namu
-  {
-    "bassamsdata/namu.nvim",
-    opts = {
-      -- Enable the modules you want
-      namu_symbols = {
-        enable = true,
-        options = {
-          AllowKinds = {
-            default = {
-              "Function",
-              "Method",
-              "Class",
-              "Module",
-              "Property",
-              "Variable",
-              "Constant",
-              "Enum",
-              "Interface",
-              "Field",
-              "Struct",
-            },
-          }
-        }, -- here you can configure namu
-      },
-      -- Optional: Enable other modules if needed
-      ui_select = {
-        enable = false
-      }, -- vim.ui.select() wrapper
-      colorscheme = {
-        enable = true,
-        options = {
-          -- NOTE: if you activate persist, then please remove any vim.cmd("colorscheme ...") in your config, no needed anymore
-          persist = true,      -- very efficient mechanism to Remember selected colorscheme
-          write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
-        },
-      },
-    },
-    cmd = {
-      "Namu"
-    }
-  }
+  -- {
+  --   "bassamsdata/namu.nvim",
+  --   opts = {
+  --     -- Enable the modules you want
+  --     namu_symbols = {
+  --       enable = true,
+  --       options = {
+  --         AllowKinds = {
+  --           default = {
+  --             "Function",
+  --             "Method",
+  --             "Class",
+  --             "Module",
+  --             "Property",
+  --             "Variable",
+  --             "Constant",
+  --             "Enum",
+  --             "Interface",
+  --             "Field",
+  --             "Struct",
+  --           },
+  --         }
+  --       }, -- here you can configure namu
+  --     },
+  --     -- Optional: Enable other modules if needed
+  --     ui_select = {
+  --       enable = false
+  --     }, -- vim.ui.select() wrapper
+  --     colorscheme = {
+  --       enable = true,
+  --       options = {
+  --         -- NOTE: if you activate persist, then please remove any vim.cmd("colorscheme ...") in your config, no needed anymore
+  --         persist = true,      -- very efficient mechanism to Remember selected colorscheme
+  --         write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
+  --       },
+  --     },
+  --   },
+  --   cmd = {
+  --     "Namu"
+  --   }
+  -- }
 }

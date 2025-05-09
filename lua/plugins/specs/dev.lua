@@ -1,77 +1,28 @@
 -- local completions = "nvim-cmp"
-local completions = 'blink.cmp'
 return {
 
   --- Autopairs
-  {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = function()
-      require('nvim-autopairs').setup({
-        disable_filetype = { 'TelescopePrompt', 'vim' },
-      })
-    end,
-  },
-  -- Better version with rainbow
   -- {
-  --   'saghen/blink.pairs',
-  --   -- version = "*", -- (recommended) only required with prebuilt binaries
-  --
-  --   -- download Binaries
-  --   -- dependencies = 'saghen/blink.download',
-  --   -- Or
-  --   build = 'cargo build --release', -- build from source
-  --
-  --   event = { 'InsertEnter', 'VeryLazy' },
-  --   config = require('plugins.configs.blinkpairsc')
+  --   'windwp/nvim-autopairs',
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('nvim-autopairs').setup({
+  --       disable_filetype = { 'TelescopePrompt', 'vim' },
+  --     })
+  --   end,
   -- },
 
-  --- Completions
+  --- Autopairs better version with rainbow
   {
-    'hrsh7th/nvim-cmp',
-    cond = function(el)
-      return completions == el.name
-    end,
-    dependencies = {
-      -- "luckasRanarison/tailwind-tools.nvim",
-      'onsails/lspkind-nvim', -- icons
-
-      'hrsh7th/cmp-nvim-lsp-signature-help',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-
-      --- snippets
-      -- {
-      --   'garymjr/nvim-snippets',
-      --   dependencies = {
-      --     'rafamadriz/friendly-snippets',
-      --   },
-      --   opts = {
-      --     create_cmp_source = true,
-      --     friendly_snippets = true,
-      --     search_paths = {
-      --       --- ~/.config/nvim/snippets
-      --       vim.fn.stdpath('config') .. '/snippets',
-      --     },
-      --   },
-      -- },
-
-      --# mini snippets
-      {
-        'abeldekat/cmp-mini-snippets',
-        dependencies = 'echasnovski/mini.snippets',
-      },
-      {
-        'echasnovski/mini.snippets',
-        dependencies = 'rafamadriz/friendly-snippets',
-        event = 'InsertEnter',
-        config = require('plugins.configs.minisnipc'),
-      },
-    },
+    'saghen/blink.pairs',
+    -- build = 'cargo build --release', -- build from source
+    -- NOTE:sometimes need nightly version, remember install nightly: `rustup install nightly`
+    build = 'cargo +nightly build --release',
     event = { 'InsertEnter', 'VeryLazy' },
-    config = require('plugins.configs.cmpc'),
+    config = require('plugins.configs.blinkpairsc')
   },
+
+  -- Completions wiith rust
   {
     'saghen/blink.cmp',
     dependencies = {
@@ -124,9 +75,6 @@ return {
       --- Comunity sources
       "mikavilpas/blink-ripgrep.nvim",
     },
-    cond = function(el)
-      return completions == el.name
-    end,
     event = { 'InsertEnter', 'VeryLazy' },
     -- lazy = false,
     -- version = 'v0.*', -- pre built binaries
@@ -161,40 +109,14 @@ return {
     },
   },
 
-  --- Emmet
-  -- {
-  --   'mattn/emmet-vim',
-  --   event = 'VeryLazy',
-  -- },
-
-  --- Runner
+  --- neotest
   {
-    'stevearc/overseer.nvim',
+    'nvim-neotest/neotest',
     dependencies = {
-      -- 'nvim-lua/plenary.nvim',
-      -- 'nvim-telescope/telescope.nvim',
-      'akinsho/toggleterm.nvim',
-    },
-    config = require('plugins.configs.overseerc'),
-    cmd = {
-      'OverseerRun',
-      'OverseerOpen',
-      'OverseerClose',
-      'OverseerToggle',
-      'OverseerSaveBundle',
-      'OverseerLoadBundle',
-      'OverseerDeleteBundle',
-      'OverseerRunCmd',
-      'OverseerRun',
-      'OverseerInfo',
-      'OverseerBuild',
-      'OverseerQuickAction',
-      'OverseerTaskAction',
-      'OverseerClearCache',
-    },
-    keys = {
-      { 'ø',     ':OverseerRun<CR>' },
-      { '<C-j>', ':OverseerToggle<CR>' },
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
     },
   },
 
@@ -211,32 +133,4 @@ return {
     end,
   },
 
-  --- Resolver
-  -- {
-  --   'yebt/file-resolver.nvim',
-  --   dev = true,
-  --   keys = {
-  --     { '<leader>gR', ':lua require("file-resolver").resolve_file()<CR>' },
-  --   },
-  --   config = function()
-  --     local fr = require('file-resolver')
-  --     fr.setup({})
-  --     fr.register_resolver('TypeScript Aliases', function(line, file_path)
-  --       local match = line:match('from%s+[\'"](@[%w_/]+)[\'"]')
-  --       if match then
-  --         return vim.fn.getcwd() .. '/src/' .. match:gsub('@', '')
-  --       end
-  --     end)
-  --   end,
-  -- },
-
-  --- Project Instructions
-  -- {
-  --   'yebt/project-instructions.nvim',
-  --   dev = true,
-  --   lazy = false,
-  --   config = function()
-  --     require('project-instructions').setup({})
-  --   end
-  -- }
 }
