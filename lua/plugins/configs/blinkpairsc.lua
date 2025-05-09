@@ -3,7 +3,7 @@ return function()
 
   local function makePair(pairStr)
     return {
-      pairStr, space=true,enter=true
+      pairStr, space = true, enter = true
     }
   end
 
@@ -15,7 +15,8 @@ return function()
       enabled = true,
       -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L10
       pairs = {
-        ['('] = makePair(')'),
+        ['!'] = { { '<!--', '-->', filetypes = { 'html', 'markdown' } } },
+        ['('] =  makePair(')'),
         ['['] = makePair(']'),
         ['{'] = makePair('}'),
       },

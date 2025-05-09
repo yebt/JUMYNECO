@@ -15,15 +15,19 @@ return function()
         show_on_accept_on_trigger_character = true,
         show_on_insert_on_trigger_character = true,
         show_on_x_blocked_trigger_characters = {
-          "'", '"', '(', '{', '['
-        }
+          "'",
+          '"',
+          '(',
+          '{',
+          '[',
+        },
       },
       list = {
         max_items = 200,
         selection = {
           preselect = true,
           auto_insert = false,
-        }
+        },
       },
       accept = {
         dot_repeat = true,
@@ -41,7 +45,7 @@ return function()
             blocked_filetypes = { 'java' },
             timeout_ms = 400,
           },
-        }
+        },
       },
       menu = {
         enabled = true,
@@ -63,12 +67,16 @@ return function()
           components = {
             kind_icon_gap = {
               ellipsis = false,
-              text = function(ctx) return " " .. ctx.kind_icon .. ctx.icon_gap .. " " end,
+              text = function(ctx)
+                return ' ' .. ctx.kind_icon .. ctx.icon_gap .. ' '
+              end,
               -- Set the highlight priority to 20000 to beat the cursorline's default priority of 10000
-              highlight = function(ctx) return { { group = ctx.kind_hl, priority = 20000 } } end,
+              highlight = function(ctx)
+                return { { group = ctx.kind_hl, priority = 20000 } }
+              end,
             },
-          }
-        }
+          },
+        },
       },
       documentation = {
         auto_show = true,
@@ -78,7 +86,7 @@ return function()
       },
       ghost_text = {
         enabled = true,
-      }
+      },
     },
 
     keymap = {
@@ -106,11 +114,17 @@ return function()
 
     snippets = {
       -- Function to use when expanding LSP provided snippets
-      expand = function(snippet) vim.snippet.expand(snippet) end,
+      expand = function(snippet)
+        vim.snippet.expand(snippet)
+      end,
       -- Function to use when checking if a snippet is active
-      active = function(filter) return vim.snippet.active(filter) end,
+      active = function(filter)
+        return vim.snippet.active(filter)
+      end,
       -- Function to use when jumping between tab stops in a snippet, where direction can be negative or positive
-      jump = function(direction) vim.snippet.jump(direction) end,
+      jump = function(direction)
+        vim.snippet.jump(direction)
+      end,
     },
 
     signature = {
@@ -125,7 +139,7 @@ return function()
 
         show_on_insert = true,
         show_on_insert_on_trigger_character = true,
-      }
+      },
     },
 
     fuzzy = {
@@ -165,6 +179,7 @@ return function()
       -- default = { 'lsp', 'path', 'snippets', 'buffer' },
       -- default = { 'lsp', 'path', 'snippets', 'buffer' },
       default = { 'lsp', 'path', 'snippets', 'buffer', 'ripgrep' },
+      -- default = {'lsp'}, --- for test
       min_keyword_length = 0,
       providers = {
 
@@ -217,8 +232,8 @@ return function()
         --
 
         ripgrep = {
-          module = "blink-ripgrep",
-          name = "Ripgrep",
+          module = 'blink-ripgrep',
+          name = 'Ripgrep',
           score_offset = -100, -- Depriorize totaly
           -- the options below are optional, some default values are shown
           ---@module "blink-ripgrep"
@@ -242,7 +257,7 @@ return function()
             -- Examples:
             -- "1024" (bytes by default), "200K", "1M", "1G", which will
             -- exclude files larger than that size.
-            max_filesize = "1M",
+            max_filesize = '1M',
 
             -- Specifies how to find the root of the project where the ripgrep
             -- search will start from. Accepts the same options as the marker
@@ -252,7 +267,7 @@ return function()
             -- Examples:
             -- - ".git" (default)
             -- - { ".git", "package.json", ".root" }
-            project_root_marker = ".git",
+            project_root_marker = '.git',
 
             -- Enable fallback to neovim cwd if project_root_marker is not
             -- found. Default: `true`, which means to use the cwd.
@@ -262,7 +277,7 @@ return function()
             -- accepts. Defaults to "--ignore-case". See `rg --help` for all the
             -- available options ripgrep supports, but you can try
             -- "--case-sensitive" or "--smart-case".
-            search_casing = "--ignore-case",
+            search_casing = '--ignore-case',
 
             -- (advanced) Any additional options you want to give to ripgrep.
             -- See `rg -h` for a list of all available options. Might be
@@ -285,8 +300,8 @@ return function()
             -- to find out where the searches are executed, enable `debug` and
             -- look at `:messages`.
             ignore_paths = {
-              "node_modules",
-              "vendor"
+              'node_modules',
+              'vendor',
             },
 
             -- Any additional paths to search in, in addition to the project
@@ -316,7 +331,7 @@ return function()
                 -- - "gitgrep", always use git grep
                 -- - "gitgrep-or-ripgrep", use git grep if possible, otherwise
                 --   ripgrep
-                use = "ripgrep",
+                use = 'ripgrep',
               },
             },
 
@@ -331,14 +346,13 @@ return function()
             for _, item in ipairs(items) do
               -- example: append a description to easily distinguish rg results
               item.labelDetails = {
-                description = "(rg)",
+                description = '(rg)',
               }
             end
             return items
           end,
         },
-
-      }
+      },
     },
 
     cmdline = {
@@ -351,7 +365,6 @@ return function()
       nerd_font_variant = 'mono',
       -- kind_icons = custom_icons.kind.text_compact
     },
-
   }
   blinkcmp.setup(opts)
 end
