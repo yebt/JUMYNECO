@@ -1,473 +1,113 @@
 return function()
   local lspc = require('lspconfig')
-  local util = require('lspconfig.util')
+  local lsp_utils = require('lspconfig.util')
   local msn = require('mason')
-  local msnslpc = require('mason-lspconfig')
+  local path = require('mason-core.path')
+  local msn_lspc = require('mason-lspconfig')
+  -- local dap = require('dap')
+  local msn_dap = require('mason-nvim-dap')
 
-  local emmet_filetypes = { 'css', 'eruby', 'html', 'htmldjango', 'javascriptreact', 'less', 'pug', 'sass', 'scss',
-    'typescriptreact', 'htmlangular', 'blade', 'php', 'vue', 'jsx', 'smarty', 'tpl', 'twig', }
+  local stdpath = vim.fn.stdpath
 
-  --- Move to dedicated opts call
-  -- msn.setup()
-  --- Move to dedicated opts call
-  -- msnslpc.setup()
-
-  -- vim.diagnostic.config({
-  --   update_in_insert = true,
-  -- })
-
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-  if ok then
-    capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-  end
-  -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-  local default_server_ops = {
-    capabilities = capabilities,
+  --- Vars
+  local emmet_filetypes = {
+    'css',
+    'eruby',
+    'html',
+    'htmldjango',
+    'javascriptreact',
+    'less',
+    'pug',
+    'sass',
+    'scss',
+    'typescriptreact',
+    'htmlangular',
+    'blade',
+    'php',
+    'vue',
+    'jsx',
+    'smarty',
+    'tpl',
+    'twig',
   }
+  local mason_root_dir = path.concat({ stdpath('data'), 'mason' })
 
-  --- Add foldingRange to capabilities
-  default_server_ops.capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
+  --- Capabilities
+  local personal_capabilities = {
+    textDocument = {
+      -- Semantik tokens
+      semanticTokens = {
+        multilineTokenSupport = true,
+      },
+      -- Completion capabilities
+      completion = {
+        completionItem = {
+          snippetSupport = true,
+        },
+      },
+      -- Folds
+      -- foldingRange = {
+      --   dynamicRegistration = false,
+      --   lineFoldingOnly = true
+      -- }
+    },
 
-  --- Add discover new files in capabilities
-  default_server_ops.capabilities.workspace = {
-    didChangeWatchedFiles = {
-      dynamicRegistration = true,
+    --- Discover new files
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
     },
   }
 
-  -- msnslpc.setup_handlers({
-  --   -- The first entry (without a key) will be the default handler
-  --   -- and will be called for each installed server that doesn't have
-  --   -- a dedicated handler.
-  --   function(server_name) -- default handler (optional)
-  --     lspc[server_name].setup(default_server_ops)
-  --   end,
+  capabilities = require('blink.cmp').get_lsp_capabilities(personal_capabilities)
+
+  -- local capabilities = vim.lsp.protocol.make_client_capabilities()
   --
-  --   ['lua_ls'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --       settings = {
-  --         Lua = {
-  --           workspace = {
-  --             checkThirdParty = false,
-  --             library = {
-  --               vim.env.VIMRUNTIME,
-  --               -- Depending on the usage, you might want to add additional paths here.
-  --               -- "${3rd}/luv/library"
-  --               -- "${3rd}/busted/library",
-  --             },
-  --             -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-  --             -- library = vim.api.nvim_get_runtime_file("", true)
-  --           },
-  --           -- diagnostics = {
-  --           --   globals = {
-  --           --     'vim',
-  --           --   },
-  --           -- },
-  --         },
-  --       },
-  --     }))
-  --   end,
+  -- capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
   --
-  --   ['pyright'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --       settings = {
-  --         python = {
-  --           analysis = {
-  --             autoSearchPaths = true,
-  --             diagnosticMode = 'openFilesOnly',
-  --             useLibraryCodeForTypes = true,
-  --           },
-  --         },
-  --       },
-  --     }))
-  --   end,
-  --
-  --   ['jsonls'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --       settings = {
-  --         json = {
-  --           schemas = require('schemastore').json.schemas(),
-  --           validate = { enable = true },
-  --         },
-  --       },
-  --     }))
-  --   end,
-  --
-  --   ['yamlls'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --       settings = {
-  --         yaml = {
-  --           schemaStore = {
-  --             -- You must disable built-in schemaStore support if you want to use
-  --             -- this plugin and its advanced options like `ignore`.
-  --             enable = false,
-  --             -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-  --             url = '',
-  --           },
-  --           schemas = require('schemastore').yaml.schemas(),
-  --         },
-  --       },
-  --     }))
-  --   end,
-  --
-  --   -- ['tailwindcss'] = function(sn)
-  --   --   -- lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --   --   --   flags = { debounce_text_changes = 300 },
-  --   --   --   tailwindCSS = {
-  --   --   --     emmetCompletions = false,
-  --   --   --     colorDecorators = false,
-  --   --   --     showPixelEquivalents = false,
-  --   --   --     hovers = false,
-  --   --   --     suggestions = false,
-  --   --   --     codeActions = false,
-  --   --   --     classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
-  --   --   --     includeLanguages = {
-  --   --   --       eelixir = 'html-eex',
-  --   --   --       eruby = 'erb',
-  --   --   --       htmlangular = 'html',
-  --   --   --       templ = 'html',
-  --   --   --     },
-  --   --   --     lint = {
-  --   --   --       cssConflict = 'warning',
-  --   --   --       invalidApply = 'error',
-  --   --   --       invalidConfigPath = 'error',
-  --   --   --       invalidScreen = 'error',
-  --   --   --       invalidTailwindDirective = 'error',
-  --   --   --       invalidVariant = 'error',
-  --   --   --       recommendedVariantOrder = 'warning',
-  --   --   --     },
-  --   --   --     validate = false,
-  --   --   --   },
-  --   --   -- }))
-  --   -- end,
-  --
-  --   -- NOTE: this is a better option, show abrebiations here
-  --   ['emmet_language_server'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --       filetypes = emmet_filetypes,
-  --       init_options = {
-  --         showAbbreviationSuggestions = true,
-  --         -- showExpandedAbbreviation = 'always',
-  --         showSuggestionsAsSnippets = true,
-  --       },
-  --     }))
-  --   end,
-  --   ['emmet_ls'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --       filetypes = emmet_filetypes,
-  --       init_options = {
-  --         showAbbreviationSuggestions = true,
-  --         -- showExpandedAbbreviation = 'always',
-  --         showSuggestionsAsSnippets = true,
-  --       },
-  --     }))
-  --   end,
-  --   -- Next, you can provide a dedicated handler for specific servers.
-  --   -- For example, a handler override for the `rust_analyzer`:
-  --   -- ['rust_analyzer'] = function()
-  --   --   require('rust-tools').setup({})
-  --   -- end,
-  --
-  --   -- ['vtsls'] = function(sn)
-  --   --   lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --   --
-  --   --     -- explicitly add default filetypes, so that we can extend
-  --   --     -- them in related extras
-  --   --     filetypes = {
-  --   --       'javascript',
-  --   --       'javascriptreact',
-  --   --       'javascript.jsx',
-  --   --       'typescript',
-  --   --       'typescriptreact',
-  --   --       'typescript.tsx',
-  --   --     },
-  --   --     settings = {
-  --   --       complete_function_calls = true,
-  --   --       vtsls = {
-  --   --         enableMoveToFileCodeAction = true,
-  --   --         autoUseWorkspaceTsdk = true,
-  --   --         experimental = {
-  --   --           completion = {
-  --   --             enableServerSideFuzzyMatch = true,
-  --   --           },
-  --   --         },
-  --   --       },
-  --   --       typescript = {
-  --   --         updateImportsOnFileMove = { enabled = 'always' },
-  --   --         suggest = {
-  --   --           completeFunctionCalls = true,
-  --   --         },
-  --   --         inlayHints = {
-  --   --           enumMemberValues = { enabled = true },
-  --   --           functionLikeReturnTypes = { enabled = true },
-  --   --           parameterNames = { enabled = 'literals' },
-  --   --           parameterTypes = { enabled = true },
-  --   --           propertyDeclarationTypes = { enabled = true },
-  --   --           variableTypes = { enabled = false },
-  --   --         },
-  --   --       },
-  --   --     },
-  --   --   }))
-  --   --   local name = 'vtsls'
-  --   --   vim.api.nvim_create_autocmd('LspAttach', {
-  --   --     callback = function(args)
-  --   --       local buffer = args.buf ---@type number
-  --   --       local client = vim.lsp.get_client_by_id(args.data.client_id)
-  --   --       if client and (not name or client.name == name) then
-  --   --         vim.notify('vtsls --- ')
-  --   --         client.commands['_typescript.moveToFileRefactoring'] = function(command, ctx)
-  --   --           ---@type string, string, lsp.Range
-  --   --           local action, uri, range = table.unpack(command.arguments)
-  --   --
-  --   --           local function move(newf)
-  --   --             client.request('workspace/executeCommand', {
-  --   --               command = command.command,
-  --   --               arguments = { action, uri, range, newf },
-  --   --             })
-  --   --           end
-  --   --
-  --   --           local fname = vim.uri_to_fname(uri)
-  --   --           client.request('workspace/executeCommand', {
-  --   --             command = 'typescript.tsserverRequest',
-  --   --             arguments = {
-  --   --               'getMoveToRefactoringFileSuggestions',
-  --   --               {
-  --   --                 file = fname,
-  --   --                 startLine = range.start.line + 1,
-  --   --                 startOffset = range.start.character + 1,
-  --   --                 endLine = range['end'].line + 1,
-  --   --                 endOffset = range['end'].character + 1,
-  --   --               },
-  --   --             },
-  --   --           }, function(_, result)
-  --   --             ---@type string[]
-  --   --             local files = result.body.files
-  --   --             table.insert(files, 1, 'Enter new path...')
-  --   --             vim.ui.select(files, {
-  --   --               prompt = 'Select move destination:',
-  --   --               format_item = function(f)
-  --   --                 return vim.fn.fnamemodify(f, ':~:.')
-  --   --               end,
-  --   --             }, function(f)
-  --   --               if f and f:find('^Enter new path') then
-  --   --                 vim.ui.input({
-  --   --                   prompt = 'Enter move destination:',
-  --   --                   default = vim.fn.fnamemodify(fname, ':h') .. '/',
-  --   --                   completion = 'file',
-  --   --                 }, function(newf)
-  --   --                   return newf and move(newf)
-  --   --                 end)
-  --   --               elseif f then
-  --   --                 move(f)
-  --   --               end
-  --   --             end)
-  --   --           end)
-  --   --         end
-  --   --       end
-  --   --     end,
-  --   --   })
-  --   --
-  --   --   -- lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --   --   --
-  --   --   -- }))
-  --   -- end,
-  --   ['vtsls'] = function(sn)
-  --     local opts = vim.tbl_extend('force', default_server_ops, {
-  --       filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  --       settings = {
-  --         vtsls = {
-  --           tsserver = {
-  --             globalPlugins = {
-  --               --- Used fot typescript in vue projects
-  --               {
-  --                 name = '@vue/typescript-plugin',
-  --                 location = require('mason-registry').get_package('vue-language-server'):get_install_path()
-  --                     .. '/node_modules/@vue/language-server',
-  --                 languages = { 'vue' },
-  --                 configNamespace = 'typescript',
-  --                 enableForWorkspaceTypeScriptVersions = true,
-  --               },
-  --             },
-  --           },
-  --         },
-  --       },
-  --       single_file_support = false, -- disable for a no project
-  --       -- not include deno
-  --       root_dir = not vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) and
-  --           util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
-  --     })
-  --     lspc[sn].setup(opts)
-  --   end,
-  --
-  --   ['denols'] = function(sn)
-  --     vim.g.markdown_fenced_languages = {
-  --       "ts=typescript"
+  -- capabilities = vim.tbl_deep_extend('force', capabilities, {
+  --   textDocument = {
+  --     foldingRange = {
+  --       dynamicRegistration = false,
+  --       lineFoldingOnly = true
   --     }
-  --     -- Try some
-  --     lspc[sn].setup({
-  --       capabilities = default_server_ops.capabilities,
-  --       root_dir = false,
-  --       root_dir = vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) or false,
-  --       --     util.root_pattern('deno.json', 'deno.jsonc', '.git'),
-  --       settings = {
-  --         deno = {
-  --           enable = true,
-  --           suggest = {
-  --             imports = {
-  --               hosts = {
-  --                 ['https://deno.land'] = true,
-  --               },
-  --             },
-  --           },
-  --         },
-  --       },
-  --     })
-  --     -- Last
-  --     -- lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --     --   -- init_options = {
-  --     --   --   lint = true,
-  --     --   --   unstable = true,
-  --     --   --   suggest = {
-  --     --   --     imports = {
-  --     --   --       hosts = {
-  --     --   --         ["https://deno.land"] = true,
-  --     --   --         ["https://cdn.nest.land"] = true,
-  --     --   --         ["https://crux.land"] = true,
-  --     --   --       },
-  --     --   --     },
-  --     --   --   },
-  --     --   -- },
-  --     --   settings = {
-  --     --     deno = {
-  --     --       enable = true,
-  --     --       lint=true,
-  --     --       suggest = {
-  --     --         autoImports=true,
-  --     --         imports = {
-  --     --           autoDiscover = true,
-  --     --           hosts = {
-  --     --             ["https://deno.land"] = true,
-  --     --             ["https://nest.land"] = true,
-  --     --             ["https://crux.land/"] = true,
-  --     --           }
-  --     --         }
-  --     --       }
-  --     --     }
-  --     --   }
-  --     --
-  --     -- }))
-  --   end,
-  --
-  --   -- NOTE: allow completion in cssls cause is like snippets
-  --   ['cssls'] = function(sn)
-  --     local lCapabilities = vim.lsp.protocol.make_client_capabilities()
-  --     capabilities.textDocument.completion.completionItem.snippetSupport = true
-  --     lspc[sn].setup({
-  --       capabilities = lCapabilities
-  --     })
-  --   end,
-  --
-  --   ['astro'] = function(sn)
-  --     lspc[sn].setup(vim.tbl_extend('force', default_server_ops, {
-  --
-  --       filetypes = {
-  --         'astro',
-  --         'typescript',
-  --         'javascript',
-  --         -- 'typescriptreact', 'javascriptreact',
-  --         -- 'svelte', 'svelte.svelte', 'vue', 'vue.vue',
-  --         -- 'astro-markdown', 'astro-markdown.md',
-  --         -- 'astro-html', 'astro-html.astro',
-  --       },
-  --       init_options = {
-  --         updateImportsOnFileMove = { enabled = 'always' },
-  --         suggest = {
-  --           completeFunctionCalls = true,
-  --         },
-  --         inlayHints = {
-  --           enumMemberValues = { enabled = true },
-  --           functionLikeReturnTypes = { enabled = true },
-  --           parameterNames = { enabled = 'literals' },
-  --           parameterTypes = { enabled = true },
-  --           propertyDeclarationTypes = { enabled = true },
-  --           variableTypes = { enabled = false },
-  --         },
-  --       },
-  --     }))
-  --   end,
-  --
-  --   ['intelephense'] = function(sn)
-  --     local itlps_capabilities = default_server_ops.capabilities
-  --     lspc[sn].setup({
-  --       capabilities = itlps_capabilities,
-  --       settings = {
-  --         intelephense = {
-  --           diagnostics = {
-  --             enable = true
-  --           },
-  --           format = {
-  --             enable = true
-  --           }
-  --         }
-  --       }
-  --       -- settings = {
-  --       --   intelephense = {
-  --       --     diagnostics = {
-  --       --       enable = true
-  --       --     },
-  --       --     format = {
-  --       --       enable = true
-  --       --     }
-  --       --   }
-  --       -- }
-  --     })
-  --   end
+  --   }
   -- })
 
-
-  -- Set up lspconfig.
-  -- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-  --   capabilities = capabilities
-  -- }
-
-  local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
-
-  --- LSP allow in all lsps the multilineTokenSupport
-  vim.lsp.config('*', {
-    capabilities = {
-      textDocument = {
-        --- Add semantic tokens
-        semanticTokens = {
-          multilineTokenSupport = true,
-        },
-        --- Allos folding
-        foldingRange = {
-          dynamicRegistration = true,
-          lineFoldingOnly = true
-        },
-        --- Allow snippets for cssls
-        -- completionItem = {
-        --   snippetSupport = true
-        -- }
+  --- Startups --------------------
+  --- Mason
+  msn.setup({
+    install_root_dir = mason_root_dir,
+    ---@type '"prepend"' | '"append"' | '"skip"'
+    PATH = 'prepend',
+    log_level = vim.log.levels.INFO,
+    max_concurrent_installers = 6,
+    ui = {
+      check_outdated_packages_on_open = true,
+      border = 'shadow',
+      icons = {
+        package_installed = '🜍',
+        package_pending = '🜛',
+        package_uninstalled = 'x',
       },
-      --- Discover new files
-      workspace = {
-        didChangeWatchedFiles = {
-          dynamicRegistration = true
-        }
-      }
-    }
+    },
   })
 
-  -- lsp settings for server
-  local setup_handlers = {
+  --- Mason Lspconfig Bridge
+  msn_lspc.setup({
+    automatic_enable = true, -- automatic enable with vim.lsp.enable(...)
+    ensure_installed = {
+      'lua_ls',
+    },
+  })
+
+  -- DAP
+  -- Mason Dap Bridge
+  msn_dap.setup({})
+
+  --- Server Settings --------------------------
+  local server_opts = {
     ['lua_ls'] = {
       settings = {
         Lua = {
@@ -479,10 +119,18 @@ return function()
               -- "${3rd}/luv/library"
               -- "${3rd}/busted/library",
             },
+            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+            -- library = vim.api.nvim_get_runtime_file("", true)
           },
-        }
-      }
+          -- diagnostics = {
+          --   globals = {
+          --     'vim',
+          --   },
+          -- },
+        },
+      },
     },
+
     ['pyright'] = {
       settings = {
         python = {
@@ -494,6 +142,7 @@ return function()
         },
       },
     },
+
     ['jsonls'] = {
       settings = {
         json = {
@@ -502,6 +151,7 @@ return function()
         },
       },
     },
+
     ['yamlls'] = {
       settings = {
         yaml = {
@@ -516,7 +166,7 @@ return function()
         },
       },
     },
-    -- NOTE: this is a better option, show abrebiations here
+
     ['emmet_language_server'] = {
       filetypes = emmet_filetypes,
       init_options = {
@@ -526,38 +176,74 @@ return function()
       },
     },
 
-    ['vtsls'] = (function()
-      -- local vuelsLocation = require('mason-registry').get_package('vue-language-server'):get_install_path() ..
-      -- '/node_modules/@vue/language-server'
-      return {
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-        settings = {
-          vtsls = {
-            tsserver = {
-              globalPlugins = {
-                --- Used fot typescript in vue projects
-                {
-                  name = '@vue/typescript-plugin',
-                  -- location = vuelsLocation,
-                  languages = { 'vue' },
-                  configNamespace = 'typescript',
-                  enableForWorkspaceTypeScriptVersions = true,
-                },
+    ['emmet_ls'] = {
+      filetypes = emmet_filetypes,
+      init_options = {
+        showAbbreviationSuggestions = true,
+        -- showExpandedAbbreviation = 'always',
+        showSuggestionsAsSnippets = true,
+      },
+    },
+
+    ['vtsls'] = {
+      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+      settings = {
+        vtsls = {
+          tsserver = {
+            globalPlugins = {
+              --- Used fot typescript in vue projects
+              {
+                name = '@vue/typescript-plugin',
+                location = path.concat({
+                  mason_root_dir,
+                  '/packages/vue-language-server/', -- check inside mason root, sometimes could be change
+                  '/node_modules/@vue/language-server',
+                }),
+                -- location = require('mason-registry').get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server',
+                languages = { 'vue' },
+                configNamespace = 'typescript',
+                enableForWorkspaceTypeScriptVersions = true,
               },
             },
           },
         },
-        single_file_support = false, -- disable for a no project
-        -- not include deno
-        root_dir = not vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) and
-            util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
-      }
-    end)(),
+      },
+      single_file_support = false, -- disable for a no project
+      -- not include deno
+      -- root_dir = not vim.fs.root(0, { 'deno.json', 'deno.jsonc' })
+      --   and lsp_utils.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
+    },
+
+    ['volar'] = {
+      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+      -- Not use vtsls
+      -- init_options = {
+      --   vue = {
+      --     -- disable hybrid mode
+      --     -- NOTE: its awful
+      --     hybridMode = false,
+      --   },
+      -- },
+    },
 
     ['denols'] = {
-      --       root_dir = false,
-      root_dir = vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) or false,
+      root_dir = false,
+      -- root_dir = vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) or false,
       --     util.root_pattern('deno.json', 'deno.jsonc', '.git'),
+
+      -- init_options = {
+      --   lint = true,
+      --   unstable = true,
+      --   suggest = {
+      --     imports = {
+      --       hosts = {
+      --         ["https://deno.land"] = true,
+      --         ["https://cdn.nest.land"] = true,
+      --         ["https://crux.land"] = true,
+      --       },
+      --     },
+      --   },
+      -- },
       settings = {
         deno = {
           enable = true,
@@ -572,14 +258,7 @@ return function()
       },
     },
 
-    -- NOTE: allow completion in cssls cause is like snippets
-    ['cssls'] = {
-      capabilities = (function()
-        local lspCapabilitiesLocal = vim.lsp.protocol.make_client_capabilities()
-        lspCapabilitiesLocal.textDocument.completion.completionItem.snippetSupport = true
-        return lspCapabilitiesLocal
-      end)() -- need add some capabilities
-    },
+    ['cssls'] = {},
 
     ['astro'] = {
       filetypes = {
@@ -608,46 +287,28 @@ return function()
     },
 
     ['intelephense'] = {
-      -- capabilities = itlps_capabilities,
       settings = {
         intelephense = {
           diagnostics = {
-            enable = true
+            enable = true,
           },
           format = {
-            enable = true
-          }
-        }
-      }
-      -- settings = {
-      --   intelephense = {
-      --     diagnostics = {
-      --       enable = true
-      --     },
-      --     format = {
-      --       enable = true
-      --     }
-      --   }
-      -- }
+            enable = true,
+          },
+        },
+      },
+    },
+
+    ['tailwindcss'] = {
+
     }
   }
-
-  for lsp_name, lsp_setting in pairs(setup_handlers) do
-    vim.lsp.config(lsp_name, lsp_setting)
-  end
-
-  --- Better folds
-  vim.o.foldmethod = 'expr'
-  -- Default to treesitter folding
-  vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  -- Prefer LSP folding if client supports it
-  vim.api.nvim_create_autocmd('LspAttach', {
-    callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if client and client:supports_method('textDocument/foldingRange') then
-        local win = vim.api.nvim_get_current_win()
-        vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-      end
-    end,
+  -- Set default configs
+  vim.lsp.config('*', {
+    capabilities = capabilities,
   })
+  for srvr_name, srvr_configs in pairs(server_opts) do
+    srvr_configs.capabilities = capabilities
+    vim.lsp.config(srvr_name, srvr_configs)
+  end
 end
