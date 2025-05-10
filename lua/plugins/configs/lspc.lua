@@ -227,9 +227,10 @@ return function()
     },
 
     ['denols'] = {
-      root_dir = false,
+      -- root_dir = false,
       -- root_dir = vim.fs.root(0, { 'deno.json', 'deno.jsonc' }) or false,
-      --     util.root_pattern('deno.json', 'deno.jsonc', '.git'),
+      root_dir =
+          lsp_utils.root_pattern('deno.json', 'deno.jsonc', '.git'),
 
       -- init_options = {
       --   lint = true,
