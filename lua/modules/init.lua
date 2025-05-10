@@ -23,20 +23,27 @@ local signs = { Error = '∃ ', Warn = 'W ', Hint = 'H ', Info = 'I ' }
 --   vim.diagnostic.config()
 -- end
 vim.diagnostic.config({
-  underline = {
-    -- Implicit true
-    severity = vim.diagnostic.severity.HINT
-  },
-  virtual_text = {
-    current_line = false,
-    source = "if_many",
-    -- 'replace'|'combine'|'blend'
-    hl_mode = "combine",
-    virt_text_hide = true
-  },
-  -- virtual_lines = {
-  --   current_line = true
+  underline = true,
+  virtual_text = true,
+  -- virtual_text = {
+  --   current_line = false,
+  --   source = false,
+  --   -- replace, comine, blend
+  --   spacing = 0,
+  --   prefix = '#',
+  --   suffix = ">>",
+  --   -- format = function ()
+  --   --   return ""
+  --   -- end,
+  --   hl_mode = 'blend',
+  --   --
+  --   virt_text_pos = 'eol_right_align'
+  --   -- virt_text_pos = 'right_align'
   -- },
+  -- virtual_lines ={
+  --   current_line = true,
+  -- }
+
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = signs.Error,
@@ -51,18 +58,18 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
     }
   },
-  float = {
-    -- 'line'|'buffer'|'cursor'|'c'|'l'|'b'
-    scope = 'c',
-    -- bold, double, none, rounded, shadow, single, solid
-    border = "solid",
-  },
-  update_in_insert = true,
-  jump = {
-    float = true,
-    wrap = true,
-  }
-
+  -- float = {
+  --   -- 'line'|'buffer'|'cursor'|'c'|'l'|'b'
+  --   scope = 'c',
+  --   -- bold, double, none, rounded, shadow, single, solid
+  --   border = "solid",
+  -- },
+  -- update_in_insert = true,
+  -- jump = {
+  --   float = true,
+  --   wrap = true,
+  -- }
+  --
 })
 
 
