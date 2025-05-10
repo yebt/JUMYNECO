@@ -17,5 +17,18 @@
       "</style>"
     ],
     "description": "Base for Vue File Setup Composition API - Typescript"
+  },
+  "vue copmponent": {
+    "prefix": "vcomp",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "</script>",
+      "",
+      "<template>",
+      "\t<div>",
+      "\t\t<h1>$0</h1>",
+      "\t</div>",
+      "</template>"
+    ]
   }
 }
