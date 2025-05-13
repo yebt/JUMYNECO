@@ -99,13 +99,19 @@ return {
   --- Null
   {
     'jay-babu/mason-null-ls.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
+    -- event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'VeryLazy' }, -- better performance
     dependencies = {
       'williamboman/mason.nvim',
-
-      'nvimtools/none-ls.nvim',
-      'nvimtools/none-ls-extras.nvim',
-      'nvim-lua/plenary.nvim',
+      {
+        'nvimtools/none-ls.nvim',
+        dependencies = {
+          'neovim/nvim-lspconfig', -- cause lsp call all mason inits
+          'williamboman/mason.nvim',
+          'nvimtools/none-ls-extras.nvim',
+          'nvim-lua/plenary.nvim',
+        },
+      },
     },
     keys = {
       { '<leader>gq', desc = 'None ls format' },
