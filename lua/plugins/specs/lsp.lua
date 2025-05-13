@@ -11,7 +11,7 @@ return {
       --- Schemes for the json,yml,tml lsp
       'b0o/schemastore.nvim',
       --- Autocompletion system
-      'saghen/blink.cmp'
+      'saghen/blink.cmp',
     },
     event = { 'VeryLazy' },
     config = require('plugins.configs.lspc'),
@@ -34,9 +34,27 @@ return {
     'mfussenegger/nvim-dap',
     event = 'VeryLazy',
     dependencies = {
-      "williamboman/mason.nvim",
-      "jay-babu/mason-nvim-dap.nvim",
+      'williamboman/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
     },
+  },
+
+  --- Better inline diagnostics
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    -- event = 'VeryLazy', -- Or `LspAttach`
+    event = 'LspAttach',
+    priority = 1000, -- needs to be loaded in first
+    keys = {
+      {
+        '<leader>',
+        function()
+          require('tiny-inline-diagnostic').toggle()
+        end,
+        desc = 'Toggle Tiny inline diagnostics',
+      },
+    },
+    config = require('plugins.configs.tiny-inline-diagnosticc'),
   },
 
   --- LSP Iteration Utils
@@ -44,7 +62,7 @@ return {
     'nvimdev/lspsaga.nvim',
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons',     -- optional
+      'nvim-tree/nvim-web-devicons', -- optional
     },
     cmd = { 'Lspsaga' },
     -- event = "LazyFile",
@@ -91,7 +109,7 @@ return {
     },
     keys = {
       { '<leader>gq', desc = 'None ls format' },
-      { '<leader>f',  desc = 'None ls format' },
+      { '<leader>f', desc = 'None ls format' },
     },
     config = require('plugins.configs.nonels'),
   },

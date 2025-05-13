@@ -2,6 +2,7 @@ return function()
   local opts = {
     max_count = 2,
     disabled_filetypes = {
+      'dapui*',
       'carbon.explorer',
       'NvimTree',
       'TelescopePrompt',

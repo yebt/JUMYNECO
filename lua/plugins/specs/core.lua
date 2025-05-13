@@ -3,8 +3,10 @@ return {
   --- Good practices
   {
     'm4xshen/hardtime.nvim',
+    event = 'BufEnter',
+    priority = 10000,
     dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
-    lazy = false,
+    -- lazy = false,
     config = require('plugins.configs.hard'),
   },
 
@@ -105,13 +107,12 @@ return {
     event = 'VeryLazy',
     opts = {
       -- enable_autocmd = false,
-    }
+    },
   },
 
   -- Better managment
   {
     'ThePrimeagen/vim-be-good',
     cmd = 'VimBeGood',
-  }
-
+  },
 }

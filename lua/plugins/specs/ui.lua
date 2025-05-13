@@ -1,11 +1,19 @@
 return {
   --- Notifycations
   -- NOTE: could be taked by snaks
+  -- {
+  --   'echasnovski/mini.notify',
+  --   version = false,
+  --   event = { 'VeryLazy' },
+  --   config = require('plugins.configs.mininotifyc'),
+  -- },
+
+  -- Notify LSP
   {
-    'echasnovski/mini.notify',
-    version = false,
-    event = { 'VeryLazy' },
-    config = require('plugins.configs.mininotifyc'),
+    'j-hui/fidget.nvim',
+    lazy = false,
+    -- event = 'VimEnter',
+    config = require("plugins.configs.fidgetc")
   },
 
   --- Visit tracker
@@ -274,7 +282,6 @@ return {
       vim.g.netrw_keepdir = 1
     end,
   },
-
 
   -- TODO: future plugin view
   -- - https://github.com/b0o/incline.nvim
