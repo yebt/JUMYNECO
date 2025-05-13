@@ -85,8 +85,9 @@ return function()
       --
       -- Options related to the notification window and buffer
       window = {
-        normal_hl = 'Comment', -- Base highlight group in the notification window
-        winblend = 80, -- Background color opacity in the notification window
+        -- normal_hl = 'Comment', -- Base highlight group in the notification window
+        normal_hl = 'NormalFloat', -- Base highlight group in the notification window
+        winblend = 10, -- Background color opacity in the notification window
         border = 'none', -- Border around the notification window
         zindex = 45, -- Stacking priority of the notification window
         max_width = 0, -- Maximum width of the notification window
