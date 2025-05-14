@@ -61,41 +61,77 @@ return {
       { 'echasnovski/mini.extra', version = false },
     },
     keys = {
+      -- {
+      --   '<C-p>',
+      --   function()
+      --     MiniPick.registry.full_files({
+      --       -- tool = 'rg',
+      --     }, {
+      --       window = {
+      --         -- Float window config (table or callable returning it)
+      --         config = function()
+      --           -- height = math.floor(0.6 * vim.o.lines)
+      --           -- width = math.floor(0.5 * vim.o.columns)
+      --           local height = 14
+      --           local width = 60
+      --           return {
+      --             anchor = 'NW',
+      --             height = height,
+      --             width = width,
+      --             row = 1,
+      --             col = math.floor(0.5 * (vim.o.columns - width)),
+      --             -- border = 'double',
+      --             -- border = 'solid',
+      --             border = 'single',
+      --           }
+      --         end,
+      --
+      --         -- String to use as cursor in prompt
+      --         prompt_cursor = '▏',
+      --
+      --         -- String to use as prefix in prompt
+      --         prompt_prefix = '󰥨  ',
+      --       },
+      --     })
+      --   end,
+      --
+      --   desc = 'Search the fiels in path',
+      -- },
       {
-        '<C-p>',
+        '<C-P>',
         function()
-          MiniPick.registry.full_files({
-            -- tool = 'rg',
-          }, {
+          MiniPick.builtin.files({}, {
             window = {
-              -- Float window config (table or callable returning it)
               config = function()
-                -- height = math.floor(0.6 * vim.o.lines)
-                -- width = math.floor(0.5 * vim.o.columns)
-                local height = 14
-                local width = 60
+                local height = math.floor(0.618 * vim.o.lines)
+                local width = math.floor(0.618 * vim.o.columns)
                 return {
-                  anchor = 'NW',
-                  height = height,
-                  width = width,
+
+                  -- • "NW" northwest (default)
+                  -- • "NE" northeast
+                  -- • "SW" southwest
+                  -- • "SE" southeast
+                  anchor = 'SW',
                   row = 1,
-                  col = math.floor(0.5 * (vim.o.columns - width)),
-                  -- border = 'double',
-                  -- border = 'solid',
                   border = 'single',
+                  -- row = math.floor(0.5 * (vim.o.lines - height)),
+                  col = math.floor(0.5 * (vim.o.columns - width)),
+
+                  --             anchor = 'NW',
+                  --             height = height,
+                  --             width = width,
+                  -- row = 1,
+                  --             col = math.floor(0.5 * (vim.o.columns - width)),
+                  --             -- border = 'double',
+                  --             -- border = 'solid',
+                  --             border = 'single',
                 }
-              end,
-
-              -- String to use as cursor in prompt
-              prompt_cursor = '▏',
-
-              -- String to use as prefix in prompt
-              prompt_prefix = '󰥨  ',
-            },
+              end
+            }
           })
         end,
-
-        desc = 'Search the fiels in path',
+        silent = true,
+        desc = 'Seacr the files in path'
       },
       {
         '<M-p>',
@@ -186,7 +222,7 @@ return {
               title = 'Title',
               title_pos = 'center', -- 'left', 'center' or 'right'
               preview = {
-                hidden         = 'hidden',      -- hidden|nohidden
+                hidden = 'hidden',  -- hidden|nohidden
               },
             },
           })
