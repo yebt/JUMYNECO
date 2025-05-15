@@ -52,7 +52,6 @@ return {
   -- },
 
   --- Picker
-
   {
     'echasnovski/mini.pick',
     version = false,
@@ -126,12 +125,12 @@ return {
                   --             -- border = 'solid',
                   --             border = 'single',
                 }
-              end
-            }
+              end,
+            },
           })
         end,
         silent = true,
-        desc = 'Seacr the files in path'
+        desc = 'Seacr the files in path',
       },
       {
         '<M-p>',
@@ -188,7 +187,7 @@ return {
       au({ 'BufDelete' }, {
         group = gbl,
         callback = function(args)
-          vim.g._bufferslist[args.buf] = null
+          vim.g._bufferslist[args.buf] = nil
         end,
       })
     end,
@@ -222,7 +221,7 @@ return {
               title = 'Title',
               title_pos = 'center', -- 'left', 'center' or 'right'
               preview = {
-                hidden = 'hidden',  -- hidden|nohidden
+                hidden = 'hidden', -- hidden|nohidden
               },
             },
           })
