@@ -1,5 +1,8 @@
 return function()
   local mf = require('mini.files')
+  local me = require('mini.extra')
+  me.setup({})
+
   -- No need to copy this inside `setup()`. Will be used automatically.
   local options = {
     -- Customization of shown content
