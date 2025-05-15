@@ -13,6 +13,7 @@ M.homeVsKey = function()
   local col = vim.fn.col('.')
   local line = vim.api.nvim_get_current_line()
   local nonBlankColumn = vim.fn.match(line, '\\S') + 1
+  local action = nil
   if col == nonBlankColumn then
     -- action = 'g0'
     action = '0'
