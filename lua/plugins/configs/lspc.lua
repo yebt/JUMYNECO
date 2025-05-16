@@ -6,7 +6,7 @@ return function()
   local msn_lspc = require('mason-lspconfig')
   -- local dap = require('dap')
   local msn_dap = require('mason-nvim-dap')
-
+  local jschemas = require('schemastore').json.schemas()
   local stdpath = vim.fn.stdpath
 
   --- Vars
@@ -146,7 +146,8 @@ return function()
     ['jsonls'] = {
       settings = {
         json = {
-          schemas = require('schemastore').json.schemas(),
+          -- schemas = require('schemastore').json.schemas(),
+          schemas = jschemas,
           validate = { enable = true },
         },
       },
