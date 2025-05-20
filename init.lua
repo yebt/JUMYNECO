@@ -1,2 +1,0 @@
---- start
-require('krnl')
