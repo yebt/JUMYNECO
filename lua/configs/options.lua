@@ -1,4 +1,3 @@
-
 local vopt = vim.opt
 local vg = vim.g
 local vapi = vim.api
@@ -260,27 +259,28 @@ local options = {
 
 --- VARS GLOBAL LOOP
 local globals = {
-  loaded_perl_provider = 0,
-  loaded_ruby_provider = 0,
-  loaded_node_provider = 0,
-  loaded_python_provider = 0,
-  loaded_python3_provider = 0,
-  --
-  -- netrw_browse_split = 4,
-  netrw_banner = 0,
-  netrw_use_errorwindow = 0,
-  netrw_windize = 35,
-  netrw_keepdir = 0,
+  -- loaded_perl_provider = 0,
+  -- loaded_ruby_provider = 0,
+  -- loaded_node_provider = 0,
+  -- loaded_python_provider = 0,
+  -- loaded_python3_provider = 0,
+  -- --
+  -- -- netrw_browse_split = 4,
+  -- netrw_banner = 0,
+  -- netrw_use_errorwindow = 0,
+  -- netrw_windize = 35,
+  -- netrw_keepdir = 0,
 }
 
+--- globals
+for key, valor in pairs(globals) do
+  vg[key] = valor
+end
 --- Load setter
 for key, valor in pairs(options) do
   vopt[key] = valor
 end
-for key, valor in pairs(globals) do
-  vg[key] = valor
-end
 
 --if vim.fn.executable('rg') == 1 then
-vopt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
-vopt.grepprg = 'rg --vimgrep --no-heading --smart-case'
+-- vopt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+-- vopt.grepprg = 'rg --vimgrep --no-heading --smart-case'
