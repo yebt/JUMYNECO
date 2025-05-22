@@ -9,7 +9,7 @@ local use = require('strive').use
 --- is_installed | | bool | Check if plugin is installed
 --- load_opts
 --- load_scripts | | void | return a promise
---- load | do_action, callback | void | Load a plugin and its dependencies
+--- load | do_action, callback | boolean | Load a plugin and its dependencies
 --- on | {}: events | | Set up lazy loading on specific events
 --- ft | {}: filetypes | | Set up lazy loading for specific filetypes
 --- cmd | {}: commands | | Set up lazy loading for specific commands
@@ -47,5 +47,18 @@ use 'echasnovski/mini.starter'
 -- use 'folke/which-key.nvim'
 
 use 'folke/tokyonight.nvim'
-  :theme('tokyonight-night')
+  :setup({
+    style = "night",
+    dim_inactive = true,
+    cache = true,
+    on_highlights = function(hl,c)
+      hl.MiniStarterFooter = {link = 'Comment'}
+    end
+  })
+  :theme('tokyonight')
+  -- :config(function()
+  --   vim.cmd.colorscheme('tokyonight')
+  -- end)
+  -- :on('StriveDone')
+  -- :load() -- load is more faster that theme
 

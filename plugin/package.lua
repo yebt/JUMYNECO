@@ -35,7 +35,9 @@ async(function()
 
   vim.o.rtp = strive_path .. ',' .. vim.o.rtp
 
-  -- local use = require('strive').use
+  local use = require('strive').use
+
+  local api = vim.api
 
   require('plugins.init')
 

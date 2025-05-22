@@ -12,7 +12,7 @@ vim.loader.enable()
 vim.g.mapleader = vim.keycode('<space>')
 vim.g.maplocal = vim.keycode('<space>')
 
-require('configs.options')
+require("configs.options")
 
 -- vim.cmd.colorscheme('habamax')
 -- vim.cmd.colorscheme('solarized')

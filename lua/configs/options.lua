@@ -7,7 +7,7 @@ local spf = vim.fs.joinpath(vim.fn.stdpath('config'), 'spell')
 local options = {
   -- Cursor
   cursorline = true, -- show cursor line highlights:
-  guicursor = 'a:block-cursor', -- show the cursor in block in any mode
+  -- guicursor = 'a:block-cursor', -- show the cursor in block in any mode
   virtualedit = 'block', --
 
   -- Sizes -- Removed cause is used in the toggler map
@@ -219,7 +219,7 @@ local options = {
      'tabpages',
      'winpos',
      'winsize',
-     -- 'folds',
+     'folds',
    },
 
    viewoptions = 'folds,cursor',
@@ -236,6 +236,7 @@ local options = {
    scroll = 4, -- quentity of lines scrolled
    scrolloff = 2, -- lines like a gap when scroll, if is 0, the scroll occourse when cursor es in the limit
    -- sidescrolloff = 5,
+    smoothscroll = true,
 
    -- Completionos
    complete = '.,k,w,b,u,t',
