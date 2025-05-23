@@ -1,64 +1,60 @@
 local api = vim.api
--- Initialize
-local use = require('strive').use
+local uv = vim.uv
 
---- NOTE: plugin -------------
---- new | SPEC | new plugin instance
----
---- get_path | string || the plugin installation path
---- is_installed | | bool | Check if plugin is installed
---- load_opts
---- load_scripts | | void | return a promise
---- load | do_action, callback | boolean | Load a plugin and its dependencies
---- on | {}: events | | Set up lazy loading on specific events
---- ft | {}: filetypes | | Set up lazy loading for specific filetypes
---- cmd | {}: commands | | Set up lazy loading for specific commands
---- keys | {}: mappings | | Set up lazy loading for specific keymaps
---- cond | function | | set a condition to load plugin
---- load_path | string: path | | Mark a plugin as dev
---- setup | {} | | Set plugin configuration options
---- init | function | | runs BEFORE the plugin runs
---- config | function | | runs AFTER the plugin loads
---- after | function | | runs after dependencies load
---- theme | ?name | | Set plugin as a theme
---- call_setup | | |
---- run | string | | executed action on build
---- depends | string or {} | |  Add dependency to a plugin
---- install | | promise |  install the plugin
---- has_update | | boolean | if has update
---- update
---- install_with_retry
+local strive = require('strive')
 
--- NOTE: Last Event
--- StriveDone
+-- _G.strive_plugins = {}
+--
+-- local original_use = strive.use
+-- strive.use = function(spec)
+--   local plugin = original_use(spec)
+--   table.insert(_G.strive_plugins, plugin)
+--   return plugin
+-- end
+--
+-- api.nvim_create_user_command("StriveList", function()
+--   -- for _, plugin in ipairs(_G.strive_plugins or {}) do
+--   --   print(string.format("%-40s %-10s", plugin.name, plugin.status or 'unknown'))
+--   -- end
+--
+--   local plugins = _G.strive_plugins
+--   local lines = {}
+--   table.insert(lines, string.format('%-40s %-12s %s', 'Plugin', 'Estado', 'Ruta'))
+--   table.insert(lines, string.rep('=', 80))
+--
+--   for _, plugin in ipairs(plugins) do
+--     local name = plugin.name
+--     local status = plugin.status or 'unknown'
+--     local path = plugin:get_path()
+--     table.insert(lines, string.format('%-40s %-12s %s', name, status, path))
+--   end
+--
+--   -- Mostrar la salida en un nuevo buffer flotante
+--   local buf = vim.api.nvim_create_buf(false, true)
+--   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+--   vim.bo[buf].buftype = 'nofile'
+--   vim.bo[buf].bufhidden = 'wipe'
+--   vim.bo[buf].modifiable = false
+--   vim.api.nvim_open_win(buf, true, {
+--     relative = 'editor',
+--     width = math.floor(vim.o.columns * 0.8),
+--     height = math.min(#lines + 2, math.floor(vim.o.lines * 0.5)),
+--     row = math.floor((vim.o.lines - #lines) / 2),
+--     col = math.floor(vim.o.columns * 0.1),
+--     style = 'minimal',
+--     border = 'rounded',
+--     title = 'Strive Plugin List',
+--     title_pos = 'center',
+--   })
+-- end, {})
+--
 
---- NOTE: UI
--- use('echasnovski/mini.starter'):init(function()vim.print('init starter')end):setup({})
+local use = strive.use
 
-use 'echasnovski/mini.starter'
-  :config(require('plugins.configs.mini-starter-c'))
-  :cond(function()
-    return vim.fn.argc() == 0
-    and api.nvim_buf_line_count(0) == 0
-    and api.nvim_buf_get_name(0) == ''
-  end)
-  :load() -- Load no lazy
+require("plugins.specs.ui")(use)
+require("plugins.specs.clrs")(use)
 
--- use 'folke/which-key.nvim'
+-- :run('Dashboard')
 
-use 'folke/tokyonight.nvim'
-  :setup({
-    style = "night",
-    dim_inactive = true,
-    cache = true,
-    on_highlights = function(hl,c)
-      hl.MiniStarterFooter = {link = 'Comment'}
-    end
-  })
-  :theme('tokyonight')
-  -- :config(function()
-  --   vim.cmd.colorscheme('tokyonight')
-  -- end)
-  -- :on('StriveDone')
-  -- :load() -- load is more faster that theme
+
 

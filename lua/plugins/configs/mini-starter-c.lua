@@ -81,14 +81,17 @@ return function()
     footer = footer_func,
 
     items = {
+      -- starter.sections.recent_files(5, false, false),
+      starter.sections.recent_files(5, false),
       starter.sections.pick(),
-      starter.sections.recent_files(5, false, false),
       starter.sections.builtin_actions(),
     },
 
     content_hooks = {
       starter.gen_hook.adding_bullet(),
       starter.gen_hook.aligning('center', 'center'),
+      -- starter.gen_hook.indexing('section',{}),
+      starter.gen_hook.indexing('all', { 'Builtin actions','Pick','Sessions' }),
 
       -- starter.gen_hook.indexing('all', { 'Builtin actions' }),
       -- starter.gen_hook.padding(3, 2),

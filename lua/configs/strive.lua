@@ -10,3 +10,6 @@ if not vim.uv.fs_stat(strive_path) then
 
   vim.o.rtp = strive_path .. ',' .. vim.o.rtp
 end
+
+
+require('plugins')
