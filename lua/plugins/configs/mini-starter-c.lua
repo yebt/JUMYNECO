@@ -74,8 +74,16 @@ return function()
     return make_footer()
   end
 
+  ---
+  local bnr = {
+    -- " ▄   ▄▄▄ ▄▄▄ ▄ ▄  ▄▄ ",
+    -- " █▄▄ █▄█  █  █▄█ ▄█  ",
+    "█▄▄ ███ ▀█▀ █▄█ ▄█▀"
+  }
+
   --
   starter.setup({
+    header = table.concat(bnr,"\n"),
     autoopen = true,
     evaluate_single = true,
     footer = footer_func,
