@@ -1,5 +1,4 @@
 clean:
-	rm -rf $(HOME)/.local/share/nvim/site/pack/strive
-	rm -rf $(HOME)/.local/share/nvim/strive.nvim/strive
-	rm -rf $(HOME)/.local/share/nvim/site/pack/lazy
-	rm -rf $(HOME)/.local/share/nvim/lazy
+	rm -rf $(HOME)/.local/share/nvim
+	rm -rf $(HOME)/.local/state/nvim
+	rm -rf $(HOME)/.cache/nvim
