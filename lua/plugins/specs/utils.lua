@@ -5,13 +5,10 @@ return {
     priority = 1000,
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
       { 'echasnovski/mini.icons', version = false },
     },
     opts = {
-      animate = { enabled = false},
-      bigfile = { enabled = true},
-      bufdelete ={ enabled = true},
+      bigfile = {enabled = true},
       dashboard = {
         formats = {
           key = function(item)
@@ -31,50 +28,27 @@ return {
           { section = "keys" },
         },
       },
-      debug = { enabled = false},
-      dim = { enabled = false},
-      explorer ={ enabled = true},
-      git ={ enabled = true},
-      gitbrowse = { enabled = false},
+      explorer = {},
+      image ={ enabled = false},
       indent = {
         indent = {
-          priority = 1,
-          enabled = true, -- enable indent guides
-          char = "│",
-          only_scope = false, -- only show indent guides of the scope
-          only_current = false, -- only show indent guides in the current window
-          hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
-          -- can be a list of hl groups to cycle through
+          -- char = "│",
+          -- ╎ │ ▏
+          char = '▏',
         },
-        -- animate scopes. Enabled by default for Neovim >= 0.10
-        -- Works on older versions but has to trigger redraws during animation.
-        ---@class snacks.indent.animate: snacks.animate.Config
-        ---@field enabled? boolean
-        --- * out: animate outwards from the cursor
-        --- * up: animate upwards from the cursor
-        --- * down: animate downwards from the cursor
-        --- * up_down: animate up or down based on the cursor position
-        ---@field style? "out"|"up_down"|"down"|"up"
         animate = {
-          enabled = false,
+          enabled=false
         },
-        ---@class snacks.indent.Scope.Config: snacks.scope.Config
         scope = {
-          enabled = true, -- enable highlighting the current scope
-          priority = 200,
-          char = "│",
-          underline = false, -- underline the start of the scope
-          only_current = false, -- only show scope in the current window
-          hl = "SnacksIndentScope", ---@type string|string[] hl group for scopes
+          enabled=false,
+          underline = true,
+          only_current = true,
+          char = '▏',
+          -- char = "╎",
         },
         chunk = {
-          -- when enabled, scopes will be rendered as chunks, except for the
-          -- top-level scope which will be rendered as a scope.
           enabled = true,
-          -- only show chunk scopes in the current window
-          only_current = false,
-          priority = 200,
-          hl = "SnacksIndentChunk", ---@type string|string[] hl group for chunk scopes
+          only_current = true,
           char = {
             corner_top = "┌",
             corner_bottom = "└",
@@ -85,26 +59,68 @@ return {
             arrow = ">",
           },
         },
-        -- filter for buffers to enable indent guides
-        filter = function(buf)
-          return vim.g.snacks_indent ~= false and vim.b[buf].snacks_indent ~= false and vim.bo[buf].buftype == ""
-        end,
       },
-
-      input ={ enabled = true},
-      -- bigfile = { enabled = true },
-      -- explorer = { enabled = true },
-      -- indent = { enabled = false },
-      -- input = { enabled = true },
-      -- picker = { enabled = true },
-      -- notifier = { enabled = true },
-      -- quickfile = { enabled = true },
-      -- scope = { enabled = true },
-      -- scroll = { enabled = true },
-      -- statuscolumn = { enabled = true },
-      -- words = { enabled = true },
+      input = {
+        enabled = true
+      },
+      notifier = {
+        --- "compact"|"fancy"|"minimal"
+        style =  "compact",
+      },
+      picker = {
+        prompt = " ",
+      }
     },
+    init = function()
+      --- Disabled animations
+      -- vim.g.snacks_animate = false
+      ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
+      local progress = vim.defaulttable()
+      vim.api.nvim_create_autocmd("LspProgress", {
+        ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+        callback = function(ev)
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          local value = ev.data.params.value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
+          if not client or type(value) ~= "table" then
+            return
+          end
+          local p = progress[client.id]
 
+          for i = 1, #p + 1 do
+            if i == #p + 1 or p[i].token == ev.data.params.token then
+              p[i] = {
+                token = ev.data.params.token,
+                msg = ("[%3d%%] %s%s"):format(
+                  value.kind == "end" and 100 or value.percentage or 100,
+                  value.title or "",
+                  value.message and (" **%s**"):format(value.message) or ""
+                ),
+                done = value.kind == "end",
+              }
+              break
+            end
+          end
+
+          local msg = {} ---@type string[]
+          progress[client.id] = vim.tbl_filter(function(v)
+            return table.insert(msg, v.msg) or not v.done
+          end, p)
+
+          local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+          vim.notify(table.concat(msg, "\n"), "info", {
+            id = "lsp_progress",
+            title = client.name,
+            opts = function(notif)
+              notif.icon = #progress[client.id] == 0 and " "
+              or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+            end,
+          })
+        end,
+      })
+    end,
+    -- config = function(_,opts)
+    --   require("snacks").setup(opts)
+    -- end,
     keys = {
       --- Buffers
       {"<M-c>", function() Snacks.bufdelete() end, desc = "Delete a buffer"},
@@ -114,5 +130,41 @@ return {
       {"<M-b>", function() Snacks.explorer() end, desc = "Open snak explorer"},
       {"<leader>gsb", function() Snacks.git.blame_line() end, desc = "Snak Git Blame Line"},
     }
-  }
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    optional = true,
+    opts = {
+      signs = true, -- show icons in the signs column
+      sign_priority = 8, -- sign priority
+      -- keywords recognized as todo comments
+      keywords = {
+        FIX = {
+          icon = " ", -- icon used for the sign, and in search results
+          color = "error", -- can be a hex color, or a named color (see below)
+          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+          -- signs = false, -- configure signs for some keywords individually
+        },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+      },
+    },
+    keys = {
+      { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Todo" },
+      { "<leader>sT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, desc = "Todo/Fix/Fixme" },
+    },
+  },
+
+  {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+  },
 }
+

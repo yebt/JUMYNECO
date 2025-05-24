@@ -4,3 +4,4 @@ sessions
 OLD*/*
 lua/modules.bak
 **/*.bak
+test/*

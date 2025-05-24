@@ -32,6 +32,13 @@ vim.api.nvim_create_autocmd("User", {
   end
 })
 
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern="LazyFile",
+--   callback = function()
+--     vim.print("LF")
+--   end
+-- })
+
 --- UIEnter occource before that lazy
 -- vim.api.nvim_create_autocmd('UIEnter', {
 --   callback = function()
