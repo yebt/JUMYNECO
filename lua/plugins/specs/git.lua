@@ -54,7 +54,9 @@ return {
       },
     },
     keys = {
-      {'<leader>gph', ':Gitsigns preview_hunk_inline<CR>', silent = true, desc ="Git signs, preview hunk" },
+      {'<leader>gph', ':Gitsigns preview_hunk_inline<CR>', silent = true, desc ="Gitsigns, preview hunk" },
+      {'<leader>gbL', function() require("gitsigns"). blame_line({ full = true }) end, silent = true, desc ="Gitsigns Blame Full Line" },
+      {'<leader>gbl', function() require("gitsigns"). blame_line() end, silent = true, desc ="Gitsigns Blame Line" },
     },
   },
 }
