@@ -121,6 +121,7 @@ local options = {
    foldenable = true,
    foldlevelstart = 99,
    foldmethod = 'indent', -- marker, indent
+   -- foldmethod = 'expr', -- marker, indent
    foldcolumn = '1',
 
    -- Sign

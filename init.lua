@@ -25,10 +25,17 @@ vim.api.nvim_create_autocmd("User", {
       if lazy_autocmds then
         require("config.autocmds")
       end
-
        -- laod keymaps
        require("config.kmaps")
+       -- lsp configs local
+       require("config.lspl")
   end
 })
+
+--- UIEnter occource before that lazy
+-- vim.api.nvim_create_autocmd('UIEnter', {
+--   callback = function()
+--   end
+-- })
 
 require("config.lazy")

@@ -17,13 +17,52 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
+  defaults = {
+    lazy = true,
+  },
   spec = {
     -- import your plugins
-    { import = "plugins" },
+    { import = "plugins.specs" },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
+
+  performance = {
+    cache = {
+      enabled = true,
+    },
+    reset_packpath = true, -- reset the package path to improve startup time
+    rtp = {
+      reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+      ---@type string[]
+      paths = {}, -- add any custom paths here that you want to includes in the rtp
+      ---@type string[] list any plugins you want to disable here
+      disabled_plugins = {
+        -- "editorconfig",
+        "gzip",
+        "man",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "osc52",
+        "rplugin",
+        "shada",
+        "spellfile",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+  -- profiling = {
+  --   -- Enables extra stats on the debug tab related to the loader cache.
+  --   -- Additionally gathers stats about all package.loaders
+  --   loader = true,
+  --   -- Track each new require in the Lazy profiling tab
+  --   require = true,
+  -- },
 })
