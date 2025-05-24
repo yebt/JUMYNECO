@@ -32,21 +32,13 @@ function make_footer()
     lines = {
       '',
       'Startuptime: ' .. package_manager_stats.time .. ' ms',
-      'Plugins: '
-      .. package_manager_stats.loaded
-      .. ' loaded / '
-      .. package_manager_stats.count
-      .. ' installed',
+      'Plugins: ' .. package_manager_stats.loaded .. ' loaded / ' .. package_manager_stats.count .. ' installed',
     }
   elseif package_manager_stats.name == 'strive' then
     lines = {
       '',
-      'Startuptime: ' .. (package_manager_stats.time or '···')  .. ' ms',
-      'Plugins: '
-      .. package_manager_stats.loaded
-      .. ' loaded / '
-      .. package_manager_stats.count
-      .. ' installed',
+      'Startuptime: ' .. (package_manager_stats.time or '···') .. ' ms',
+      'Plugins: ' .. package_manager_stats.loaded .. ' loaded / ' .. package_manager_stats.count .. ' installed',
     }
   else
     lines = {
@@ -56,20 +48,20 @@ function make_footer()
   end
 
   if #lines > 0 then
-    return table.concat(lines , '\n')
+    return table.concat(lines, '\n')
   end
-  return "···"
+  return '···'
 end
 
 return function()
   local starter = require('mini.starter')
   --- FOOT
   local footer_func = function()
-    vim.api.nvim_create_autocmd('User',{
-      pattern = {'StriveDone', 'LazyVimStarted'},
+    vim.api.nvim_create_autocmd('User', {
+      pattern = { 'StriveDone', 'LazyVimStarted' },
       callback = function()
         MiniStarter.refresh()
-      end
+      end,
     })
     return make_footer()
   end
@@ -79,12 +71,12 @@ return function()
     -- " ▄   ▄▄▄ ▄▄▄ ▄ ▄  ▄▄ ",
     -- " █▄▄ █▄█  █  █▄█ ▄█  ",
 
-    "█▄▄ ███ ▀█▀ █▄█ ▄█▀"
+    '█▄▄ ███ ▀█▀ █▄█ ▄█▀',
   }
 
   --
   starter.setup({
-    header = table.concat(bnr,"\n"),
+    header = table.concat(bnr, '\n'),
     autoopen = true,
     evaluate_single = true,
     footer = footer_func,
@@ -108,5 +100,4 @@ return function()
       -- -- starter.gen_hook.indexing('all', { 'Builtin actions' }),
     },
   })
-
 end

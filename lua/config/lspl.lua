@@ -1,4 +1,3 @@
-
 -- OFF the log of lsp
 vim.lsp.log.set_level(vim.log.levels.OFF)
 
@@ -9,4 +8,3 @@ vim.diagnostic.config({
     text = { '●', '●', '●', '●' },
   },
 })
-

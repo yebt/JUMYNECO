@@ -1,7 +1,7 @@
 function safe_keymap_set(mode, lhs, rhs, opts)
-  local keys = require("lazy.core.handler").handlers.keys
+  local keys = require('lazy.core.handler').handlers.keys
   ---@cast keys LazyKeysHandler
-  local modes = type(mode) == "string" and { mode } or mode
+  local modes = type(mode) == 'string' and { mode } or mode
 
   ---@param m string
   modes = vim.tbl_filter(function(m)
