@@ -1,4 +1,7 @@
+--- Colorschemes
 return {
+
+  --- Tokyonight
   {
     'folke/tokyonight.nvim',
     lazy = false,
