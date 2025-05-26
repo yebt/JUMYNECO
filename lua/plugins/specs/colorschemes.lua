@@ -13,14 +13,25 @@ return {
       -- on_highlights = function(highlights, colors)
 
       on_highlights = function(h, c)
+        local ca = "#76946A"
+        local cc = "#DCA561"
+        local cd = "#C34043"
+
         h.MiniStarterFooter = { link = 'Comment' }
+
         h.MiniDiffOverAdd     = "DiffAdd"
         h.MiniDiffOverChange  = "DiffText"
         h.MiniDiffOverContext = "DiffChange"
         h.MiniDiffOverDelete  = "DiffDelete"
-        h.MiniDiffSignAdd     = { fg = "#76946A" }
-        h.MiniDiffSignChange  = { fg = "#DCA561" }
-        h.MiniDiffSignDelete  = { fg = "#C34043" }
+
+        h.MiniDiffSignAdd     = { fg = ca }
+        h.MiniDiffSignChange  = { fg = cc }
+        h.MiniDiffSignDelete  = { fg = cd }
+
+        h.GitSignsAdd         = { fg = ca}
+        h.GitSignsChange      = { fg = cc}
+        h.GitSignsDelete      = { fg = cd}
+
       end,
     },
     config = function(_, opts)
