@@ -130,6 +130,7 @@ return {
       },
       words = {}
     },
+
     init = function()
       --- Disabled animations
       vim.g.snacks_animate = false
@@ -305,7 +306,6 @@ return {
     },
   },
 
-
   -- Trouble for Snack
   {
     "folke/trouble.nvim",
@@ -331,6 +331,5 @@ return {
       end,
     },
   }
-
 
 }
