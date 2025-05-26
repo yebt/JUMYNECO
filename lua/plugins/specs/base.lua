@@ -1,17 +1,21 @@
 --- Base plugins to work
 
 return {
+
+  --- Force good practices
   {
-    "folke/lazy.nvim",
-    version = false
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
   },
 
   ---  QoL varius plugins
   {
     'folke/snacks.nvim',
-    -- priority = 1000,
-    -- lazy = false,
-    event = {"VeryLazy"},
+    priority = 1000,
+    lazy = false,
+    -- event = {"VeryLazy"},
     dependencies = {
       { 'echasnovski/mini.icons', version = false },
     },
@@ -75,6 +79,7 @@ return {
         },
       },
       input = {
+        --
         enabled = true,
       },
       notifier = {
@@ -96,6 +101,14 @@ return {
           frecency = true, -- frecency bonus
           history_bonus = false, -- give more weight to chronological order
         },
+        win = {
+          -- input window
+          input = {
+            keys = {
+              ["<M-p>"] = { "toggle_preview", mode = { "i", "n" } },
+            }
+          }
+        }
         -- formatters = {
         --   text = {
         --     ft = nil, ---@type string? filetype for highlighting
@@ -149,6 +162,25 @@ return {
         --   }
         -- },
       },
+      quickfile = {
+        exclude = { "latex" },
+      },
+      -- scope = {},
+      scroll = { enabled = false },
+      statuscolumn = {
+        left = { "mark", "sign" }, -- priority of signs on the left (high to low)
+        right = { "fold", "git" }, -- priority of signs on the right (high to low)
+        folds = {
+          open = false, -- show open fold icons
+          git_hl = false, -- use Git Signs hl for fold icons
+        },
+        git = {
+          -- patterns to match Git signs
+          patterns = { "GitSign", "MiniDiffSign" },
+        },
+        refresh = 50, -- refresh at most every 50ms
+      }
+
     },
     init = function()
       --- Disabled animations
@@ -202,73 +234,101 @@ return {
     -- end,
     keys = {
       --- Buffers
-      {
-        '<M-c>',
-        function()
-          Snacks.bufdelete()
-        end,
-        desc = 'Delete a buffer',
-      },
-      {
-        '<C-k><C-w>',
-        function()
-          Snacks.bufdelete.all()
-        end,
-        desc = 'Delete all buffers',
-      },
-      {
-        '<C-k><C-q>',
-        function()
-          Snacks.bufdelete.other()
-        end,
-        desc = 'Delete all buffers but not the actual',
-      },
+      { '<M-c>', function() Snacks.bufdelete() end, desc = 'Delete a buffer', },
+      { '<C-k><C-w>', function() Snacks.bufdelete.all() end, desc = 'Delete all buffers', },
+      { '<C-k><C-q>', function() Snacks.bufdelete.other() end, desc = 'Delete all buffers but not the actual', },
+
       --- If use explorer
+      { '<M-b>', function() Snacks.explorer() end, desc = 'Open snak explorer', },
+      { '<leader>gsb', function() Snacks.git.blame_line() end, desc = 'Snak Git Blame Line', },
+      { '<leader>gff', function() Snacks.git.git_files() end, desc = 'Snak Git Find Files', },
+      { '<leader>gfb', function() Snacks.git.git_branches() end, desc = 'Snak Git Find Branches', },
+
+      --- General Finds
+      { "<leader>pb", function() Snacks.picker.buffers() end, desc = "Pick Buffers" },
+      { "<leader>pf", function() Snacks.picker.files() end, desc = "Pick Find Files" },
+      { "<leader>pp", function() Snacks.picker.projects() end, desc = "Pick Projects" },
+      { "<leader>pr", function() Snacks.picker.recent() end, desc = "Pick Recent" },
+      { "<leader>ps", function() Snacks.picker.smart() end, desc = "Pick Smart find files" },
+      { "<leader>pg", function() Snacks.picker.grep() end, desc = "Pick Grep" },
+      { "<leader>pR", function() Snacks.picker.resume() end, desc = "Pick Resume" },
+      { "<leader>pld", function() Snacks.picker.diagnostics_buffer() end, desc = "Pick LSP Diagnostics in buffer" },
+      { "<leader>plD", function() Snacks.picker.diagnostics() end, desc = "Pick LSP Diagnostics" },
+      { "<leader>pn", function() Snacks.picker.notifications() end, desc = "Pick Grep" },
+
+      --- LSP
+      { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+      { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+      { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+      { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+      { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+
+      --- Usual Pickers
       {
-        '<M-b>',
+        "<C-p>",
         function()
-          Snacks.explorer()
+          Snacks.picker.files({
+            formatters = {
+              file = {
+                filename_first = true,
+                git_status_hl = false
+              }
+            },
+            layout = {
+              --- VSCODE
+              preview = false,
+              layout = {
+                backdrop = false,
+                row = 1,
+                width = 0.4,
+                min_width = 80,
+                -- min_height=0.4,
+                height = 0.4,
+                border = "none",
+                box = "vertical",
+                {
+                  box = "vertical",
+                  height = 0.5,
+                  -- border = "single",
+                  { win = "input", height = 1, border = "bottom", title = "{title} {live} {flags}", title_pos = "center" },
+                  { win = "list", border = "hpad" },
+                },
+                { win = "preview", title = "{preview}", border = "rounded" },
+              },
+            }
+          })
         end,
-        desc = 'Open snak explorer',
+        desc = "Pick Resume"
       },
-      {
-        '<leader>gsb',
-        function()
-          Snacks.git.blame_line()
-        end,
-        desc = 'Snak Git Blame Line',
-      },
+
+      -- { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      -- { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      -- { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+      -- { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
     },
   },
 
-
-  ---
-  {
-    "m4xshen/hardtime.nvim",
-    lazy = false,
-    dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
-  },
-
+  --- Motions Snak map
   {
     "folke/flash.nvim",
-    event ={'VeryLazy'},
+    optional = true,
     specs = {
-     {
+      {
         "folke/snacks.nvim",
         opts = {
           picker = {
             win = {
               input = {
                 keys = {
-                  ["<M-s>"] = { "flash", mode = { "n", "i" } },
+                  ["<a-s>"] = { "flash", mode = { "n", "i" } },
                   ["s"] = { "flash" },
                 },
               },
             },
             actions = {
               flash = function(picker)
-                vim.print('-----')
                 require("flash").jump({
                   pattern = "^",
                   label = { after = { 0, 0 } },
@@ -292,4 +352,42 @@ return {
       },
     },
   },
+
+  --- Todo commets Snack map
+  {
+    "folke/todo-comments.nvim",
+    optional = true,
+    keys = {
+      { "<leader>pt", function() Snacks.picker.todo_comments() end, desc = "Todo" },
+    },
+  },
+
+
+  -- Trouble for Snack
+  {
+    "folke/trouble.nvim",
+    optional = true,
+    specs = {
+      "folke/snacks.nvim",
+      opts = function(_, opts)
+        return vim.tbl_deep_extend("force", opts or {}, {
+          picker = {
+            actions = require("trouble.sources.snacks").actions,
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = {
+                    "trouble_open",
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end,
+    },
+  }
+
+
 }
