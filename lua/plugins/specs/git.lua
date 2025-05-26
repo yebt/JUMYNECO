@@ -4,17 +4,25 @@ return {
     'echasnovski/mini.diff', version = false ,
     -- event = {"LazyFile", "User PostVeryLazy"},
     lazy = false,
-    opts  = -- No need to copy this inside `setup()`. Will be used automatically.
-    {
+    -- init = function()
+    --   vim.api.nvim_create_autocmd('ColorScheme',{
+    --     callback = function()
+    --       vim.api.nvim_set_hl(0, "",{})
+    --     end,
+    --     desc = "Ser colors for diff",
+    --   })
+    -- end,
+    opts  ={
       -- Options for how hunks are visualized
       view = {
         -- Visualization style. Possible values are 'sign' and 'number'.
         -- Default: 'number' if line numbers are enabled, 'sign' otherwise.
         -- style = vim.go.number and 'number' or 'sign',
-        string = 'sign',
+        style = 'sign',
 
         -- Signs used for hunks with 'sign' view
-        signs = { add = '▒', change = '▒', delete = '▒' },
+        -- signs = { add = '▒', change = '▒', delete = '▒' },
+        signs = { add = '+', change = '~', delete = '_' },
 
         -- Priority of used visualization extmarks
         priority = 199,
@@ -33,10 +41,12 @@ return {
       -- Module mappings. Use `''` (empty string) to disable one.
       mappings = {
         -- Apply hunks inside a visual/operator region
-        apply = 'gh',
+        -- apply = 'gh',
+        apply = '',
 
         -- Reset hunks inside a visual/operator region
-        reset = 'gH',
+        -- reset = 'gH',
+        reset = '',
 
         -- Hunk range textobject to be used inside operator
         -- Works also in Visual mode if mapping differs from apply and reset
@@ -52,7 +62,8 @@ return {
       -- Various options
       options = {
         -- Diff algorithm. See `:h vim.diff()`.
-        algorithm = 'histogram',
+        -- {algorithm}? (`'myers'|'minimal'|'patience'|'histogram'`,
+        algorithm = 'patience',
 
         -- Whether to use "indent heuristic". See `:h vim.diff()`.
         indent_heuristic = true,

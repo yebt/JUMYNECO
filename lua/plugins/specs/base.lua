@@ -109,64 +109,12 @@ return {
             }
           }
         }
-        -- formatters = {
-        --   text = {
-        --     ft = nil, ---@type string? filetype for highlighting
-        --   },
-        --   file = {
-        --     filename_first = true, -- display filename before the file path
-        --     truncate = 40, -- truncate the file path to (roughly) this length
-        --     filename_only = false, -- only show the filename
-        --     icon_width = 2, -- width of the icon (in characters)
-        --     git_status_hl = true, -- use the git status highlight group for the filename
-        --   },
-        --   selected = {
-        --     show_always = false, -- only show the selected column when there are multiple selections
-        --     unselected = true, -- use the unselected icon for unselected items
-        --   },
-        --   severity = {
-        --     icons = true, -- show severity icons
-        --     level = false, -- show severity level
-        --     ---@type "left"|"right"
-        --     pos = "left", -- position of the diagnostics
-        --   },
-        -- },
-
-        -- layouts = {
-        --   files = {
-        --     layout = {
-        --       backdrop = false,
-        --       row = 1,
-        --       width = 0.4,
-        --       min_width = 80,
-        --       height = 0.8,
-        --       border = "none",
-        --       box = "vertical",
-        --       { win = "preview", title = "{preview}", height = 0.4, border = "rounded" },
-        --       {
-        --         box = "vertical",
-        --         border = "rounded",
-        --         title = "{title} {live} {flags}",
-        --         title_pos = "center",
-        --         { win = "input", height = 1, border = "bottom" },
-        --         { win = "list", border = "none" },
-        --       },
-        --     },
-        --   }
-        -- },
-        -- win = {
-        --   -- input window
-        --   input = {
-        --     keys = {
-        --     },
-        --   }
-        -- },
       },
       quickfile = {
         exclude = { "latex" },
       },
-      -- scope = {},
-      scroll = { enabled = false },
+      -- scope asd= {},
+      -- scroll = { enabled = false },
       statuscolumn = {
         left = { "mark", "sign" }, -- priority of signs on the left (high to low)
         right = { "fold", "git" }, -- priority of signs on the right (high to low)
@@ -179,8 +127,8 @@ return {
           patterns = { "GitSign", "MiniDiffSign" },
         },
         refresh = 50, -- refresh at most every 50ms
-      }
-
+      },
+      words = {}
     },
     init = function()
       --- Disabled animations
@@ -280,7 +228,6 @@ return {
               --- VSCODE
               preview = false,
               layout = {
-                backdrop = false,
                 row = 1,
                 width = 0.4,
                 min_width = 80,
@@ -303,10 +250,6 @@ return {
         desc = "Pick Resume"
       },
 
-      -- { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
-      -- { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      -- { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
-      -- { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
     },
   },
 
