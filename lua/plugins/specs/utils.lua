@@ -440,5 +440,53 @@ return {
         desc = "2 Char jump"
       }
     },
-  }
+  },
+
+
+  --- Sessions
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = {
+      -- branch = true, -- use git branch to save session
+    },
+    -- stylua: ignore
+    keys = {
+      { "<leader>Ss", function() require("persistence").load() end, desc = "Restore Session" },
+      { "<leader>SS", function() require("persistence").select() end,desc = "Select Session" },
+      { "<leader>Sl", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+      { "<leader>Sd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+    },
+  },
+
+  --- Which Key
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      preset = "helix",
+      defaults = {},
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+          { "gs", group = "surround" },
+          { "z", group = "fold" },
+          { "<leader>p", group = "pick" },
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+  },
+
 }
