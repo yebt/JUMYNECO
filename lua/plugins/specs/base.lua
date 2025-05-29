@@ -199,7 +199,7 @@ return {
       { "<leader>pp", function() Snacks.picker.projects() end, desc = "Pick Projects" },
       { "<leader>pr", function() Snacks.picker.recent() end, desc = "Pick Recent" },
       { "<leader>ps", function() Snacks.picker.smart() end, desc = "Pick Smart find files" },
-      { "<leader>pg", function() Snacks.picker.grep() end, desc = "Pick Grep" },
+      { "<leader>pG", function() Snacks.picker.grep() end, desc = "Pick Grep" },
       { "<leader>pR", function() Snacks.picker.resume() end, desc = "Pick Resume" },
       { "<leader>pld", function() Snacks.picker.diagnostics_buffer() end, desc = "Pick LSP Diagnostics in buffer" },
       { "<leader>plD", function() Snacks.picker.diagnostics() end, desc = "Pick LSP Diagnostics" },
