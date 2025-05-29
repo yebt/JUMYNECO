@@ -35,6 +35,7 @@ vim.api.nvim_create_autocmd('User', {
   group = vim.api.nvim_create_augroup('LunarSetup', { clear = true }),
   pattern = 'VeryLazy',
   callback = function()
+    -- load autocmds
     if lazy_autocmds then
       require('config.autocmds')
     end
@@ -42,6 +43,10 @@ vim.api.nvim_create_autocmd('User', {
     require('config.kmaps')
     -- lsp configs local
     require('config.lspl')
+    -- Make a status line
+    -- require('modeline').setup()
+    -- require('fastline')
+
     vim.api.nvim_exec_autocmds('User',{
       pattern = 'PostVeryLazy'
     })
@@ -49,4 +54,3 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 require('config.lazy')
-require('modeline').setup()
