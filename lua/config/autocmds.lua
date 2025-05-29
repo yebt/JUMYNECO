@@ -57,6 +57,23 @@ au('BufWinEnter', {
   end,
 })
 
+au({ 'FileType' }, {
+  desc = "Remove conceal form json",
+  group = group,
+  pattern = { 'json', 'jsonc', 'json5' },
+  callback = function()
+    vim.opt_local.conceallevel = 0
+  end
+})
+
+au("FileType", {
+  group = group,
+  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
 --- USAGE
 --------------------
 au('TextYankPost', {
