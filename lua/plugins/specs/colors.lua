@@ -1,4 +1,5 @@
---- Colorschemes
+--- COLORS THINGS
+--- Just the colors things
 return {
 
   --- Tokyonight

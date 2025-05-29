@@ -1,6 +1,8 @@
 -- Bootstrap lazy.nvim
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.notify('No lazy.nvim plugin manager, installing ...', vim.log.levels.WARM)
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
   if vim.v.shell_error ~= 0 then
@@ -12,6 +14,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     vim.fn.getchar()
     os.exit(1)
   end
+  vim.notify('Done')
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -29,6 +32,9 @@ require('lazy').setup({
   spec = {
     -- import your plugins
     { import = 'plugins.specs' },
+  },
+  rocks = {
+    enabled = false,
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -64,6 +70,7 @@ require('lazy').setup({
       },
     },
   },
+
   -- profiling = {
   --   -- Enables extra stats on the debug tab related to the loader cache.
   --   -- Additionally gathers stats about all package.loaders
