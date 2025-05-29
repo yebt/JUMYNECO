@@ -1,41 +1,48 @@
-local config = require("modeline.config")
+local rendered_once = false
 
 local function get_module_output(name)
   local ok, mod = pcall(require, "modeline.modules." .. name)
   if ok and mod and mod.get then
-    return mod.get()
+    return coroutine.create(mod.get)
   end
-  return ""
+  return coroutine.create(function() return "[error:load:" .. name .. "]" end)
+end
+
+local function run_coroutines(module_names)
+  local results = {}
+  for _, name in ipairs(module_names) do
+    local co = get_module_output(name)
+    local ok, result = coroutine.resume(co)
+    if not ok then
+      result = "[error:" .. name .. "]"
+      vim.schedule(function()
+        vim.notify("modeline.nvim: error in module '" .. name .. "':\n" .. tostring(result), vim.log.levels.ERROR)
+      end)
+    end
+    table.insert(results, result or "")
+  end
+  return results
 end
 
 local function render_section(modules, separator)
-  local parts = {}
-  for _, name in ipairs(modules) do
-    local output = get_module_output(name)
-    if output and output ~= "" then
-      table.insert(parts, output)
-    end
-  end
+  local parts = run_coroutines(modules)
   return table.concat(parts, separator or "%#ModelineSeparator# | %#Normal#")
 end
 
 local function render()
-  local sections = config.get_sections()
+  if not rendered_once then
+    rendered_once = true
+    vim.schedule(function()
+      vim.api.nvim_exec_autocmds("User", { pattern = "ModelineReady" })
+    end)
+  end
 
+  local sections = require("modeline.config").get_sections()
   local left = render_section(sections.left)
   local center = render_section(sections.center)
   local right = render_section(sections.right)
 
-  local full_line = table.concat({
-    "%#Normal#", -- reset to normal
-    left,
-    "%=",
-    center,
-    "%=",
-    right,
-  }, " ")
-
-  return full_line
+  return table.concat({ "%#Normal#", left, "%=", center, "%=", right }, " ")
 end
 
 return {
