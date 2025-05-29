@@ -8,11 +8,11 @@
 if vim.env.PROF then
   -- example for lazy.nvim
   -- change this to the correct path for your plugin manager
-  local snacks = vim.fn.stdpath("data") .. "/lazy/snacks.nvim"
+  local snacks = vim.fn.stdpath('data') .. '/lazy/snacks.nvim'
   vim.opt.rtp:append(snacks)
-  require("snacks.profiler").startup({
+  require('snacks.profiler').startup({
     startup = {
-      event = "VimEnter", -- stop profiler on this event. Defaults to `VimEnter`
+      event = 'VimEnter', -- stop profiler on this event. Defaults to `VimEnter`
       -- event = "UIEnter",
       -- event = "VeryLazy",
     },
@@ -45,10 +45,16 @@ vim.api.nvim_create_autocmd('User', {
     require('config.lspl')
     -- Make a status line
     -- require('modeline').setup()
-    -- require('fastline')
+    require('fastline').setup({
+      sections = {
+        left = { 'lsp' },
+        right = { 'startup' },
+        -- puedes agregar "git", "filename", etc.
+      },
+    })
 
-    vim.api.nvim_exec_autocmds('User',{
-      pattern = 'PostVeryLazy'
+    vim.api.nvim_exec_autocmds('User', {
+      pattern = 'PostVeryLazy',
     })
   end,
 })
