@@ -47,8 +47,9 @@ vim.api.nvim_create_autocmd('User', {
     -- require('modeline').setup()
     require('fastline').setup({
       sections = {
-        left = { 'lsp' },
-        right = { 'startup' },
+        left = { 'filename' },
+        center = {'lsp'},
+        right = { 'startup', 'mode' },
         -- puedes agregar "git", "filename", etc.
       },
     })
