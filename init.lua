@@ -45,14 +45,14 @@ vim.api.nvim_create_autocmd('User', {
     require('config.lspl')
     -- Make a status line
     -- require('modeline').setup()
-    require('fastline').setup({
-      sections = {
-        left = { 'filename' },
-        center = {'lsp'},
-        right = { 'startup', 'mode' },
-        -- puedes agregar "git", "filename", etc.
-      },
-    })
+    -- require('fastline').setup({
+    --   sections = {
+    --     left = { 'filename' },
+    --     center = {'lsp'},
+    --     right = { 'startup', 'mode' },
+    --     -- puedes agregar "git", "filename", etc.
+    --   },
+    -- })
 
     vim.api.nvim_exec_autocmds('User', {
       pattern = 'PostVeryLazy',
