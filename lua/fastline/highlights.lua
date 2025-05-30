@@ -1,20 +1,22 @@
 local M = {}
 
 function colorize(name, opts)
-  vim.api.nvim_set_hl(0, name,opts)
+  vim.api.nvim_set_hl(0, name, opts)
 end
 
 function M.setup()
   local colors = {
-    green_pistachio = "#98c379",
-    blue_argentinian = "#61afef",
-    gray_paynes = "#5c6370",
+    green_pistachio = '#98c379',
+    blue_argentinian = '#61afef',
+    gray_paynes = '#5c6370',
   }
 
   local theme = {
-    ["ModelineLSP"] = {fg = colors.green_pistachio, bold = true},
-    ["ModelineStartup"] = {fg = colors.blue_argentinian, bold = true},
-    ["ModelineSeparator"] = {fg = colors.gray_paynes},
+    ['FastlineLSP'] = { fg = colors.green_pistachio, bold = true },
+    ['FastlineStartup'] = { fg = colors.blue_argentinian, bold = true },
+    ['FastlineSeparator'] = { fg = colors.gray_paynes },
+    ['FastlineSeparator'] = { fg = colors.gray_paynes },
+    ['FastlineNormal'] = {link = 'Statusline'}
   }
   for name, opts in pairs(theme) do
     colorize(name, opts)

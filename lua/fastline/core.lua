@@ -1,12 +1,28 @@
-local config = require("fastline.config")
+local config = require('fastline.config')
 local rendered_once = false
 
 local function get_module_output(name)
-  local ok, mod = pcall(require, "fastline.modules." .. name)
+  if type(name) ~= 'string' then
+    return coroutine.create(function()
+      return ''
+    end)
+  end
+
+  -- Literal space or Vim expressions like %{...}
+  if name:match('^%%{.*}$') or name:match('^%s+$') then
+    return coroutine.create(function()
+      return name
+    end)
+  end
+
+  local ok, mod = pcall(require, 'modeline.modules.' .. name)
   if ok and mod and mod.get then
     return coroutine.create(mod.get)
   end
-  return coroutine.create(function() return "[error:load:" .. name .. "]" end)
+
+  return coroutine.create(function()
+    return '[error:load:' .. name .. ']'
+  end)
 end
 
 local function run_coroutines(module_names)
@@ -15,26 +31,26 @@ local function run_coroutines(module_names)
     local co = get_module_output(name)
     local ok, result = coroutine.resume(co)
     if not ok then
-      result = "[error:" .. name .. "]"
+      result = '[error:' .. name .. ']'
       vim.schedule(function()
         vim.notify("fastline.nvim: error in module '" .. name .. "':\n" .. tostring(result), vim.log.levels.ERROR)
       end)
     end
-    table.insert(results, result or "")
+    table.insert(results, result or '')
   end
   return results
 end
 
 local function render_section(modules, separator)
   local parts = run_coroutines(modules)
-  return table.concat(parts, separator or "%#FastlineSeparator# | %#Normal#")
+  return table.concat(parts, separator or '%#FastlineSeparator# | %#Normal#')
 end
 
 local function render()
   if not rendered_once then
     rendered_once = true
     vim.schedule(function()
-      vim.api.nvim_exec_autocmds("User", { pattern = "FastlineReady" })
+      vim.api.nvim_exec_autocmds('User', { pattern = 'FastlineReady' })
     end)
   end
 
@@ -43,10 +59,9 @@ local function render()
   local center = render_section(sections.center)
   local right = render_section(sections.right)
 
-  return table.concat({ "%#Normal#", left, "%=", center, "%=", right }, " ")
+  return table.concat({ '%#FastlineNormal#', left, '%=', center, '%=', right }, ' ')
 end
 
 return {
   render = render,
 }
-
