@@ -41,7 +41,11 @@ require('lazy').setup({
   install = { colorscheme = { 'habamax' } },
   -- automatically check for plugin updates
   checker = { enabled = true },
-
+  change_detection = {
+    -- automatically check for config file changes and reload the ui
+    enabled = false,
+    notify = true, -- get a notification when changes are found
+  },
   performance = {
     cache = {
       enabled = true,
@@ -79,3 +83,5 @@ require('lazy').setup({
   --   require = true,
   -- },
 })
+
+vim.keymap.set('n','<leader>lp',':Lazy profile<cr>')
