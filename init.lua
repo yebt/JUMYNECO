@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd('User', {
     -- lsp configs local
     require('config.lspl')
     -- Make a status line
-    -- require('modeline').setup()
+    require('modules.statusline')
     -- require('fastline').setup({
     --   sections = {
     --     left = { 'filename' },
