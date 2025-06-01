@@ -112,6 +112,7 @@ au('FileType', {
     'spectre_panel',
     'startuptime',
     'tsplayground',
+    -- 'netrw',
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
