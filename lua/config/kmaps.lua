@@ -1,9 +1,12 @@
 local map = vim.keymap.set
 
+map('n','\\', ':Ex %:h<cr>')
+
 --- Break the undo for no remove all word
 map('i', ',', ',<c-g>u')
 map('i', '.', '.<c-g>u')
 map('i', ';', ';<c-g>u')
+map('i', '<cr>', '<cr><c-g>u')
 
 --- Quit
 map('n', '<leader>q', '<cmd>q<CR>', { silent = true, desc = 'Quit of nvim' })
