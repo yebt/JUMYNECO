@@ -5,10 +5,17 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
+    opts_extend = { "spec" },
     opts = {
       preset = "helix",
       -- delay = 10,
       spec = {
+        -- {
+        --   {
+        --     mode={'n','x'},
+        --     {'<leader>gh', group = "Gitsigns"}
+        --   }
+        -- }
       },
       triggers = {
         --- Default
@@ -23,25 +30,32 @@ return {
         },
       },
       -- expand = function()
-      --   return true
-      -- end
-      expand = function(node)
-        return not node.desc -- expand all nodes without a description
-      end,
-      icons = {
-        colors = false,
-        rules = false,
-      },
-      -- loop = true
-    },
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show({ global = false })
+        --   return true
+        -- end
+        expand = function(node)
+          return not node.desc -- expand all nodes without a description
         end,
-        desc = "Buffer Local Keymaps (which-key)",
+        icons = {
+          -- colors = false,
+          rules = false,
+        },
+        -- loop = true
       },
-    },
+      keys = {
+        {
+          "<leader>?",
+          function()
+            require("which-key").show({ global = false })
+          end,
+          desc = "Buffer Local Keymaps (which-key)",
+        },
+        {
+          "<c-w><space>",
+          function()
+            require("which-key").show({ keys = "<c-w>", loop = true })
+          end,
+          desc = "Window Hydra Mode (which-key)",
+        },
+      },
+    }
   }
-}
