@@ -84,4 +84,4 @@ require('lazy').setup({
   -- },
 })
 
-vim.keymap.set('n','<leader>lp',':Lazy profile<cr>')
+vim.keymap.set('n', '<leader>lp', ':Lazy profile<cr>')

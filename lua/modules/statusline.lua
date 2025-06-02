@@ -25,12 +25,12 @@ local function set_hl_status()
 
   hl(0, 'stlLSP', { fg = '#6290C8', italic = true })
 
-  hl(0, "stlModeNormal", { fg = "#98c379", bold = true })
-  hl(0, "stlModeInsert", { fg = "#61afef", bold = true })
-  hl(0, "stlModeVisual", { fg = "#c678dd", bold = true })
-  hl(0, "stlModeNormalR", { fg = "#98c379", bold = true, reverse = true })
-  hl(0, "stlModeInsertR", { fg = "#61afef", bold = true, reverse = true })
-  hl(0, "stlModeVisualR", { fg = "#c678dd", bold = true, reverse = true })
+  hl(0, 'stlModeNormal', { fg = '#98c379', bold = true })
+  hl(0, 'stlModeInsert', { fg = '#61afef', bold = true })
+  hl(0, 'stlModeVisual', { fg = '#c678dd', bold = true })
+  hl(0, 'stlModeNormalR', { fg = '#98c379', bold = true, reverse = true })
+  hl(0, 'stlModeInsertR', { fg = '#61afef', bold = true, reverse = true })
+  hl(0, 'stlModeVisualR', { fg = '#c678dd', bold = true, reverse = true })
   ---
 end
 
@@ -67,20 +67,20 @@ local function ml_mode()
 end
 
 local mode_map = {
-  n = { "NOR", "stlModeNormal" },
-  i = { "INS", "stlModeInsert" },
-  v = { "VIS", "stlModeVisual" },
-  V = { "V-L", "stlModeVisual" },
-  [""] = { "V-B", "stlModeVisual" },
-  c = { "CMD", "stlModeCommand" },
-  R = { "REP", "stlModeReplace" },
-  t = { "TER", "stlModeTerminal" },
+  n = { 'NOR', 'stlModeNormal' },
+  i = { 'INS', 'stlModeInsert' },
+  v = { 'VIS', 'stlModeVisual' },
+  V = { 'V-L', 'stlModeVisual' },
+  [''] = { 'V-B', 'stlModeVisual' },
+  c = { 'CMD', 'stlModeCommand' },
+  R = { 'REP', 'stlModeReplace' },
+  t = { 'TER', 'stlModeTerminal' },
 }
 
-local function color_mode ()
+local function color_mode()
   local mode = vim.api.nvim_get_mode().mode
-  local data = mode_map[mode] or { mode, "stlMode" }
-  g.stl_mod_str = ("%%#%s# %s %%*"):format(data[2], data[1])
+  local data = mode_map[mode] or { mode, 'stlMode' }
+  g.stl_mod_str = ('%%#%s# %s %%*'):format(data[2], data[1])
 end
 
 -- mode to show
@@ -111,24 +111,23 @@ vim.defer_fn(update_git_branch, 100) -- Llama una vez al inicio
 ------- LSP Status
 -----------------------
 
-g.stl_lsp_clients = ""
+g.stl_lsp_clients = ''
 
 local function get_actual_clients()
-
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   if #clients > 0 then
     local names = {}
     for _, client in ipairs(clients) do
       table.insert(names, client.name)
     end
-    local lst =  table.concat(names, ',')
-    g.stl_lsp_clients = ("%#stlLSP#󰿘 [%s]"):format(lst)
+    local lst = table.concat(names, ',')
+    g.stl_lsp_clients = ('%#stlLSP#󰿘 [%s]'):format(lst)
   else
-    g.stl_lsp_clients = ""
+    g.stl_lsp_clients = ''
   end
 end
 
-vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach", "LspProgress" }, {
+vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress' }, {
   callback = get_actual_clients,
 })
 
@@ -154,14 +153,13 @@ local components = {
   nrml,
 }
 
-au({'VimEnter','User'},{
-  pattern = "PostVeryLazy",
+au({ 'VimEnter', 'User' }, {
+  pattern = 'PostVeryLazy',
   once = true,
   callback = function()
     set_hl_status()
     color_mode()
-  end
+  end,
 })
-
 
 vim.opt.statusline = table.concat(components, '%#Statusline#')

@@ -58,17 +58,17 @@ au('BufWinEnter', {
 })
 
 au({ 'FileType' }, {
-  desc = "Remove conceal form json",
+  desc = 'Remove conceal form json',
   group = group,
   pattern = { 'json', 'jsonc', 'json5' },
   callback = function()
     vim.opt_local.conceallevel = 0
-  end
+  end,
 })
 
-au("FileType", {
+au('FileType', {
   group = group,
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+  pattern = { 'text', 'plaintex', 'typst', 'gitcommit', 'markdown' },
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true

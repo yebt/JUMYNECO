@@ -1,6 +1,6 @@
 local map = vim.keymap.set
 
-map('n','\\', ':Ex %:h<cr>')
+map('n', '\\', ':Ex %:h<cr>')
 
 --- Break the undo for no remove all word
 map('i', ',', ',<c-g>u')
@@ -85,7 +85,6 @@ map('n', '<M-s>', '<cmd>e #<cr>', { silent = true, desc = 'Go to altername buffe
 --- Comments
 map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Below' })
 map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Above' })
-
 
 --- Toggler Wrap
 map('n', '<M-z>w', '<cmd>set wrap!<CR>', { silent = true, desc = 'Toggle wrap' })
