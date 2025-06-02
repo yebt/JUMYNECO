@@ -90,7 +90,22 @@ return {
         -- map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
         --
       end,
-    }
+    },
+    dependencies = {
+      {
+        "folke/which-key.nvim",
+        opts = {
+          spec = {
+            {
+              {
+                mode={'n','x'},
+                {'<leader>gh', group = "Gitsigns", icon = ""}
+              }
+            }
+          },
+        }
+      }
+    },
   },
 
   -- DIFF
