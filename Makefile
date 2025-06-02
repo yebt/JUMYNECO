@@ -12,10 +12,10 @@ help: ## Show help
 	@echo -e "$(GREEN) ===== Actions ====$(NC)"
 	@echo -e "$(YELLOW) clean $(NC)"
 	@echo -e "$(YELLOW) format $(NC)"
-	# @echo -e ""
-	# @echo -e "$(GREEN)🚀 Development:$(NC)"
-	# @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | grep -E "(serve|dev)" | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(YELLOW)%-20s$(NC) %s\n", $$1, $$2}'
-	# @echo -e ""
+#	@echo -e ""
+#	@echo -e "$(GREEN)🚀 Development:$(NC)"
+#	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | grep -E "(serve|dev)" | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(YELLOW)%-20s$(NC) %s\n", $$1, $$2}'
+#	@echo -e ""
 
 .PHONY: clean
 clean:
@@ -25,7 +25,7 @@ clean:
 
 .PHONY: format
 format:
-	@echo -e "$(BLUE) Cleaning $(NC)"
+	@echo -e "$(YELLOW) Cleaning $(NC)"
 	stylua ./{init.lua,lua/**/*.lua,after/**/*.lua,lsp/**/.lua,plugin/**/.lua}
 
 # Not use files like target
