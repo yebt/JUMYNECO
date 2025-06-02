@@ -5,9 +5,9 @@ return {
   --- Tokyonight
   {
     'folke/tokyonight.nvim',
-    lazy = false,
+    -- lazy = false,
     priority = 1000,
-    -- event="VeryLazy",
+    event="VeryLazy",
     opts = {
       style = 'night',
       dim_inactive = true,
