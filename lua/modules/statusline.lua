@@ -148,6 +148,7 @@ local components = {
   --
   separator,
   -- '%{mode()}',
+  -- ' ',
   [[%{%get(g:,'stl_mod_str','')%}]],
   ' ',
   nrml,
