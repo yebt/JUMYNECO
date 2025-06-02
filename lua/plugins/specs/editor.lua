@@ -51,7 +51,7 @@ return {
     },
   },
 
-  --- Split
+  --- Split and Join
   {
     'echasnovski/mini.splitjoin',
     version = false,

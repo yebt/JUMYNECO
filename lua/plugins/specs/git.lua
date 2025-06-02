@@ -1,7 +1,19 @@
 return {
 
+  --- DIFF
+  -- Gitsigns
+  -- {
+  --   "lewis6991/gitsigns.nvim",
+  --   event = "VeryLazy",
+  -- }
+
+  -- DIFF
   {
-    "lewis6991/gitsigns.nvim",
+    'echasnovski/mini.diff',
+    version = false,
     event = "VeryLazy",
-  }
+    opt = {
+    }
+  },
+
 }
