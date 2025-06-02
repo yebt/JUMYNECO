@@ -47,7 +47,7 @@ return {
       silent = false,
     },
     keys = {
-      { '<C-s>', mode = { 'n', 's' } },
+      { '<C-s>', mode = { 'n', 'x' } },
     },
   },
 
@@ -95,6 +95,5 @@ return {
       { 'gS' },
     },
   },
-
 
 }
