@@ -30,7 +30,7 @@ local options = {
   autoindent = true,
 
   -- Wrap
-  wrap = false,
+  wrap = true,
   linebreak = true,
   breakindentopt = 'shift:2,min:20', --"min:40, shift:0,sbr"
   breakindent = true,
@@ -74,11 +74,12 @@ local options = {
   -- tabline='%#TabLine# %#TabLineSel#> %<%f %#WarningMsg#%h%m%r %#TabLineFill#',
   laststatus = 3,
   -- winbar = " %<%f %h%m%r%w%y%#Normal#",
-  winbar = [[ >> %#Comment#%<%{expand("%:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
+  -- winbar = [[ >> %#Comment#%<%{expand("%:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
+  winbar = [[ >> %#Comment#%<%{expand("%:~:.:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
 
   -- statuscolumn
   -- statusline
-  -- statusline = " ",
+  statusline = " ",
 
   -- Split
   splitbelow = true,
