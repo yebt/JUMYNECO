@@ -1,6 +1,6 @@
 local map = vim.keymap.set
 
-map('n', '\\', ':Ex %:h<cr>')
+-- map('n', '\\', ':Ex %:h<cr>')
 
 --- Break the undo for no remove all word
 map('i', ',', ',<c-g>u')
