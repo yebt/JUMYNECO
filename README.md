@@ -4,35 +4,41 @@ This is try to make my neovim faster with plugins
 
 ## TODO
 
-- [ ] CONFIGS
-  - [ ] OPTS
-  - [ ] AUTOCOMMANDS
-  - [ ] AFTER
-- [ ] KEYS
+- [x] CONFIGS
+  - [x] OPTS
+  - [x] AUTOCOMMANDS
+  - [x] AFTER
+    - [x] Markdown
+- [x] KEYS
 - [ ] PLUGINS
-  - [ ] HARD
-  - [ ] COLORS
+  - [x] HARD
+  - [x] COLORS
   - [ ] LSP
-    - [ ] TROUBLE
+    - [x] TROUBLE
     - [ ] LSPACTION
-    - [ ] LSPCONFIG
+    - [x] LSPCONFIG
     - [ ] MSON
     - [ ] DAP
     - [ ] NOTE
-  - [ ] TREESITTER
-  - [ ] COMPLETION
-    - [ ] SNIPPS
-    - [ ] AUTOCOMPLETION
+  - [x] TREESITTER
+  - [x] COMPLETION
+    - [x] SNIPPS
+    - [x] AUTOCOMPLETION
   - [ ] UTILS
-    - [ ] SPLIT
-    - [ ] MINI TREE
+    - [x] SPLIT
+    - [x] MINI TREE
     - [ ] MARKDOWN
-  - [ ] JUMPS
-    - [ ] TELESCOPE/MINIPICK/FZF
-    - [ ] BUFFERS
-    - [ ] FLASH
-  - [ ] UI
-    - [ ] NOTIFICATIONS
-    - [ ] ICONS
-    - [ ] STARTER
-    - [ ]
+  - [x] JUMPS
+    - [x] TELESCOPE/MINIPICK/FZF
+    - [x] BUFFERS
+    - [x] FLASH
+  - [x] UI
+    - [x] NOTIFICATIONS
+    - [x] ICONS
+    - [x] STARTER
+
+
+## Extras
+
+- [ ] Pass the element configurations to servers from old
+- [ ] pass
