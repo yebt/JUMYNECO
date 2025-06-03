@@ -25,8 +25,8 @@ clean:
 
 .PHONY: format
 format:
-	@echo -e "$(YELLOW) Cleaning $(NC)"
-	stylua ./{init.lua,lua/**/*.lua,after/**/*.lua,lsp/**/.lua,plugin/**/.lua}
+	@echo -e "$(YELLOW) Formating $(NC)"
+	stylua ./**/*.lua
 
 # Not use files like target
 %: force
