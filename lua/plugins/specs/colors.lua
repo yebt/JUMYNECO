@@ -1,13 +1,21 @@
 --- COLORS THINGS
 --- Just the colors things
+-- 'tokyonight.nvim', 'slack.nvim'
+local color = 'tokyonight.nvim'
+
+local function isColor (plgn)
+  return plgn.name == color
+end
+
 return {
 
   --- Tokyonight
   {
     'folke/tokyonight.nvim',
-    -- lazy = false,
+    lazy = false,
     priority = 1000,
-    event = 'VeryLazy',
+    cond = isColor,
+    -- event = 'VeryLazy',
     opts = {
       style = 'night',
       dim_inactive = true,
@@ -39,5 +47,16 @@ return {
       require('tokyonight').setup(opts)
       vim.cmd.colorscheme('tokyonight')
     end,
+  },
+
+  --- Snack
+  {
+    'ntk148v/slack.nvim',
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    config = function()
+      vim.cmd.colorscheme('slack')
+    end
   },
 }
