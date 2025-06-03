@@ -94,6 +94,12 @@ return {
         },
         menu = {
           draw = {
+            columns = {
+              { 'kind_icon' },
+              { 'label', 'label_description', gap = 1 },
+              {'kind'},
+              {'source_name_short' }
+            },
             components = {
               kind_icon = {
                 text = function(ctx)
@@ -112,6 +118,11 @@ return {
                   local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
                   return hl
                 end,
+              },
+              source_name_short = {
+                width = { max = 30 },
+                text = function(ctx) return '[' .. ctx.source_name:sub(1,3) .. ']' end,
+                highlight = 'Comment',
               },
             },
           },
@@ -161,6 +172,7 @@ return {
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
       },
+
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
@@ -202,7 +214,10 @@ return {
           },
         },
       },
+
       fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+        use_frecency = true,
         sorts = {
           'exact',
           -- default sorts
@@ -211,7 +226,6 @@ return {
           -- 'label',
           -- 'kind'
         },
-        implementation = 'prefer_rust_with_warning',
       },
 
       -- Signature
