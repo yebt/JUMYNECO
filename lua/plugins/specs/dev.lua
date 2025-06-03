@@ -65,25 +65,25 @@ return {
             enabled = true,
           },
         },
-        trigger = {
-          -- Shows after typing a keyword, typically an alphanumeric character, - or _
-          show_on_keyword = true,
-          -- Shows after typing a trigger character, defined by the sources
-          show_on_trigger_character = true,
-          show_on_blocked_trigger_characters = { ' ', '\n', '\t' },
-          -- Shows after entering insert mode on top of a trigger character
-          show_on_insert_on_trigger_character = true,
-          show_on_x_blocked_trigger_characters = {
-            "'",
-            '"',
-            '(',
-            '{',
-            '[',
-          },
-        },
+        -- trigger = {
+        --   -- Shows after typing a keyword, typically an alphanumeric character, - or _
+        --   show_on_keyword = true,
+        --   -- Shows after typing a trigger character, defined by the sources
+        --   show_on_trigger_character = true,
+        --   show_on_blocked_trigger_characters = { ' ', '\n', '\t' },
+        --   -- Shows after entering insert mode on top of a trigger character
+        --   show_on_insert_on_trigger_character = true,
+        --   show_on_x_blocked_trigger_characters = {
+        --     "'",
+        --     '"',
+        --     '(',
+        --     '{',
+        --     '[',
+        --   },
+        -- },
         list = {
           selection = {
-            preselect = true,
+            preselect = false,
             auto_insert = false,
           },
         },
@@ -130,7 +130,7 @@ return {
           },
         },
         ghost_text = {
-          enabled = true,
+          enabled = false,
           -- Show the ghost text when an item has been selected
           show_with_selection = true,
           -- Show the ghost text when no item has been selected, defaulting to the first item
