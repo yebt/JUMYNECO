@@ -3,11 +3,11 @@
 return {
   --- which key
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts_extend = { "spec" },
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts_extend = { 'spec' },
     opts = {
-      preset = "helix",
+      preset = 'helix',
       -- delay = 10,
       spec = {
         -- {
@@ -21,8 +21,8 @@ return {
         --- Default
         -- { "<auto>", mode = "nxso" },
         --- trigger on a builtin keymap
-        { "<auto>", mode = "nixsotc" },
-        { "a", mode = { "n", "v" } },
+        { '<auto>', mode = 'nixsotc' },
+        { 'a', mode = { 'n', 'v' } },
       },
       win = {
         wo = {
@@ -30,32 +30,32 @@ return {
         },
       },
       -- expand = function()
-        --   return true
-        -- end
-        expand = function(node)
-          return not node.desc -- expand all nodes without a description
+      --   return true
+      -- end
+      expand = function(node)
+        return not node.desc -- expand all nodes without a description
+      end,
+      icons = {
+        -- colors = false,
+        rules = false,
+      },
+      -- loop = true
+    },
+    keys = {
+      {
+        '<leader>?',
+        function()
+          require('which-key').show({ global = false })
         end,
-        icons = {
-          -- colors = false,
-          rules = false,
-        },
-        -- loop = true
+        desc = 'Buffer Local Keymaps (which-key)',
       },
-      keys = {
-        {
-          "<leader>?",
-          function()
-            require("which-key").show({ global = false })
-          end,
-          desc = "Buffer Local Keymaps (which-key)",
-        },
-        {
-          "<c-w><space>",
-          function()
-            require("which-key").show({ keys = "<c-w>", loop = true })
-          end,
-          desc = "Window Hydra Mode (which-key)",
-        },
+      {
+        '<c-w><space>',
+        function()
+          require('which-key').show({ keys = '<c-w>', loop = true })
+        end,
+        desc = 'Window Hydra Mode (which-key)',
       },
-    }
-  }
+    },
+  },
+}

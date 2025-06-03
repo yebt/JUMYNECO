@@ -97,8 +97,8 @@ return {
             columns = {
               { 'kind_icon' },
               { 'label', 'label_description', gap = 1 },
-              {'kind'},
-              {'source_name_short' }
+              { 'kind' },
+              { 'source_name_short' },
             },
             components = {
               kind_icon = {
@@ -121,7 +121,9 @@ return {
               },
               source_name_short = {
                 width = { max = 30 },
-                text = function(ctx) return '[' .. ctx.source_name:sub(1,3) .. ']' end,
+                text = function(ctx)
+                  return '[' .. ctx.source_name:sub(1, 3) .. ']'
+                end,
                 highlight = 'Comment',
               },
             },
