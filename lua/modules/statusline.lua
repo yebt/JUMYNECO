@@ -95,7 +95,6 @@ au({ 'ModeChanged' }, {
 g.stl_startup = ''
 
 local function get_startup_time()
-  vim.print('asdf')
   local ok, lz = pcall(require, 'lazy')
   if ok then
     local num = lz.stats().startuptime
