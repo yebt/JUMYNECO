@@ -1,7 +1,6 @@
 --- Here is all tooling to interactuate with LSP
 
 return {
-  -- FIX: some
   --- List all diagnostics
   {
     'folke/trouble.nvim',
@@ -28,4 +27,7 @@ return {
       { '<leader>xS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
     },
   },
+
+  --- LSP
+
 }
