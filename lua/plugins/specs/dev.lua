@@ -84,7 +84,7 @@ return {
         list = {
           selection = {
             preselect = false,
-            auto_insert = false,
+            auto_insert = true,
           },
         },
         documentation = {
@@ -267,5 +267,39 @@ return {
       },
     },
     opts_extend = { 'sources.default' },
+  },
+
+  {
+    'echasnovski/mini.files',
+    version = false,
+    dependencies = { 'echasnovski/mini.icons' },
+    config = require('plugins.configs.mini-files-c'),
+    keys = {
+      {
+        '\\',
+        function()
+          local ok, mf = pcall(require, 'mini.files')
+          if not ok then
+            return
+          end
+          if not mf.close() then
+            mf.open()
+          end
+        end,
+        silent = true,
+        desc = 'Toggle Mini Files',
+      },
+      {
+        '¿',
+        function()
+          local ok, mf = pcall(require, 'mini.files')
+          if not mf.close() then
+            MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+          end
+        end,
+        silent = true,
+        desc = 'Toggle Mini Files try reveal',
+      },
+    },
   },
 }
