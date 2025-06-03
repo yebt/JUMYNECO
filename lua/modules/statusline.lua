@@ -182,3 +182,37 @@ au({ 'VimEnter', 'User' }, {
 })
 
 vim.opt.statusline = table.concat(components, '%#Statusline#')
+
+--- set the winbar
+--- ===========================================================
+-- function l_path()
+--   local actual_filetype = vim.bo.filetype
+--   local full_path = vim.api.nvim_buf_get_name(0)
+--   local prefix = " >> %#Comment#%<"
+--
+--   -- Empty filetypes
+--   local fts = {
+--     ['snacks_dashboard'] = true,
+--   }
+--   if fts[actual_filetype] then return "%#Normal#" end
+--
+--   -- Special mods
+--   local mods = {
+--     [''] = '[NOPE]',
+--     ['Starter'] = '[STRTR]',
+--   }
+--   local smod  = mods[full_path] or nil
+--   if smod then return prefix .. "%#Constant#".. smod end
+--
+--   -- Specific complex appariences
+--   local cwd = vim.fn.getcwd()
+--   local relative_path = vim.fn.fnamemodify(full_path, ':~:.')
+--   local base = vim.fn.fnamemodify(relative_path, ':h') -- head (directorio)
+--   local tail = vim.fn.fnamemodify(relative_path, ':t') -- tail (archivo)
+--
+--   return prefix ..base.. "/%#Constant#" .. tail .. "%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#%=%f"
+-- end
+-- vim.opt.winbar = [[%{%v:lua.l_path()%}]]
+-- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
+-- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:~:.:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]]
+
