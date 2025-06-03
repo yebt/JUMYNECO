@@ -114,14 +114,16 @@ au({ 'VimEnter', 'User'}, {
 g.current_git_branch = ''
 
 local function update_git_branch()
-  async(function()
-    local result = try_await(asystem({ 'git', 'rev-parse', '--abbrev-ref', 'HEAD' }, { text = true }))
-    if result.success then
-      local branch = vim.trim(result.value.stdout)
-      g.current_git_branch = '%#stlGit#  %#stlGitR#[ ' .. branch .. ' ]'
-      vim.api.nvim__redraw({ statusline = true })
-    end
-  end)()
+  if async then
+    async(function()
+      local result = try_await(asystem({ 'git', 'rev-parse', '--abbrev-ref', 'HEAD' }, { text = true }))
+      if result.success then
+        local branch = vim.trim(result.value.stdout)
+        g.current_git_branch = '%#stlGit#  %#stlGitR#[ ' .. branch .. ' ]'
+        vim.api.nvim__redraw({ statusline = true })
+      end
+    end)()
+  end
 end
 
 vim.defer_fn(update_git_branch, 100) -- Llama una vez al inicio
@@ -138,7 +140,8 @@ local function get_actual_clients()
       table.insert(names, client.name)
     end
     local lst = table.concat(names, ',')
-    vim.b.stl_lsp_clients = ('%#stlLSP#󰿘 [%s]'):format(lst)
+    vim.b.stl_lsp_clients  = ("%%#stlLSP#󰿘 [%s]"):format(lst)
+    -- vim.b.stl_lsp_clients = ('%#stlLSP#󰿘 [%s]'):format(lst)
   else
     vim.b.stl_lsp_clients = ''
   end
