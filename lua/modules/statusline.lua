@@ -89,6 +89,26 @@ au({ 'ModeChanged' }, {
 })
 
 -----------------------
+------- Startup Time
+-----------------------
+
+g.stl_startup = ''
+
+local function get_startup_time()
+  vim.print('asdf')
+  local ok, lz = pcall(require, 'lazy')
+  if ok then
+    local num = lz.stats().startuptime
+    g.stl_startup = ' '.. string.format("%.2f", num)
+  end
+end
+
+au({ 'VimEnter', 'User'}, {
+  pattern = { 'PostVeryLazy','VeryLazy'  },
+  callback = get_startup_time,
+})
+
+-----------------------
 ------- BRANCH
 -----------------------
 
@@ -111,8 +131,6 @@ vim.defer_fn(update_git_branch, 100) -- Llama una vez al inicio
 ------- LSP Status
 -----------------------
 
-g.stl_lsp_clients = ''
-
 local function get_actual_clients()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   if #clients > 0 then
@@ -121,9 +139,9 @@ local function get_actual_clients()
       table.insert(names, client.name)
     end
     local lst = table.concat(names, ',')
-    g.stl_lsp_clients = ('%#stlLSP#󰿘 [%s]'):format(lst)
+    vim.b.stl_lsp_clients = ('%#stlLSP#󰿘 [%s]'):format(lst)
   else
-    g.stl_lsp_clients = ''
+    vim.b.stl_lsp_clients = ''
   end
 end
 
@@ -143,13 +161,15 @@ local components = {
   -- '%f',
   separator,
   -- LSP
-  [[%{%get(g:,'stl_lsp_clients','')%}]],
+  [[%{%get(b:,'stl_lsp_clients','')%}]],
   --
   separator,
   -- '%{mode()}',
-  -- ' ',
-  [[%{%get(g:,'stl_mod_str','')%}]],
+  '%<',
+  [[%{%get(g:,'stl_startup','')%}]],
   ' ',
+  ' %p%% (%l,%c%V)',
+  [[%{%get(g:,'stl_mod_str','')%}]],
   nrml,
 }
 
