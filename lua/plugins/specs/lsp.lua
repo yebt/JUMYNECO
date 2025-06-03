@@ -28,6 +28,50 @@ return {
     },
   },
 
-  --- LSP
+  --- LSP Config
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'LazyFile', 'VeryLazy' },
+  },
 
+  --- Mason
+  {
+    'mason-org/mason.nvim',
+    event = { 'LazyFile', 'VeryLazy' },
+    opts = {
+      ui = {
+        icons = {
+          package_installed = '✓',
+          package_pending = '➜',
+          package_uninstalled = '✗',
+        },
+      },
+    },
+    cmd = {
+      'Mason',
+      'MasonInstall',
+      'MasonUninstall',
+      'MasonUninstallAll',
+      'MasonUpdate',
+      'MasonLog',
+    },
+  },
+
+  --- Bridge with Mason and lspconfig
+  {
+    'mason-org/mason-lspconfig.nvim',
+    lazy = false,
+    opts = {
+      ensure_installed = { "lua_ls" },
+      automatic_enable = true,
+    },
+    dependencies = {
+      { 'mason-org/mason.nvim', opts = {} },
+      'neovim/nvim-lspconfig',
+    },
+    cmd = {
+      "LspInstall",
+      "LspUninstall"
+    }
+  },
 }
