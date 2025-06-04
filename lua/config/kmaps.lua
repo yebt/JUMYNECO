@@ -11,7 +11,7 @@ map('i', '<cr>', '<cr><c-g>u')
 --- Quit
 map('n', '<leader>q', '<cmd>q<CR>', { silent = true, desc = 'Quit of nvim' })
 map('n', '<M-q>', '<cmd>qa<CR>', { silent = true, desc = 'Quit of all panels nvim' })
-map({ 'i', 'n' }, '<M-Q>', '<C-o><cmd>qa!<CR>', { silent = true, desc = 'Quit of nvim forzed' })
+map({ 'n' }, '<M-Q>', '<cmd>qa!<CR>', { silent = true, desc = 'Quit of nvim forzed' })
 
 --- Save
 map('n', '<leader>w', '<cmd>w<CR>', { silent = true, desc = 'Save buffer' })
@@ -83,8 +83,8 @@ map('n', '<M-a>', '<cmd>bprevious<cr>', { silent = true, desc = 'Go to prev buff
 map('n', '<M-s>', '<cmd>e #<cr>', { silent = true, desc = 'Go to altername buffer' })
 
 --- Comments
-map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Below' })
-map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Above' })
+-- map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Below' })
+-- map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', { desc = 'Add Comment Above' })
 
 --- Toggler Wrap
 map('n', '<M-z>w', '<cmd>set wrap!<CR>', { silent = true, desc = 'Toggle wrap' })
