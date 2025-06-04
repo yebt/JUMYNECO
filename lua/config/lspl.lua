@@ -1,12 +1,39 @@
 vim.lsp.config('*', {
   capabilities = {
     textDocument = {
+
+      -- Semantik tokens
       semanticTokens = {
         multilineTokenSupport = true,
-      }
-    }
+      },
+
+      -- Completion capabilities
+      completion = {
+        completionItem = {
+          snippetSupport = true,
+        },
+      },
+
+      -- Folds
+      -- foldingRange = {
+      --   dynamicRegistration = false,
+      --   lineFoldingOnly = true
+      -- }
+    },
+
+    workspace = {
+      -- Detect file changes
+      fileOperations = {
+        didRename = true,
+        willRename = true,
+      },
+      --- Discover new files
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    },
   },
-  root_markers = { '.git' },
+  -- root_markers = { '.git' },
 })
 
 -- OFF the log of lsp
