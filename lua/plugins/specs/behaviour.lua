@@ -16,7 +16,8 @@ return {
             {
               {
                 mode = { 'n' },
-                { '<leader>p', group = 'Pick Snacks', icon = '' },
+                { '<leader>p', group = 'Pick Snacks', icon = '' },
+                { '<leader>gp', group = 'Git Snacks', icon = '' },
               },
             },
           },
@@ -35,6 +36,17 @@ return {
           header = table.concat({
             'yebt',
           }, '\n'),
+          keys = {
+            { icon = "󰸧", key = "l", desc = "Load last session", action = ":lua require('persistence').load({last=true})", },
+            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+            { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
         },
         sections = {
           { section = 'startup' },
@@ -186,189 +198,56 @@ return {
     --   require("snacks").setup(opts)
     -- end,
     keys = {
+
+      -- Top Picker
+      -- =====================
+      {'<leader><space>', function() Snacks.picker.smart() end, desc = "SP: Smart Find files" },
+      -- Git Picks
+      -- =====================
+      -- stylua: ignore
+      {'<leader>gpf', function() Snacks.picker.git_files() end, desc = "SP: Git files" },
+      { "<leader>gpb", function() Snacks.picker.git_branches() end, desc = "SP: Git Branches" },
+      { "<leader>gpl", function() Snacks.picker.git_log() end, desc = "SP: Git Log" },
+      { "<leader>gpL", function() Snacks.picker.git_log_line() end, desc = "SP: Git Log Line" },
+      { "<leader>gps", function() Snacks.picker.git_status() end, desc = "SP: Git Status" },
+      { "<leader>gpS", function() Snacks.picker.git_stash() end, desc = "SP: Git Stash" },
+      { "<leader>gpd", function() Snacks.picker.git_diff() end, desc = "SP: Git Diff (Hunks)" },
+      { "<leader>gpF", function() Snacks.picker.git_log_file() end, desc = "SP: Git Log File" },
+      { "<leader>gpB", function() Snacks.picker.blame_line() end, desc = "SP: Git Blame Line" },
+
+      -- Pickers Usual
+      -- =====================
+      {'<leader>pf', function() Snacks.picker.files() end, desc = "SP: Fiels" },
+      {'<leader>pp', function() Snacks.picker.projects() end, desc = "SP: Projects" },
+      {'<leader>pb', function() Snacks.picker.buffers() end, desc = "SP: Buffers" },
+      {'<leader>pg', function() Snacks.picker.grep() end, desc = "SP: Grep" },
+      {'<leader>pr', function() Snacks.picker.recent() end, desc = "SP: Recent" },
+      {'<leader>pR', function() Snacks.picker.resume() end, desc = "SP: Resume" },
+      {'<leader>pn', function() Snacks.picker.notifications() end, desc = "SP: Notifications" },
+
+      -- Pickers LSP
+      -- =====================
+      {'<leader>pld', function() Snacks.picker.diagnostics_buffer() end, desc = "SP: Diagnostic in buffer" },
+      {'<leader>plD', function() Snacks.picker.diagnostics() end, desc = "SP: Diagnostics" },
+      { "<leader>pld", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+      { "<leader>plD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+      { "<leader>plr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+      { "<leader>plI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+      { "<leader>ply", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+      { "<leader>pls", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<m-o>", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<leader>plS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+
+      -- =============================================
       --- Buffers
-      {
-        '<M-c>',
-        function()
-          Snacks.bufdelete()
-        end,
-        desc = 'Delete a buffer',
-      },
-      {
-        '<C-k><C-w>',
-        function()
-          Snacks.bufdelete.all()
-        end,
-        desc = 'Delete all buffers',
-      },
-      {
-        '<C-k><C-q>',
-        function()
-          Snacks.bufdelete.other()
-        end,
-        desc = 'Delete all buffers but not the actual',
-      },
+      -- =====================
+      {'<M-c>', function() Snacks.bufdelete() end, desc = 'Delete a buffer',},
+      {'<C-k><C-w>', function() Snacks.bufdelete.all() end, desc = 'Delete all buffers',},
+      {'<C-k><C-q>', function() Snacks.bufdelete.other() end, desc = 'Delete all buffers but not the actual',},
 
       --- If use explorer
-      {
-        '<M-b>',
-        function()
-          Snacks.explorer()
-        end,
-        desc = 'Open snak explorer',
-      },
-      {
-        '<leader>gsb',
-        function()
-          Snacks.git.blame_line()
-        end,
-        desc = 'Snak Git Blame Line',
-      },
-      {
-        '<leader>gff',
-        function()
-          Snacks.git.git_files()
-        end,
-        desc = 'Snak Git Find Files',
-      },
-      {
-        '<leader>gfb',
-        function()
-          Snacks.git.git_branches()
-        end,
-        desc = 'Snak Git Find Branches',
-      },
-
-      --- General Finds
-      {
-        '<leader>pb',
-        function()
-          Snacks.picker.buffers()
-        end,
-        desc = 'Pick Buffers',
-      },
-      {
-        '<leader>pf',
-        function()
-          Snacks.picker.files()
-        end,
-        desc = 'Pick Find Files',
-      },
-      {
-        '<leader>pp',
-        function()
-          Snacks.picker.projects()
-        end,
-        desc = 'Pick Projects',
-      },
-      {
-        '<leader>pr',
-        function()
-          Snacks.picker.recent()
-        end,
-        desc = 'Pick Recent',
-      },
-      {
-        '<leader>ps',
-        function()
-          Snacks.picker.smart()
-        end,
-        desc = 'Pick Smart find files',
-      },
-      {
-        '<leader>pG',
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = 'Pick Grep',
-      },
-      {
-        '<leader>pR',
-        function()
-          Snacks.picker.resume()
-        end,
-        desc = 'Pick Resume',
-      },
-      {
-        '<leader>pld',
-        function()
-          Snacks.picker.diagnostics_buffer()
-        end,
-        desc = 'Pick LSP Diagnostics in buffer',
-      },
-      {
-        '<leader>plD',
-        function()
-          Snacks.picker.diagnostics()
-        end,
-        desc = 'Pick LSP Diagnostics',
-      },
-      {
-        '<leader>pn',
-        function()
-          Snacks.picker.notifications()
-        end,
-        desc = 'Pick Grep',
-      },
-
-      --- LSP
-      {
-        '<leader>pgd',
-        function()
-          Snacks.picker.lsp_definitions()
-        end,
-        desc = 'Goto Definition',
-      },
-      {
-        '<leader>pgD',
-        function()
-          Snacks.picker.lsp_declarations()
-        end,
-        desc = 'Goto Declaration',
-      },
-      {
-        '<leader>pgR',
-        function()
-          Snacks.picker.lsp_references()
-        end,
-        nowait = true,
-        desc = 'References',
-      },
-      {
-        '<leader>pgI',
-        function()
-          Snacks.picker.lsp_implementations()
-        end,
-        desc = 'Goto Implementation',
-      },
-      {
-        '<leader>pgy',
-        function()
-          Snacks.picker.lsp_type_definitions()
-        end,
-        desc = 'Goto T[y]pe Definition',
-      },
-      {
-        '<leader>pls',
-        function()
-          Snacks.picker.lsp_symbols()
-        end,
-        desc = 'LSP Symbols',
-      },
-      {
-        '<leader>pwS',
-        function()
-          Snacks.picker.lsp_workspace_symbols()
-        end,
-        desc = 'LSP Workspace Symbols',
-      },
-      {
-        '<leader>ptc',
-        function()
-          Snacks.picker.todo_commets()
-        end,
-        desc = 'Pick todo commets',
-      },
+      -- =====================
+      {'<M-b>', function() Snacks.explorer() end, desc = 'Open snak explorer',},
 
       --- Usual Pickers
       {
@@ -409,11 +288,12 @@ return {
         desc = 'Pick Resume',
       },
       {
-        '<c-s-o>',
-        function ()
+        '<c-l>',
+        function()
+          Snacks.notifier.hide()
         end,
-        desc = "Symbols if is posible"
-      }
+        desc = 'Snacks hide notifications',
+      },
     },
   },
 
