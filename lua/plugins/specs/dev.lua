@@ -1,5 +1,4 @@
 --- Plugings to coding
-
 return {
 
   --- Autopairs
@@ -101,17 +100,28 @@ return {
               { 'source_name_short' },
             },
             components = {
+
               kind_icon = {
+                ellipsis = false,
                 text = function(ctx)
-                  local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+                  local is_path = vim.tbl_contains({ 'Path' }, ctx.source_name)
+                  local resolve_type = (not is_path) and 'lsp' or (ctx.kind == 'File' and 'file' or 'directory')
+                  local resolve_item = is_path and ctx.label or ctx.kind
+                  local kind_icon, _, _ = require('mini.icons').get(resolve_type, resolve_item)
                   return kind_icon
                 end,
-                -- (optional) use highlights from mini.icons
+                -- Set the highlight priority to 20000 to beat the cursorline's default priority of 10000
                 highlight = function(ctx)
-                  local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-                  return hl
+
+                  local is_path = vim.tbl_contains({ 'Path' }, ctx.source_name)
+                  local resolve_type = (not is_path) and 'lsp' or (ctx.kind == 'File' and 'file' or 'directory')
+                  local resolve_item = is_path and ctx.label or ctx.kind
+                  local _, hl, _ = require('mini.icons').get(resolve_type, resolve_item)
+                  return { { group = hl, priority = 20000 } }
+                  -- return { { group = ctx.kind_hl, priority = 20000 } }
                 end,
               },
+
               kind = {
                 -- (optional) use highlights from mini.icons
                 highlight = function(ctx)
@@ -119,6 +129,39 @@ return {
                   return hl
                 end,
               },
+              -- kind_icon = {
+              --   text = function(ctx)
+              --     -- local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+              --     local is_path = vim.tbl_contains({ 'Path' }, ctx.source_name)
+              --     local typeel = is_path and 'file' or 'lsp'
+              --     local el = is_path and ctx.label or ctx.kind
+              --     local kind_icon, _, _ = require('mini.icons').get(typeel, el)
+              --     if is_path then
+              --       vim.print(ctx)
+              --     end
+              --     return kind_icon
+              --   end,
+              --   -- (optional) use highlights from mini.icons
+              --   highlight = function(ctx)
+              --     -- local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+              --     local is_path = vim.tbl_contains({ 'Path' }, ctx.source_name)
+              --     local typeel = is_path and 'file' or 'lsp'
+              --     local el = is_path and ctx.label or ctx.kind
+              --     local _, hl, _ = require('mini.icons').get(typeel, el)
+              --     return hl
+              --   end,
+              -- },
+              -- kind = {
+              --   -- (optional) use highlights from mini.icons
+              --   highlight = function(ctx)
+              --     -- local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+              --     local is_path = vim.tbl_contains({ 'Path' }, ctx.source_name)
+              --     local typeel = is_path and 'file' or 'lsp'
+              --     local el = is_path and ctx.label or ctx.kind
+              --     local _, hl, _ = require('mini.icons').get(typeel, el)
+              --     return hl
+              --   end,
+              -- },
               source_name_short = {
                 width = { max = 30 },
                 text = function(ctx)
