@@ -34,7 +34,8 @@ return {
     event = { 'LazyFile', 'VeryLazy' },
     dependencies = {
       "b0o/SchemaStore.nvim"
-    }
+    },
+    -- configure = require('plugins.configs.lspconfig-c')
   },
 
   --- Mason
@@ -44,10 +45,15 @@ return {
     opts = {
       ui = {
         icons = {
-          package_installed = '✓',
-          package_pending = '➜',
-          package_uninstalled = '✗',
+          package_installed = '🜍',
+          package_pending = '🜛',
+          package_uninstalled = 'x',
         },
+        -- icons = {
+        --   package_installed = '✓',
+        --   package_pending = '➜',
+        --   package_uninstalled = '✗',
+        -- },
       },
     },
     cmd = {
