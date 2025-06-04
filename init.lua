@@ -20,7 +20,8 @@ if vim.env.PROF then
 end
 
 require('config.options')
-require('modules.statusline')
+-- require('modules.statusline')
+require('config.lspl')
 
 vim.g.mapleader = vim.keycode('<space>')
 vim.g.maplocal = vim.keycode('<space>')
@@ -43,8 +44,8 @@ vim.api.nvim_create_autocmd('User', {
     -- laod keymaps
     require('config.kmaps')
     -- lsp configs local
-    require('config.lspl')
     -- Make a status line
+    require('modules.statusline')
     -- require('modules.statusline')
     -- require('fastline').setup({
     --   sections = {
