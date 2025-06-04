@@ -32,6 +32,9 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = { 'LazyFile', 'VeryLazy' },
+    dependencies = {
+      "b0o/SchemaStore.nvim"
+    }
   },
 
   --- Mason

@@ -1,10 +1,21 @@
+vim.lsp.config('*', {
+  capabilities = {
+    textDocument = {
+      semanticTokens = {
+        multilineTokenSupport = true,
+      }
+    }
+  },
+  root_markers = { '.git' },
+})
+
 -- OFF the log of lsp
 -- vim.lsp.log.set_level(vim.log.levels.OFF)
 local icons = {
   Error = 'E',
   Warn = 'W',
   Info = 'I',
-  Hint = 'H'
+  Hint = 'H',
 }
 
 --- Diagnostic configs
@@ -12,12 +23,12 @@ vim.diagnostic.config({
   virtual_text = {
     current_line = true,
     spacing = 4,
-    source = "if_many",
+    source = 'if_many',
     -- prefix = "●",
   },
-  virtual_lines ={
-    current_line = true,
-  },
+  -- virtual_lines ={
+  --   current_line = true,
+  -- },
   underline = true,
   update_in_insert = false,
   signs = {
@@ -25,8 +36,7 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.ERROR] = icons.Error,
       [vim.diagnostic.severity.WARN] = icons.Warn,
       [vim.diagnostic.severity.HINT] = icons.Hint,
-      [vim.diagnostic.severity.INFO] = icons.Info
-
+      [vim.diagnostic.severity.INFO] = icons.Info,
     },
   },
 })
