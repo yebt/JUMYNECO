@@ -53,14 +53,15 @@ return {
   --- Snack
   {
     'ntk148v/slack.nvim',
-    lazy = false,
-    priority = 1000,
-    cond = isColor,
+    -- lazy = false,
+    -- priority = 1000,
+    -- cond = isColor,
     config = function()
       vim.cmd.colorscheme('slack')
     end
   },
 
+  --- Colorize
   {
     'echasnovski/mini.hipatterns',
     version = false,
