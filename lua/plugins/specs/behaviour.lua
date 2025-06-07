@@ -148,6 +148,11 @@ return {
     },
 
     init = function()
+      --- Load in init if is needed to show dashboard
+      -- if  vim.fn.argc() == 0 then
+      --   require('snacks')
+      -- end
+
       --- Disabled animations
       vim.g.snacks_animate = false
       ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
