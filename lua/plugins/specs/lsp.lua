@@ -127,7 +127,7 @@ return {
         show_server_name = true,
         extend_gitsigns = true,
       },
-      lightbulbs ={
+      lightbulb ={
         enable = false
       }
     },
