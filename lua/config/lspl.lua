@@ -67,3 +67,45 @@ vim.diagnostic.config({
     },
   },
 })
+
+-- Formatter selector
+
+local function execute_client_formatter(client)
+    if client then
+      vim.lsp.buf.format({
+        bufnr = bufnr,
+        filter = function(c)
+          return c.id == client.id
+        end,
+      })
+      vim.notify('Formatted with: ' .. client.name)
+    end
+end
+
+local function format_with_client()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = 'textDocument/formatting' })
+
+  if #clients == 0 then
+    vim.notify('No LSP clients support formatting', vim.log.levels.WARN)
+    return
+  end
+
+  if #clients == 1 then
+    execute_client_formatter(clients[0])
+    return
+  end
+
+  vim.ui.select(clients, {
+    prompt = 'Select LSP client for formatting:',
+    format_item = function(client)
+      return client.name
+    end,
+  }, execute_client_formatter)
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP formatter" })
+  end,
+})
