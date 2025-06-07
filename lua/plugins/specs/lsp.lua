@@ -141,6 +141,8 @@ return {
       { '<leader>lol', ':Lspsaga outline<CR>', desc = 'LSPSaga Out Line' },
       { '<leader>lrn', ':Lspsaga rename<CR>', desc = 'LSPSaga Rename' },
       { '<leader>lrp', ':Lspsaga rename ++project<CR>', desc = 'LSPSaga Rename Project' },
+      { '<leader>lgd', ':Lspsaga goto_definition<CR>', desc = 'LSPSaga Go To Definition' },
+      { '<leader>lgy', ':Lspsaga goto_type_definition<CR>', desc = 'LSPSaga Go To Type Definition' },
     },
   },
 
