@@ -72,8 +72,20 @@ return  {
         "xml",
         "yaml",
       },
+      auto_install = true,
     }
   },
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = 'VeryLazy',
+  },
+
+
+  -- {
+  --   "andymass/vim-matchup",
+  --   event = "VeryLazy"
+  -- },
 
   {
     "windwp/nvim-ts-autotag",
