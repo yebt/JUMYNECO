@@ -88,7 +88,8 @@ return {
   {
     'nvimtools/none-ls.nvim',
     priority = 100,
-    event = { 'BufReadPre', 'BufNewFile' },
+    -- event = { 'BufReadPre', 'BufNewFile' },
+    event = 'VeryLazy',
     opts = {
       sources = {},
     },
