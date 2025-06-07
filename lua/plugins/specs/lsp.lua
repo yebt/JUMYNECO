@@ -33,7 +33,7 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'LazyFile', 'VeryLazy' },
     dependencies = {
-      "b0o/SchemaStore.nvim"
+      'b0o/SchemaStore.nvim',
     },
     -- configure = require('plugins.configs.lspconfig-c')
   },
@@ -71,7 +71,7 @@ return {
     'mason-org/mason-lspconfig.nvim',
     lazy = false,
     opts = {
-      ensure_installed = { "lua_ls" },
+      ensure_installed = { 'lua_ls' },
       automatic_enable = true,
     },
     dependencies = {
@@ -79,33 +79,40 @@ return {
       'neovim/nvim-lspconfig',
     },
     cmd = {
-      "LspInstall",
-      "LspUninstall"
-    }
+      'LspInstall',
+      'LspUninstall',
+    },
   },
 
-  --- None ls Format and lintters
+  --- Sources for formatting and lingintgs
   {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "mason-org/mason.nvim",
-      "nvimtools/none-ls.nvim",
+    'nvimtools/none-ls.nvim',
+    priority = 100,
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {
+      sources = {},
     },
-    config = function()
-      require("mason").setup()
-      require("mason-null-ls").setup({
-        ensure_installed = {
-          ensure_installed = { "stylua", "jq" }
-        },
-        automatic_installation = false,
-        handlers = {},
-      })
-      require("null-ls").setup({
-        sources = {
-        }
-      })
-    end,
+    dependencies = {
+      'jay-babu/mason-null-ls.nvim',
+    },
+  },
+
+  --- Bridge for none - null LS
+  {
+    'jay-babu/mason-null-ls.nvim',
+    priority = 101,
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'mason-org/mason.nvim',
+      -- 'nvimtools/none-ls.nvim',
+    },
+    opts = {
+      ensure_installed = {
+        ensure_installed = { 'stylua', 'jq' },
+      },
+      automatic_installation = false,
+      handlers = {},
+    },
   },
 
   --- LSP Saga
