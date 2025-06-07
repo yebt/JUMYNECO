@@ -116,6 +116,32 @@ return {
   },
 
   --- LSP Saga
+  {
+    'nvimdev/lspsaga.nvim',
+    event = 'LspAttach',
+    opts = {
+      symbol_in_winbar = { enable = false },
+      code_action = {
+        num_shortcut = true,
+        show_server_name = true,
+        extend_gitsigns = true,
+      },
+      lightbulbs ={
+        enable = false
+      }
+    },
+    keys = {
+      { '<leader>lic', ':Lspsaga incoming_calls<CR>', desc = 'LSPSaga Incomming calls' },
+      { '<leader>lca', ':Lspsaga code_action<CR>', desc = 'LSPSaga Code Action' },
+      { '<leader>lpd', ':Lspsaga peek_definition<CR>', desc = 'LSPSaga Peek Definition' },
+      { '<leader>lff', ':Lspsaga finder tyd+ref+imp+def<CR>', desc = 'LSPSaga Finder full' },
+      { '<leader>lfi', ':Lspsaga finder imp<CR>', desc = 'LSPSaga Finder Implementation' },
+      { '<leader>lhd', ':Lspsaga hover_doc<CR>', desc = 'LSPSaga Hover Doc' },
+      { '<leader>lol', ':Lspsaga outline<CR>', desc = 'LSPSaga Out Line' },
+      { '<leader>lrn', ':Lspsaga rename<CR>', desc = 'LSPSaga Rename' },
+      { '<leader>lrp', ':Lspsaga rename ++project<CR>', desc = 'LSPSaga Rename Project' },
+    },
+  },
 
   --- Formatt and Lint
   -- {
