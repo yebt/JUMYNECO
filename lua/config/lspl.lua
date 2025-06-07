@@ -1,3 +1,4 @@
+--- General capabilities
 vim.lsp.config('*', {
   capabilities = {
     textDocument = {
@@ -36,6 +37,10 @@ vim.lsp.config('*', {
   -- root_markers = { '.git' },
 })
 
+---
+-- vim.lsp.set_log_level 'trace'
+--
+
 -- OFF the log of lsp
 -- vim.lsp.log.set_level(vim.log.levels.OFF)
 local icons = {
@@ -71,15 +76,15 @@ vim.diagnostic.config({
 -- Formatter selector
 
 local function execute_client_formatter(client)
-    if client then
-      vim.lsp.buf.format({
-        bufnr = bufnr,
-        filter = function(c)
-          return c.id == client.id
-        end,
-      })
-      vim.notify('Formatted with: ' .. client.name)
-    end
+  if client then
+    vim.lsp.buf.format({
+      bufnr = bufnr,
+      filter = function(c)
+        return c.id == client.id
+      end,
+    })
+    vim.notify('Formatted with: ' .. client.name)
+  end
 end
 
 local function format_with_client()
@@ -104,8 +109,15 @@ local function format_with_client()
   }, execute_client_formatter)
 end
 
+
 vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP formatter" })
+  -- callback = function(args)
+  callback = function()
+    vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP Formatter" })
+    vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, { desc = "LSP Rename" })
+    vim.keymap.set('n', '<leader>lih', function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    end, { desc = "LSP Toggle Inline Hint" })
+
   end,
 })
