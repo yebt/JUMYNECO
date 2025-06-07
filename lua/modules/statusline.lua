@@ -98,12 +98,12 @@ local function get_startup_time()
   local ok, lz = pcall(require, 'lazy')
   if ok then
     local num = lz.stats().startuptime
-    g.stl_startup = ' '.. string.format("%.2f", num)
+    g.stl_startup = ' ' .. string.format('%.2f', num)
   end
 end
 
-au({ 'VimEnter', 'User'}, {
-  pattern = { 'PostVeryLazy','VeryLazy'  },
+au({ 'VimEnter', 'User' }, {
+  pattern = { 'PostVeryLazy', 'VeryLazy' },
   callback = get_startup_time,
 })
 
@@ -140,7 +140,7 @@ local function get_actual_clients()
       table.insert(names, client.name)
     end
     local lst = table.concat(names, ',')
-    vim.b.stl_lsp_clients  = ("%%#stlLSP#󰿘 [%s]"):format(lst)
+    vim.b.stl_lsp_clients = ('%%#stlLSP#󰿘 [%s]'):format(lst)
     -- vim.b.stl_lsp_clients = ('%#stlLSP#󰿘 [%s]'):format(lst)
   else
     vim.b.stl_lsp_clients = ''
@@ -150,6 +150,28 @@ end
 vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress' }, {
   callback = get_actual_clients,
 })
+
+-----------------------
+------- GUARD
+-----------------------
+
+-- vim.g.stl_guard = ''
+-- vim.api.nvim_create_autocmd({ 'User' }, {
+--   pattern = { 'GuardFmt', 'PostVeryLazy', 'BuffEnter' },
+--   callback = function(opt)
+--     local filetype = require('guard.filetype')
+--     local aus = vim.api.nvim_get_autocmds({
+--       group = 'Guard',
+--       buffer = 0,
+--     })
+--
+--     if filetype[vim.bo.ft] and #aus ~= 0 then
+--       vim.g.stl_guard = opt.data.status == 'pending' and '' or ''
+--     else
+--       vim.g.stl_guard = '·'
+--     end
+--   end,
+-- })
 
 -----------------------
 ------- COMPS
@@ -168,6 +190,8 @@ local components = {
   separator,
   -- '%{mode()}',
   '%<',
+  -- [[%{%get(g:,'stl_guard','')%} ]],
+  -- ' ',
   [[%{%get(g:,'stl_startup','')%}]],
   ' ',
   ' %p%% (%l,%c%V)',
@@ -218,4 +242,3 @@ vim.opt.statusline = table.concat(components, '%#Statusline#')
 -- vim.opt.winbar = [[%{%v:lua.l_path()%}]]
 -- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
 -- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:~:.:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]]
-
