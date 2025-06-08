@@ -114,6 +114,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   -- callback = function(args)
   callback = function()
     vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP Formatter" })
+    vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, { desc = "LSP Format Select" })
     vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, { desc = "LSP Rename" })
     vim.keymap.set('n', '<leader>lih', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
