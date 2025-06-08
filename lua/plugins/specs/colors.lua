@@ -4,7 +4,7 @@
 -- 'tokyonight.nvim', 'slack.nvim'
 local color = 'tokyonight.nvim'
 
-local function isColor (plgn)
+local function isColor(plgn)
   return plgn.name == color
 end
 
@@ -58,7 +58,43 @@ return {
     -- cond = isColor,
     config = function()
       vim.cmd.colorscheme('slack')
-    end
+    end,
+  },
+
+  ---
+  {
+    'navarasu/onedark.nvim',
+    config = function()
+      require('onedark').setup({
+        style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+      })
+      -- Enable theme
+      require('onedark').load()
+    end,
+  },
+
+  ---
+  {
+    "ribru17/bamboo.nvim",
+    config = function()
+      require('bamboo').setup {
+        -- optional configuration here
+        toggle_style_key = "<leader>ts",
+        style = 'vulgaris', -- Choose between 'vulgaris' (regular), 'multiplex' (greener), and 'light'
+        ending_tildes = true,
+      }
+      require('bamboo').load()
+    end,
+  },
+
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      variant = "default",
+    italic_comments = true,
+    },
   },
 
   --- Colorize
@@ -80,8 +116,6 @@ return {
           hex_color = hipatterns.gen_highlighter.hex_color(),
         },
       })
-    end
+    end,
   },
-
-
 }
