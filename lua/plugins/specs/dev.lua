@@ -64,22 +64,22 @@ return {
             enabled = true,
           },
         },
-        -- trigger = {
-        --   -- Shows after typing a keyword, typically an alphanumeric character, - or _
-        --   show_on_keyword = true,
-        --   -- Shows after typing a trigger character, defined by the sources
-        --   show_on_trigger_character = true,
-        --   show_on_blocked_trigger_characters = { ' ', '\n', '\t' },
-        --   -- Shows after entering insert mode on top of a trigger character
-        --   show_on_insert_on_trigger_character = true,
-        --   show_on_x_blocked_trigger_characters = {
-        --     "'",
-        --     '"',
-        --     '(',
-        --     '{',
-        --     '[',
-        --   },
-        -- },
+        trigger = {
+          --   -- Shows after typing a keyword, typically an alphanumeric character, - or _
+          -- show_on_keyword = true,
+          --   -- Shows after typing a trigger character, defined by the sources
+          show_on_trigger_character = true,
+          --   show_on_blocked_trigger_characters = { ' ', '\n', '\t' },
+          --   -- Shows after entering insert mode on top of a trigger character
+          -- show_on_insert_on_trigger_character = true,
+          --   show_on_x_blocked_trigger_characters = {
+          --     "'",
+          --     '"',
+          --     '(',
+          --     '{',
+          --     '[',
+          --   },
+        },
         list = {
           selection = {
             preselect = false,
@@ -112,7 +112,6 @@ return {
                 end,
                 -- Set the highlight priority to 20000 to beat the cursorline's default priority of 10000
                 highlight = function(ctx)
-
                   local is_path = vim.tbl_contains({ 'Path' }, ctx.source_name)
                   local resolve_type = (not is_path) and 'lsp' or (ctx.kind == 'File' and 'file' or 'directory')
                   local resolve_item = is_path and ctx.label or ctx.kind
@@ -226,36 +225,80 @@ return {
         providers = {
           buffer = {
             -- keep case of first char
-            transform_items = function(a, items)
-              local keyword = a.get_keyword()
-              local correct, case
-              if keyword:match('^%l') then
-                correct = '^%u%l+$'
-                case = string.lower
-              elseif keyword:match('^%u') then
-                correct = '^%l+$'
-                case = string.upper
-              else
-                return items
-              end
+            -- transform_items = function(a, items)
+            --   local keyword = a.get_keyword()
+            --   local correct, case
+            --   if keyword:match('^%l') then
+            --     correct = '^%u%l+$'
+            --     case = string.lower
+            --   elseif keyword:match('^%u') then
+            --     correct = '^%l+$'
+            --     case = string.upper
+            --   else
+            --     return items
+            --   end
+            --
+            --   -- avoid duplicates from the corrections
+            --   local seen = {}
+            --   local out = {}
+            --   for _, item in ipairs(items) do
+            --     local raw = item.insertText
+            --     if raw:match(correct) then
+            --       local text = case(raw:sub(1, 1)) .. raw:sub(2)
+            --       item.insertText = text
+            --       item.label = text
+            --     end
+            --     if not seen[item.insertText] then
+            --       seen[item.insertText] = true
+            --       table.insert(out, item)
+            --     end
+            --   end
+            --   return out
+            -- end,
 
-              -- avoid duplicates from the corrections
-              local seen = {}
-              local out = {}
-              for _, item in ipairs(items) do
-                local raw = item.insertText
-                if raw:match(correct) then
-                  local text = case(raw:sub(1, 1)) .. raw:sub(2)
-                  item.insertText = text
-                  item.label = text
-                end
-                if not seen[item.insertText] then
-                  seen[item.insertText] = true
-                  table.insert(out, item)
-                end
-              end
-              return out
-            end,
+            opts = {
+              get_bufnrs = function()
+                return vim
+                  .iter(vim.api.nvim_list_bufs())
+                  :filter(function(buf)
+                    return vim.api.nvim_buf_is_loaded(buf)
+                  end)
+                  :totable()
+                -- return vim
+                --   .iter(vim.api.nvim_list_wins())
+                --   :map(function(win)
+                --     return vim.api.nvim_win_get_buf(win)
+                --   end)
+                --   :filter(function(buf)
+                --     return vim.bo[buf].buftype ~= 'nofile'
+                --   end)
+                --   :totable()
+              end,
+            },
+          },
+          lsp = {
+            override = {
+              -- get_trigger_characters = function(self)
+              --   -- vim.print(self)
+              --   return {'.'}
+              -- end
+              -- get_trigger_characters = function()
+              --   local clients = vim.lsp.get_clients({ bufnr = 0 })
+              --   local trigger_characters = {}
+              --
+              --   for _, client in pairs(clients) do
+              --     local completion_provider = client.server_capabilities.completionProvider
+              --     if completion_provider and completion_provider.triggerCharacters then
+              --       for _, trigger_character in pairs(completion_provider.triggerCharacters) do
+              --         table.insert(trigger_characters, trigger_character)
+              --       end
+              --     end
+              --   end
+              --
+              --   -- vim.print(clients and clients[1].server_capabilities.completionProvider)
+              --   return trigger_characters
+              -- end,
+            },
           },
         },
       },
