@@ -75,25 +75,61 @@ return {
 
   ---
   {
-    "ribru17/bamboo.nvim",
+    'ribru17/bamboo.nvim',
     config = function()
-      require('bamboo').setup {
+      require('bamboo').setup({
         -- optional configuration here
-        toggle_style_key = "<leader>ts",
+        toggle_style_key = '<leader>ts',
         style = 'vulgaris', -- Choose between 'vulgaris' (regular), 'multiplex' (greener), and 'light'
         ending_tildes = true,
-      }
+      })
       require('bamboo').load()
     end,
   },
 
   {
-    "scottmckendry/cyberdream.nvim",
+    'scottmckendry/cyberdream.nvim',
     lazy = false,
     priority = 1000,
     opts = {
-      variant = "default",
-    italic_comments = true,
+      variant = 'default',
+      italic_comments = true,
+    },
+  },
+
+  {
+    'rebelot/kanagawa.nvim',
+    opts = {
+      compile = true,
+      theme = 'dragon',
+      colors = {
+        wave = {
+          ui = {
+            float = {
+              bg = 'none',
+            },
+          },
+        },
+        dragon = {
+          syn = {
+            parameter = 'yellow',
+          },
+        },
+        all = {
+          ui = {
+            bg_gutter = 'none',
+          },
+        },
+      },
+      overrides = function(colors)
+        local theme = colors.theme
+        return {
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
+          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+        }
+      end,
     },
   },
 
