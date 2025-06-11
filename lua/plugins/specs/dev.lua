@@ -7,6 +7,7 @@ return {
     -- OR build from source
     build = 'cargo +nightly build --release',
     event = { 'VeryLazy', 'InsertEnter' },
+    dependencies = {},
     --- @module 'blink.pairs'
     --- @type blink.pairs.Config
     opts = {
@@ -43,12 +44,22 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {
       'rafamadriz/friendly-snippets',
+      {
+        'L3MON4D3/LuaSnip',
+        version = 'v2.*',
+        build = 'make install_jsregexp',
+        dependencies = {
+          'rafamadriz/friendly-snippets',
+        },
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load()
+        end,
+      },
     },
     build = 'cargo +nightly build --release',
     event = { 'VeryLazy', 'InsertEnter' },
     ---@type blink.cmp.Config
     opts = {
-
       -- Disable cmdline
       cmdline = { enabled = false },
 
@@ -186,7 +197,7 @@ return {
 
       snippets = {
         -- preset = 'default' | 'luasnip' | 'mini_snippets',
-        preset = 'default',
+        preset = 'luasnip',
       },
 
       keymap = {
@@ -211,6 +222,7 @@ return {
 
         ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
       },
+
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
@@ -307,7 +319,7 @@ return {
         implementation = 'prefer_rust_with_warning',
         use_frecency = true,
         sorts = {
-          'exact',
+          -- 'exact',
           -- default sorts
           'score',
           'sort_text',
@@ -355,6 +367,7 @@ return {
     opts_extend = { 'sources.default' },
   },
 
+  --- File sistem iteration
   {
     'echasnovski/mini.files',
     version = false,
@@ -385,6 +398,34 @@ return {
         end,
         silent = true,
         desc = 'Toggle Mini Files try reveal',
+      },
+    },
+  },
+
+  --- Annotation toolkit
+  {
+    'danymat/neogen',
+    config = true,
+    -- Uncomment next line if you want to follow only stable versions
+    -- version = "*"
+    event = {
+      "VeryLazy",
+      "InsertEnter"
+    },
+    lazy = false,
+    cmd = { 'Neogen' },
+    -- cond = false,
+    opts = {
+      enabled = true,
+      snippet_engine = 'luasnip',
+      input_after_comment = true,
+    },
+    dependencies ={"L3MON4D3/LuaSnip"},
+    keys = {
+      {
+        '<leader>ng',
+        ":lua require('neogen').generate()<CR>",
+        { noremap = true, silent = true, desc = 'Neogen generate' },
       },
     },
   },
