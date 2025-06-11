@@ -35,7 +35,7 @@ return {
     dependencies = {
       'b0o/SchemaStore.nvim',
     },
-    -- configure = require('plugins.configs.lspconfig-c')
+    -- config = require('plugins.configs.lspconfig-c')
   },
 
   --- Mason
