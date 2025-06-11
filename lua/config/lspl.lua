@@ -123,6 +123,39 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- Crea un comando de usuario llamado :LspCommands
+vim.api.nvim_create_user_command('LspCommands', function()
+  -- Obtiene los clientes para el buffer actual
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    vim.notify("No hay servidores LSP activos para este buffer.", vim.log.levels.WARN)
+    return
+  end
+
+  vim.notify("Comandos disponibles de los servidores LSP:", vim.log.levels.INFO, { title = "LSP" })
+
+  -- Itera sobre cada cliente activo
+  for _, client in ipairs(clients) do
+    local commands = client.server_capabilities.executeCommandProvider and client.server_capabilities.executeCommandProvider.commands or nil
+
+    if commands and #commands > 0 then
+      -- Usa vim.notify para mostrar una notificación bonita y no invasiva
+      vim.notify(
+        "Servidor: " .. client.name .. "\n" .. table.concat(commands, "\n"),
+        vim.log.levels.INFO,
+        { title = "Comandos de " .. client.name }
+      )
+    else
+      vim.notify(
+        "El servidor '" .. client.name .. "' no reporta comandos.",
+        vim.log.levels.INFO,
+        { title = "Comandos de " .. client.name }
+      )
+    end
+  end
+end, {
+desc = "Muestra los comandos disponibles de los servidores LSP activos"
+})
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
 --   group = vim.api.nvim_create_augroup('my.lsp', {}),
@@ -154,9 +187,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- })
 --
 
-local api = vim.api
-local au = api.nvim_create_autocmd
-local g = api.nvim_create_augroup('glepnir.completion', { clear = true })
+-- local api = vim.api
+-- local au = api.nvim_create_autocmd
+-- local g = api.nvim_create_augroup('glepnir.completion', { clear = true })
 
 
 vim.o.cot = 'menu,menuone,noinsert,fuzzy,popup'
