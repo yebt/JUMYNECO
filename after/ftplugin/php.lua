@@ -1,0 +1,99 @@
+vim.bo.iskeyword = vim.bo.iskeyword .. ',$'
+
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--   group = vim.api.nvim_create_augroup('my.lsp', {}),
+--   callback = function(args)
+--     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+--     local bufnr = args.buf
+--
+--     if client.server_capabilities.executeCommandProvider then
+--       -- client:exec_cmd('intelephense.phpdoc.add')
+--
+--       local position_params = {
+--         line = vim.api.nvim_win_get_cursor(0)[1] - 1,
+--         character = 0,
+--       }
+--
+--       local execute_params = {
+--         command = 'intelephense.phpdoc.add',
+--         arguments = { vim.uri_from_bufnr(0), position_params },
+--       }
+--
+--       local handler = function(err, result)
+--         if err then
+--           vim.notify('Error al ejecutar el comando: ' .. vim.inspect(err), vim.log.levels.ERROR)
+--           return
+--         end
+--         -- Puedes poner alguna lógica aquí si lo necesitas.
+--         vim.notify('PHPDoc generado!', vim.log.levels.INFO)
+--       end
+--
+--       client:request(
+--         'workspace/executeCommand', -- El método real del protocolo LSP
+--         execute_params,             -- Los parámetros que espera ese método
+--         handler,                    -- La función que procesará la respuesta
+--         0                    -- El buffer al que se aplica
+--       )
+--     end
+--   end,
+-- })
+
+-- vim.keymap.set('i', '<CR>', function()
+--   local line = vim.api.nvim_get_current_line()
+--   if string.match(line, '^%s*/%*%*$') then
+--     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 'n', false)
+--
+--     vim.schedule(function()
+--       -- === COMIENZA LA LÓGICA DE BAJO NIVEL ===
+--
+--       -- 1. Obtener el cliente LSP manualmente
+--       local clients = vim.lsp.get_clients({ bufnr = 0 })
+--       local intelephense_client = nil
+--       for _, client in ipairs(clients) do
+--         if client.name == 'intelephense' then
+--           intelephense_client = client
+--           break
+--         end
+--       end
+--
+--       if not intelephense_client then
+--         vim.notify("Cliente de Intelephense no encontrado.", vim.log.levels.WARN)
+--         return
+--       end
+--
+--       -- 2. Construir los parámetros para el método 'workspace/executeCommand'
+--       local position_params = {
+--         line = vim.api.nvim_win_get_cursor(0)[1] - 1,
+--         character = 0
+--       }
+--       local execute_params = {
+--         command = 'intelephense.phpdoc.add',
+--         arguments = { vim.uri_from_bufnr(0), position_params }
+--       }
+--
+--       -- 3. Definir un "handler" para la respuesta del servidor.
+--       --    Esta es la función que se llamará cuando el servidor responda.
+--       --    Para este comando, el servidor no devuelve nada importante (err es nil y result es nil en caso de éxito).
+--       local handler = function(err, result)
+--         if err then
+--           vim.notify("Error al ejecutar el comando: " .. vim.inspect(err), vim.log.levels.ERROR)
+--           return
+--         end
+--         -- Puedes poner alguna lógica aquí si lo necesitas.
+--         vim.notify("PHPDoc generado!", vim.log.levels.INFO)
+--       end
+--
+--       -- 4. Llamar a client:request()
+--       intelephense_client:request(
+--         'workspace/executeCommand', -- El método real del protocolo LSP
+--         execute_params,             -- Los parámetros que espera ese método
+--         handler,                    -- La función que procesará la respuesta
+--         0                    -- El buffer al que se aplica
+--       )
+--     end)
+--
+--     return ''
+--   else
+--     return '<CR>'
+--   end
+-- end, { expr = true, buffer = 0, noremap = true, silent = true })
