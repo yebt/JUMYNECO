@@ -1,0 +1,37 @@
+{
+  "name": "example-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "php"
+        ],
+        "path": "./php.json"
+      },
+      {
+        "language": [
+          "vue"
+        ],
+        "path": "./vue.json"
+      },
+      {
+        "language": [
+          "typescript"
+        ],
+        "path": "./typescript.json"
+      },
+      {
+        "language": [
+          "css"
+        ],
+        "path": "./css.json"
+      },
+      {
+        "language": [
+          "all"
+        ],
+        "path": "./global.json"
+      }
+    ]
+  }
+}
