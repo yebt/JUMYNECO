@@ -103,9 +103,9 @@ return function()
         -- phpdoc = { textFormat = 'snippet' },             -- asegura snippet output
         -- completion = { fullyQualifyGlobalConstantsAndFunctions = true },
       },
-      on_attach = function(client, bufnr)
-        require('intelephense_cmds').setup(client, bufnr)
-      end,
+      -- on_attach = function(client, bufnr)
+      --   require('intelephense_cmds').setup(client, bufnr)
+      -- end,
     },
     ['lua_ls'] = {
       settings = {
