@@ -53,8 +53,7 @@ return {
         },
         config = function()
           require('luasnip.loaders.from_vscode').lazy_load()
-          -- require('luasnip.loaders.from_vscode').lazy_load({path = "snippets"})
-          require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
+          require('luasnip.loaders.from_vscode').lazy_load({ paths = { './snippets' } })
         end,
       },
     },
@@ -108,7 +107,7 @@ return {
           draw = {
             columns = {
               { 'kind_icon' },
-              { 'label', 'label_description', gap = 1 },
+              { 'label',            'label_description', gap = 1 },
               { 'kind' },
               { 'source_name_short' },
             },
@@ -273,11 +272,11 @@ return {
             opts = {
               get_bufnrs = function()
                 return vim
-                  .iter(vim.api.nvim_list_bufs())
-                  :filter(function(buf)
-                    return vim.api.nvim_buf_is_loaded(buf)
-                  end)
-                  :totable()
+                    .iter(vim.api.nvim_list_bufs())
+                    :filter(function(buf)
+                      return vim.api.nvim_buf_is_loaded(buf)
+                    end)
+                    :totable()
                 -- return vim
                 --   .iter(vim.api.nvim_list_wins())
                 --   :map(function(win)
@@ -405,30 +404,30 @@ return {
   },
 
   --- Annotation toolkit
-  {
-    'danymat/neogen',
-    config = true,
-    -- Uncomment next line if you want to follow only stable versions
-    -- version = "*"
-    event = {
-      "VeryLazy",
-      "InsertEnter"
-    },
-    lazy = false,
-    cmd = { 'Neogen' },
-    -- cond = false,
-    opts = {
-      enabled = true,
-      snippet_engine = 'luasnip',
-      input_after_comment = true,
-    },
-    dependencies ={"L3MON4D3/LuaSnip"},
-    keys = {
-      {
-        '<leader>ng',
-        ":lua require('neogen').generate()<CR>",
-        { noremap = true, silent = true, desc = 'Neogen generate' },
-      },
-    },
-  },
+  -- {
+  --   'danymat/neogen',
+  --   config = true,
+  --   -- Uncomment next line if you want to follow only stable versions
+  --   -- version = "*"
+  --   event = {
+  --     'VeryLazy',
+  --     'InsertEnter',
+  --   },
+  --   lazy = false,
+  --   cmd = { 'Neogen' },
+  --   -- cond = false,
+  --   opts = {
+  --     enabled = true,
+  --     snippet_engine = 'luasnip',
+  --     input_after_comment = true,
+  --   },
+  --   dependencies = { 'L3MON4D3/LuaSnip' },
+  --   keys = {
+  --     {
+  --       '<leader>ng',
+  --       ":lua require('neogen').generate()<CR>",
+  --       { noremap = true, silent = true, desc = 'Neogen generate' },
+  --     },
+  --   },
+  -- },
 }
