@@ -1,4 +1,7 @@
 return function()
+  local caps = vim.lsp.protocol.make_client_capabilities()
+  caps.textDocument.completion.completionItem.snippetSupport = true
+
   local lsp_settings = {
 
     ['astro'] = {
@@ -84,6 +87,8 @@ return function()
       init_options = {
         licenceKey = vim.fn.expand('~') .. '/intelephense/licence.txt',
       },
+      filetypes = { 'php', 'phtml' },
+      capabilities = caps,
       settings = {
         intelephense = {
           diagnostics = {
@@ -92,13 +97,15 @@ return function()
           format = {
             enable = true,
           },
+          -- phpdoc = { textFormat = 'snippet' }, -- asegura snippet output
+          -- completion = {
+          --   fullyQualifyGlobalConstantsAndFunctions = true,
+          -- },
           phpdoc = { textFormat = 'snippet' }, -- asegura snippet output
-          completion = {
-            fullyQualifyGlobalConstantsAndFunctions = true,
-          },
-          progress = {
-            enable = true,
-          },
+          completion = { fullyQualifyGlobalConstantsAndFunctions = true },
+          -- progress = {
+          --   enable = true,
+          -- },
         },
         -- phpdoc = { textFormat = 'snippet' },             -- asegura snippet output
         -- completion = { fullyQualifyGlobalConstantsAndFunctions = true },
