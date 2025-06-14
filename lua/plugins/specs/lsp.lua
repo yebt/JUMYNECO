@@ -1,165 +1,162 @@
+--- Here is all tooling to interactuate with LSP
+
 return {
-
-  --- Lsp config wrapper
+  --- List all diagnostics
   {
-    'neovim/nvim-lspconfig',
+    'folke/trouble.nvim',
+    cmd = { 'Trouble' },
     dependencies = {
-      --- Packages
-      'williamboman/mason.nvim',
-      --- Bridge
-      'williamboman/mason-lspconfig.nvim',
-      --- Schemes for the json,yml,tml lsp
-      'b0o/schemastore.nvim',
-      --- Autocompletion system
-      'saghen/blink.cmp',
-    },
-    event = { 'VeryLazy' },
-    config = require('plugins.configs.lspc'),
-  },
-
-  --- Packages
-  {
-    'williamboman/mason.nvim',
-    cmd = { 'Mason', 'MasonUpdate', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll', 'MasonLog' },
-  },
-
-  --- Bridge Mason and Nvm-LSPConfig
-  {
-    'williamboman/mason-lspconfig.nvim',
-    cmd = { 'LspInstall', 'LspUninstall' },
-  },
-
-  --- Debug Adapter Protocol
-  {
-    'mfussenegger/nvim-dap',
-    event = 'VeryLazy',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'jay-babu/mason-nvim-dap.nvim',
-    },
-  },
-
-  --- Better inline diagnostics
-  {
-    'rachartier/tiny-inline-diagnostic.nvim',
-    -- event = 'VeryLazy', -- Or `LspAttach`
-    event = 'LspAttach',
-    priority = 1000, -- needs to be loaded in first
-    keys = {
       {
-        '<leader>',
-        function()
-          require('tiny-inline-diagnostic').toggle()
-        end,
-        desc = 'Toggle Tiny inline diagnostics',
-      },
-    },
-    config = require('plugins.configs.tiny-inline-diagnosticc'),
-  },
-
-  --- LSP Iteration Utils
-  {
-    'nvimdev/lspsaga.nvim',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons', -- optional
-    },
-    cmd = { 'Lspsaga' },
-    -- event = "LazyFile",
-    event = { 'LspAttach' },
-    config = require('plugins.configs.lspsaga'),
-  },
-
-  --- Formatter
-  --- Guard is problematic
-  -- {
-  --   'nvimdev/guard.nvim',
-  --   -- Builtin configuration, optional
-  --   dependencies = {
-  --     'nvimdev/guard-collection',
-  --     'williamboman/mason.nvim',
-  --   },
-  --   cmd = {
-  --     'GuardFmt',
-  --     'GuardDisable',
-  --     'GuardEnable',
-  --   },
-  --   event = 'VeryLazy',
-  --   config = require('plugins.configs.guardc'),
-  -- },
-
-  --- Formatter
-  -- {
-  --   'stevearc/conform.nvim',
-  --   -- TODO: load all available formatter for the current file
-  --   keys = {'<leader>f'},
-  --   config = require("plugins.configs.conformc")
-  -- },
-
-  --- Null
-  {
-    'jay-babu/mason-null-ls.nvim',
-    -- event = { 'BufReadPre', 'BufNewFile' },
-    event = { 'VeryLazy' }, -- better performance
-    dependencies = {
-      'williamboman/mason.nvim',
-      {
-        'nvimtools/none-ls.nvim',
-        dependencies = {
-          'neovim/nvim-lspconfig', -- cause lsp call all mason inits
-          'williamboman/mason.nvim',
-          'nvimtools/none-ls-extras.nvim',
-          'nvim-lua/plenary.nvim',
+        'folke/which-key.nvim',
+        opts = {
+          spec = {
+            {
+              {
+                mode = { 'n' },
+                { '<leader>x', group = 'Trouble', icon = '󱍼' },
+              },
+            },
+          },
         },
       },
     },
     keys = {
-      { '<leader>gq', desc = 'None ls format' },
-      { '<leader>f', desc = 'None ls format' },
+      { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
+      { '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
+      { '<leader>xs', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
+      { '<leader>xS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
     },
-    config = require('plugins.configs.nonels'),
   },
 
-  --- Namu
+  --- LSP Config
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'LazyFile', 'VeryLazy' },
+    dependencies = {
+      'b0o/SchemaStore.nvim',
+      'saghen/blink.cmp', -- caps
+    },
+    config = require('plugins.configs.lspconfig-c')
+  },
+
+  --- Mason
+  {
+    'mason-org/mason.nvim',
+    event = { 'LazyFile', 'VeryLazy' },
+    opts = {
+      ui = {
+        icons = {
+          package_installed = '🜍',
+          package_pending = '🜛',
+          package_uninstalled = 'x',
+        },
+        -- icons = {
+        --   package_installed = '✓',
+        --   package_pending = '➜',
+        --   package_uninstalled = '✗',
+        -- },
+      },
+    },
+    cmd = {
+      'Mason',
+      'MasonInstall',
+      'MasonUninstall',
+      'MasonUninstallAll',
+      'MasonUpdate',
+      'MasonLog',
+    },
+  },
+
+  --- Bridge with Mason and lspconfig
+  {
+    'mason-org/mason-lspconfig.nvim',
+    lazy = false,
+    opts = {
+      ensure_installed = { 'lua_ls' },
+      automatic_enable = true,
+    },
+    dependencies = {
+      { 'mason-org/mason.nvim', opts = {} },
+      'neovim/nvim-lspconfig',
+    },
+    cmd = {
+      'LspInstall',
+      'LspUninstall',
+    },
+  },
+
+  --- Sources for formatting and lingintgs
+  {
+    'nvimtools/none-ls.nvim',
+    priority = 100,
+    -- event = { 'BufReadPre', 'BufNewFile' },
+    event = 'VeryLazy',
+    opts = {
+      sources = {},
+    },
+    dependencies = {
+      'jay-babu/mason-null-ls.nvim',
+    },
+  },
+
+  --- Bridge for none - null LS
+  {
+    'jay-babu/mason-null-ls.nvim',
+    priority = 101,
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'mason-org/mason.nvim',
+      -- 'nvimtools/none-ls.nvim',
+    },
+    opts = {
+      ensure_installed = {
+        ensure_installed = { 'stylua', 'jq' },
+      },
+      automatic_installation = false,
+      handlers = {},
+    },
+  },
+
+  --- LSP Saga
+  {
+    'nvimdev/lspsaga.nvim',
+    event = 'LspAttach',
+    opts = {
+      symbol_in_winbar = { enable = false },
+      code_action = {
+        num_shortcut = true,
+        show_server_name = true,
+        extend_gitsigns = true,
+      },
+      lightbulb ={
+        enable = false
+      }
+    },
+    keys = {
+      { '<leader>lic', ':Lspsaga incoming_calls<CR>', desc = 'LSPSaga Incomming calls' },
+      { '<leader>lca', ':Lspsaga code_action<CR>', desc = 'LSPSaga Code Action' },
+      { '<leader>lpd', ':Lspsaga peek_definition<CR>', desc = 'LSPSaga Peek Definition' },
+      { '<leader>lff', ':Lspsaga finder tyd+ref+imp+def<CR>', desc = 'LSPSaga Finder full' },
+      { '<leader>lfi', ':Lspsaga finder imp<CR>', desc = 'LSPSaga Finder Implementation' },
+      { '<leader>lhd', ':Lspsaga hover_doc<CR>', desc = 'LSPSaga Hover Doc' },
+      { '<leader>lol', ':Lspsaga outline<CR>', desc = 'LSPSaga Out Line' },
+      { '<leader>lrn', ':Lspsaga rename<CR>', desc = 'LSPSaga Rename' },
+      { '<leader>lrp', ':Lspsaga rename ++project<CR>', desc = 'LSPSaga Rename Project' },
+      { '<leader>lgd', ':Lspsaga goto_definition<CR>', desc = 'LSPSaga Go To Definition' },
+      { '<leader>lgy', ':Lspsaga goto_type_definition<CR>', desc = 'LSPSaga Go To Type Definition' },
+    },
+  },
+
+  --- Formatt and Lint
   -- {
-  --   "bassamsdata/namu.nvim",
-  --   opts = {
-  --     -- Enable the modules you want
-  --     namu_symbols = {
-  --       enable = true,
-  --       options = {
-  --         AllowKinds = {
-  --           default = {
-  --             "Function",
-  --             "Method",
-  --             "Class",
-  --             "Module",
-  --             "Property",
-  --             "Variable",
-  --             "Constant",
-  --             "Enum",
-  --             "Interface",
-  --             "Field",
-  --             "Struct",
-  --           },
-  --         }
-  --       }, -- here you can configure namu
-  --     },
-  --     -- Optional: Enable other modules if needed
-  --     ui_select = {
-  --       enable = false
-  --     }, -- vim.ui.select() wrapper
-  --     colorscheme = {
-  --       enable = true,
-  --       options = {
-  --         -- NOTE: if you activate persist, then please remove any vim.cmd("colorscheme ...") in your config, no needed anymore
-  --         persist = true,      -- very efficient mechanism to Remember selected colorscheme
-  --         write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
-  --       },
-  --     },
+  --   "nvimdev/guard.nvim",
+  --   event = {
+  --     "VeryLazy",
+  --     -- "LazyFile"
   --   },
-  --   cmd = {
-  --     "Namu"
-  --   }
-  -- }
+  --   dependencies = {
+  --     "nvimdev/guard-collection"
+  --   },
+  --   config = require("plugins.configs.guard-c")
+  -- },
 }

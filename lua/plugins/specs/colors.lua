@@ -1,118 +1,157 @@
+--- #ababab
+--- COLORS THINGS
+--- Just the colors things
+-- 'tokyonight.nvim', 'slack.nvim'
+local color = 'tokyonight.nvim'
+
+local function isColor(plgn)
+  return plgn.name == color
+end
+
 return {
-  -- Kanagawa
+
+  --- Tokyonight
   {
-    "rebelot/kanagawa.nvim",
-    -- event = "VeryLazy",
-    -- priority = -1,
+    'folke/tokyonight.nvim',
     lazy = false,
+    priority = 1000,
+    cond = isColor,
+    -- event = 'VeryLazy',
     opts = {
-      compile = true,   -- enable compiling the colorscheme
-      undercurl = true, -- enable undercurls
-      commentStyle = { italic = true },
-      functionStyle = { bold = true, },
-      keywordStyle = { italic = true },
-      statementStyle = { bold = true },
-      typeStyle = {},
-      transparent = false,   -- do not set background color
-      dimInactive = true,    -- dim inactive window `:h hl-NormalNC`
-      terminalColors = true, -- define vim.g.terminal_color_{0,17}
-      colors = {             -- add/modify theme and palette colors
-        palette = {
-          -- sumiInk0 = "#000000",
-          -- fujiWhite = "#FFFFFF",
-        },
-        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-      },
-      overrides = function(colors) -- add/modify highlights
-        local theme = colors.theme
-        local palette = colors.palette
+      style = 'night',
+      dim_inactive = true,
+      on_colors = function(colors) end,
+      -- on_highlights = function(highlights, colors)
 
-        local makeDiagnosticColor = function(color)
-          local c = require("kanagawa.lib.color")
-          return { fg = color, bg = c(color):blend(theme.ui.bg, 0.95):to_hex() }
-        end
+      on_highlights = function(h, c)
+        local ca = '#76946A'
+        local cc = '#DCA561'
+        local cd = '#C34043'
 
-        local itemMode = 'fg'
-        local useBg = false
-        local makeItemColor = function(color)
-          local newColor = { fg = color.fg }
-          if useBg then
-            newColor.bg = color.bg
-          else
-            newColor.bg = "NONE"
-          end
-          if itemMode == 'fg' then
-            return newColor
-          end
-          return { bg = newColor.fg, fg = newColor.bg }
-        end
-        return {
-          --- transparent floating
-          -- NormalFloat                = { bg = "none" },
-          -- FloatBorder                = { bg = "none" },
-          -- FloatTitle                 = { bg = "none" },
-          -- NormalDark                 = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-          -- LazyNormal                 = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-          -- MasonNormal                = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+        h.MiniStarterFooter = { link = 'Comment' }
 
-          --- Diagnostics
-          DiagnosticVirtualTextHint  = makeDiagnosticColor(theme.diag.hint),
-          DiagnosticVirtualTextInfo  = makeDiagnosticColor(theme.diag.info),
-          DiagnosticVirtualTextWarn  = makeDiagnosticColor(theme.diag.warning),
-          DiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
+        h.MiniDiffOverAdd = 'DiffAdd'
+        h.MiniDiffOverChange = 'DiffText'
+        h.MiniDiffOverContext = 'DiffChange'
+        h.MiniDiffOverDelete = 'DiffDelete'
 
-          --- Dark completion
-          -- Pmenu                      = { fg = theme.ui.shade0, bg = theme.ui.bg_dim }, -- add `blend = vim.o.pumblend` to enable transparency
-          Pmenu                      = { fg = theme.ui.shade0, bg = theme.ui.bg_m3 },
-          -- PmenuSel                   = { fg = "NONE", bg = theme.ui.bg_p2 },
-          PmenuSel                   = { fg = "NONE", bg = palette.waveBlue1 },
-          PmenuSbar                  = { bg = palette.surimiOrange },
-          PmenuThumb                 = { bg = theme.ui.bg_p2 },
+        h.MiniDiffSignAdd = { fg = ca }
+        h.MiniDiffSignChange = { fg = cc }
+        h.MiniDiffSignDelete = { fg = cd }
 
-          --- indentline
-          IndentLine                 = { fg = theme.ui.bg_p2 },
-          IndentLineCurrent          = { fg = palette.roninYellow },
-
-          --- Cmp Types
-
-
-          BlinkCmpKindField         = makeItemColor { bg = '#EED8DA', fg = '#B5585F' },
-          BlinkCmpKindProperty      = makeItemColor { bg = '#EED8DA', fg = '#B5585F' },
-          BlinkCmpKindEvent         = makeItemColor { bg = '#EED8DA', fg = '#B5585F' },
-          BlinkCmpKindText          = makeItemColor { bg = '#C3E88D', fg = '#9FBD73' },
-          BlinkCmpKindEnum          = makeItemColor { bg = '#C3E88D', fg = '#9FBD73' },
-          BlinkCmpKindKeyword       = makeItemColor { bg = '#C3E88D', fg = '#9FBD73' },
-          BlinkCmpKindConstant      = makeItemColor { bg = '#FFE082', fg = '#D4BB6C' },
-          BlinkCmpKindConstructor   = makeItemColor { bg = '#FFE082', fg = '#D4BB6C' },
-          BlinkCmpKindReference     = makeItemColor { bg = '#FFE082', fg = '#D4BB6C' },
-          BlinkCmpKindFunction      = makeItemColor { bg = '#EADFF0', fg = '#A377BF' },
-          BlinkCmpKindStruct        = makeItemColor { bg = '#EADFF0', fg = '#A377BF' },
-          BlinkCmpKindClass         = makeItemColor { bg = '#EADFF0', fg = '#A377BF' },
-          BlinkCmpKindModule        = makeItemColor { bg = '#EADFF0', fg = '#A377BF' },
-          BlinkCmpKindOperator      = makeItemColor { bg = '#EADFF0', fg = '#A377BF' },
-          BlinkCmpKindVariable      = makeItemColor { bg = '#C5CDD9', fg = '#7E8294' },
-          BlinkCmpKindFile          = makeItemColor { bg = '#C5CDD9', fg = '#7E8294' },
-          BlinkCmpKindUnit          = makeItemColor { bg = '#F5EBD9', fg = '#D4A959' },
-          BlinkCmpKindSnippet       = makeItemColor { bg = '#F5EBD9', fg = '#D4A959' },
-          BlinkCmpKindFolder        = makeItemColor { bg = '#F5EBD9', fg = '#D4A959' },
-          BlinkCmpKindMethod        = makeItemColor { bg = '#DDE5F5', fg = '#6C8ED4' },
-          BlinkCmpKindValue         = makeItemColor { bg = '#DDE5F5', fg = '#6C8ED4' },
-          BlinkCmpKindEnumMember    = makeItemColor { bg = '#DDE5F5', fg = '#6C8ED4' },
-          BlinkCmpKindInterface     = makeItemColor { bg = '#D8EEEB', fg = '#58B5A8' },
-          BlinkCmpKindColor         = makeItemColor { bg = '#D8EEEB', fg = '#58B5A8' },
-          BlinkCmpKindTypeParameter = makeItemColor { bg = '#D8EEEB', fg = '#58B5A8' },
-        }
+        h.GitSignsAdd = { fg = ca }
+        h.GitSignsChange = { fg = cc }
+        h.GitSignsDelete = { fg = cd }
       end,
-      theme = "wave",  -- Load "wave" theme
-      background = {   -- map the value of 'background' option to a theme
-        dark = "wave", -- try "dragon" !
-        light = "lotus"
-      },
     },
     config = function(_, opts)
-      require("kanagawa").setup(opts)
-      vim.cmd.colorscheme("kanagawa")
-    end
+      require('tokyonight').setup(opts)
+      vim.cmd.colorscheme('tokyonight')
+    end,
+  },
 
-  }
+  --- Snack
+  {
+    'ntk148v/slack.nvim',
+    -- lazy = false,
+    -- priority = 1000,
+    -- cond = isColor,
+    config = function()
+      vim.cmd.colorscheme('slack')
+    end,
+  },
+
+  ---
+  {
+    'navarasu/onedark.nvim',
+    config = function()
+      require('onedark').setup({
+        style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+      })
+      -- Enable theme
+      require('onedark').load()
+    end,
+  },
+
+  ---
+  {
+    'ribru17/bamboo.nvim',
+    config = function()
+      require('bamboo').setup({
+        -- optional configuration here
+        toggle_style_key = '<leader>ts',
+        style = 'vulgaris', -- Choose between 'vulgaris' (regular), 'multiplex' (greener), and 'light'
+        ending_tildes = true,
+      })
+      require('bamboo').load()
+    end,
+  },
+
+  {
+    'scottmckendry/cyberdream.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      variant = 'default',
+      italic_comments = true,
+    },
+  },
+
+  {
+    'rebelot/kanagawa.nvim',
+    opts = {
+      compile = true,
+      theme = 'dragon',
+      colors = {
+        wave = {
+          ui = {
+            float = {
+              bg = 'none',
+            },
+          },
+        },
+        dragon = {
+          syn = {
+            parameter = 'yellow',
+          },
+        },
+        all = {
+          ui = {
+            bg_gutter = 'none',
+          },
+        },
+      },
+      overrides = function(colors)
+        local theme = colors.theme
+        return {
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
+          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+        }
+      end,
+    },
+  },
+
+  --- Colorize
+  {
+    'echasnovski/mini.hipatterns',
+    version = false,
+    event = 'VeryLazy',
+    -- opts = {}
+    config = function()
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup({
+        highlighters = {
+          -- -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          -- fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+          -- hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
+          -- todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
+          -- note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      })
+    end,
+  },
 }

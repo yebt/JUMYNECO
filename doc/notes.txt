@@ -1,9 +1,0 @@
-# Notes
-
-## Folds
-
-Close all folds zM
-
-## Go to previos location before jump
-
-'' or ``

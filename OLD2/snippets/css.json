@@ -1,0 +1,62 @@
+{
+    "Media query screen xs": {
+        "prefix": "@media-s-xs",
+        "body": [
+            "/* xs */",
+            "@media screen and (min-width: 475px) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media query screen xs like tailwindcss"
+    },
+    "Media query screen sm": {
+        "prefix": "@media-s-sm",
+        "body": [
+            "/* sm */",
+            "@media screen and (min-width: 640px) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media query screen sm like tailwindcss"
+    },
+    "Media query screen md": {
+        "prefix": "@media-s-md",
+        "body": [
+            "/* md */",
+            "@media screen and (min-width: 768px) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media query screen md like tailwindcss"
+    },
+    "Media query screen lg": {
+        "prefix": "@media-s-lg",
+        "body": [
+            "/* lg */",
+            "@media screen and (min-width: 1024px) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media query screen lg like tailwindcss"
+    },
+    "Media query screen xl": {
+        "prefix": "@media-s-xl",
+        "body": [
+            "/* xl */",
+            "@media screen and (min-width: 1280px) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media query screen xl like tailwindcss"
+    },
+    "Media query screen 2xl": {
+        "prefix": "@media-s-2xl",
+        "body": [
+            "/* 2xl */",
+            "@media screen and (min-width: 1536px) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media query screen 2xl like tailwindcss"
+    }
+}

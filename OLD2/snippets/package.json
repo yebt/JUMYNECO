@@ -1,0 +1,49 @@
+{
+  "name": "example-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "css"
+        ],
+        "path": "./css.json"
+      },
+      {
+        "language": [
+          "python"
+        ],
+        "path": "./python.json"
+      },
+      {
+        "language": [
+          "javascript"
+        ],
+        "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "php"
+        ],
+        "path": "./php.json"
+      },
+      {
+        "language": [
+          "lua"
+        ],
+        "path": "./lua.json"
+      },
+      {
+        "language": [
+          "typescript"
+        ],
+        "path": "./typescript.json"
+      },
+      {
+        "language": [
+          "all"
+        ],
+        "path": "./global.json"
+      }
+    ]
+  }
+}

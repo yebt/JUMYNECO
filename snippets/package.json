@@ -4,21 +4,15 @@
     "snippets": [
       {
         "language": [
-          "python"
+          "php"
         ],
-        "path": "./python.json"
+        "path": "./php.json"
       },
       {
         "language": [
-          "typescript"
+          "vue"
         ],
-        "path": "./typescript.json"
-      },
-      {
-        "language": [
-          "lua"
-        ],
-        "path": "./lua.json"
+        "path": "./vue.json"
       },
       {
         "language": [
@@ -37,6 +31,12 @@
           "javascript"
         ],
         "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "css"
+        ],
+        "path": "./css.json"
       },
       {
         "language": [

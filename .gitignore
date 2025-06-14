@@ -1,6 +1,8 @@
 test/*
 # lazy-lock.json
 sessions
-OLD/*
+OLD*/*
 lua/modules.bak
-plugin/namu_colorscheme_persist.lua
+**/*.bak
+test/*
+OLD2
