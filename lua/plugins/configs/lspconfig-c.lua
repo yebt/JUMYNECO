@@ -1,8 +1,16 @@
 return function()
-  local caps = vim.lsp.protocol.make_client_capabilities()
-  caps.textDocument.completion.completionItem.snippetSupport = true
+  local lspconfig                      = require('lspconfig')
+  local blink                          = require('blink.cmp')
 
-  local lsp_settings = {
+  local capabilities                   = blink.get_lsp_capabilities()
+  capabilities.window                  = capabilities.window or {}
+  capabilities.window.workDoneProgress = true
+
+  -- local lsp_settings = {
+  --
+  -- }
+
+  local lsp_settings                   = {
 
     ['astro'] = {
       filetypes = {
@@ -83,37 +91,112 @@ return function()
         showSuggestionsAsSnippets = true,
       },
     },
+
     ['intelephense'] = {
       init_options = {
         licenceKey = vim.fn.expand('~') .. '/intelephense/licence.txt',
       },
-      filetypes = { 'php', 'phtml' },
-      capabilities = caps,
+
+      capabilities = capabilities,
       settings = {
         intelephense = {
+          client = {
+            -- Al escribir /** se autoinserta */ y se muestra el completado de PHPDoc
+            autoCloseDocCommentDoSuggest = true,
+          },
+          files = {
+            maxSize = 10000000,
+            exclude = {
+              "**/.git/**",
+              "**/.svn/**",
+              "**/.hg/**",
+              "**/CVS/**",
+              "**/.DS_Store/**",
+              "**/node_modules/**",
+              "**/bower_components/**",
+              "**/vendor/**/{Tests,tests}/**",
+              "**/.history/**",
+              "**/vendor/**/vendor/**"
+            }
+          },
           diagnostics = {
             enable = true,
           },
           format = {
             enable = true,
           },
-          -- phpdoc = { textFormat = 'snippet' }, -- asegura snippet output
-          -- completion = {
-          --   fullyQualifyGlobalConstantsAndFunctions = true,
-          -- },
-          phpdoc = { textFormat = 'snippet' }, -- asegura snippet output
-          completion = { fullyQualifyGlobalConstantsAndFunctions = true },
-          -- progress = {
-          --   enable = true,
-          -- },
+          phpdoc = {
+            textFormat = 'snippet'
+          }, -- asegura snippet output
+          completion = {
+            fullyQualifyGlobalConstantsAndFunctions = true,
+          },
+
         },
-        -- phpdoc = { textFormat = 'snippet' },             -- asegura snippet output
-        -- completion = { fullyQualifyGlobalConstantsAndFunctions = true },
       },
-      -- on_attach = function(client, bufnr)
-      --   require('intelephense_cmds').setup(client, bufnr)
-      -- end,
+
+      on_attach = function(client, bufnr)
+        local api = vim.api
+
+        -- 2.3 Comando para forzar indexación del workspace
+        api.nvim_buf_create_user_command(bufnr, 'IntelephenseIndex', function()
+          client.request(
+            'workspace/executeCommand',
+            { command = 'intelephense.index.workspace' },
+            function(err)
+              if err then
+                vim.notify('Error al iniciar indexación: ' .. err.message, vim.log.levels.ERROR)
+              else
+                vim.notify('Indexación de Intelephense iniciada', vim.log.levels.INFO)
+              end
+            end,
+            bufnr
+          )
+        end, { desc = 'Indexar workspace con Intelephense' })
+
+        -- 2.4 Escuchar notificaciones de progreso y mostrarlas
+        client.handlers['window/workDoneProgress/create'] = function(err, result)
+          if not err and result then
+            vim.notify('Intelephense: ' .. result.title, vim.log.levels.INFO)
+          end
+        end
+        client.handlers['$/progress'] = function(err, result)
+          if not err and result.value and result.value.message then
+            vim.notify('Intelephense: ' .. result.value.message, vim.log.levels.INFO)
+          end
+        end
+      end
     },
+    -- ['intelephense'] = {
+    --   init_options = {
+    --     licenceKey = vim.fn.expand('~') .. '/intelephense/licence.txt',
+    --   },
+    --   filetypes = { 'php', 'phtml' },
+    --   settings = {
+    --     intelephense = {
+    --       diagnostics = {
+    --         enable = true,
+    --       },
+    --       format = {
+    --         enable = true,
+    --       },
+    --       -- phpdoc = { textFormat = 'snippet' }, -- asegura snippet output
+    --       -- completion = {
+    --       --   fullyQualifyGlobalConstantsAndFunctions = true,
+    --       -- },
+    --       phpdoc = { textFormat = 'snippet' }, -- asegura snippet output
+    --       completion = { fullyQualifyGlobalConstantsAndFunctions = true },
+    --       -- progress = {
+    --       --   enable = true,
+    --       -- },
+    --     },
+    --     -- phpdoc = { textFormat = 'snippet' },             -- asegura snippet output
+    --     -- completion = { fullyQualifyGlobalConstantsAndFunctions = true },
+    --   },
+    --   -- on_attach = function(client, bufnr)
+    --   --   require('intelephense_cmds').setup(client, bufnr)
+    --   -- end,
+    -- },
     ['lua_ls'] = {
       settings = {
         Lua = {
@@ -159,7 +242,7 @@ return function()
           {
             name = '@vue/typescript-plugin',
             location = vim.fn.stdpath('data')
-              .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
             languages = { 'vue' },
           },
         },
@@ -200,7 +283,7 @@ return function()
               {
                 name = '@vue/typescript-plugin',
                 location = vim.fn.stdpath('data')
-                  .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                    .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
                 languages = { 'vue' },
                 configNamespace = 'typescript',
                 enableForWorkspaceTypeScriptVersions = true,
