@@ -34,6 +34,7 @@ return {
     event = { 'LazyFile', 'VeryLazy' },
     dependencies = {
       'b0o/SchemaStore.nvim',
+      'saghen/blink.cmp', -- caps
     },
     config = require('plugins.configs.lspconfig-c')
   },
