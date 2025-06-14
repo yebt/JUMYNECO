@@ -1,5 +1,5 @@
 test/*
-lazy-lock.json
+# lazy-lock.json
 sessions
 OLD*/*
 lua/modules.bak

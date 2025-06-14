@@ -1,0 +1,233 @@
+return {
+
+  --
+  -- {
+  --   'nvimdev/dired.nvim',
+  --   cmd = { 'Dired' },
+  --   opts = {
+  --     show_hidden = true,
+  --     normal_when_fits = true,
+  --     file_dir_based = true,
+  --     shortcuts = 'sdfhlwertyuopzxcvbnmSDFGHLQWERTYUOPZXCVBNM', -- make sure > 25
+  --     keymaps = {
+  --       open = { i = '<CR>', n = '<CR>' },                      -- both on search and main buffer
+  --       up = { i = '<C-u>', n = '<C-u>' },                      -- both on search and main buffer
+  --       quit = { n = { 'q', '<ESC>' }, i = '<C-c>' },           -- both on search and main buffer
+  --       forward = { i = '<C-n>', n = 'j' },                     -- search buffer
+  --       backward = { i = '<C-p>', n = 'k' },                    -- search buffer
+  --       split = { n = 'gs', i = '<C-s>' },                      -- both on search and main buffer
+  --       vsplit = { n = 'gv', i = '<C-v>' },                     -- both on search and main buffer
+  --       switch = { i = '<C-j>', n = '<C-j>' },                  -- both on search and main buffer
+  --       execute = '<C-s>',                                      -- main buffer
+  --     },
+  --   },
+  --   config = function (_,opts)
+  --     local drd = require("dired")
+  --   end
+  -- },
+
+  --- Snacks
+  -- {
+  --   "folke/snacks.nvim",
+  --   priority = 1000,
+  --   lazy = false,
+  --   -- event = 'VeryLazy',
+  --   opts = {
+  --     styles = {
+  --       minimal = {
+  --         wo = {
+  --           cursorcolumn = false,
+  --           cursorline = false,
+  --           cursorlineopt = "both",
+  --           colorcolumn = "",
+  --           fillchars = "eob: ,lastline:…",
+  --           list = false,
+  --           listchars = "extends:…,tab:  ",
+  --           number = false,
+  --           relativenumber = false,
+  --           signcolumn = "no",
+  --           spell = false,
+  --           winbar = "",
+  --           statuscolumn = "",
+  --           wrap = true,
+  --           sidescrolloff = 0,
+  --         }
+  --       },
+  --       notification = {
+  --         border = "rounded",
+  --         zindex = 100,
+  --         ft = "markdown",
+  --         wo = {
+  --           winblend = 5,
+  --           wrap = true,
+  --           conceallevel = 2,
+  --           colorcolumn = "",
+  --         },
+  --         bo = { filetype = "snacks_notif" },
+  --       }
+  --     },
+  --     --
+  --     bigfile = {
+  --       -- your bigfile configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --       enabled = true,
+  --       notify = true,            -- show notification when big file detected
+  --       size = 1.5 * 1024 * 1024, -- 1.5MB
+  --     },
+  --
+  --     -- dashboard = {
+  --     --   enabled = true,
+  --     --   -- example = "startify",
+  --     --   formats = {
+  --     --     key = function(item)
+  --     --       return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
+  --     --     end,
+  --     --   },
+  --     --   sections = {
+  --     --     -- { section = "terminal",     cmd = "fortune -s | cowsay",          hl = "header", padding = 1, indent = 8 },
+  --     --     { title = "MRU",            padding = 1 },
+  --     --     { section = "recent_files", limit = 8,                            padding = 1 },
+  --     --     { title = "MRU ",           file = vim.fn.fnamemodify(".", ":~"), padding = 1 },
+  --     --     { section = "recent_files", cwd = true,                           limit = 8,     padding = 1 },
+  --     --     { title = "Sessions",       padding = 1 },
+  --     --     { section = "projects",     padding = 1 },
+  --     --     { title = "Bookmarks",      padding = 1 },
+  --     --     { section = "keys" },
+  --     --   },
+  --     -- },
+  --
+  --     statuscolumn = {
+  --       -- your statuscolumn configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --       enabled = true,
+  --       left = { "mark", "sign" }, -- priority of signs on the left (high to low)
+  --       right = { "fold", "git" }, -- priority of signs on the right (high to low)
+  --       folds = {
+  --         open = true,             -- show open fold icons
+  --         git_hl = false,          -- use Git Signs hl for fold icons
+  --       },
+  --       git = {
+  --         -- patterns to match Git signs
+  --         patterns = { "GitSign", "MiniDiffSign" },
+  --       },
+  --       refresh = 50, -- refresh at most every 50ms
+  --
+  --     },
+  --
+  --     notifier = {
+  --       -- your notifier configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --       enabled = true,
+  --       --"compact"|"fancy"|"minimal"
+  --       style = "minimal",
+  --     },
+  --
+  --     scroll = {
+  --       -- your scroll configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --       enabled = true,
+  --       animate = {
+  --         duration = { step = 8, total = 250 },
+  --         easing = "linear",
+  --       },
+  --       -- faster animation when repeating scroll after delay
+  --       animate_repeat = {
+  --         delay = 100, -- delay in ms before using the repeat animation
+  --         duration = { step = 5, total = 50 },
+  --         easing = "linear",
+  --       },
+  --       -- what buffers to animate
+  --       filter = function(buf)
+  --         return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and vim.bo[buf].buftype ~= "terminal"
+  --       end,
+  --     },
+  --     quickfile = {
+  --       enabled = true
+  --       -- your quickfile configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --     },
+  --     explorer = {
+  --       -- your explorer configuration comes here
+  --       -- or leave it empty to use the default settings
+  --       -- refer to the configuration section below
+  --       enabled = true,
+  --     },
+  --     picker = {
+  --       sources = {
+  --         explorer = {
+  --           -- your explorer picker configuration comes here
+  --           -- or leave it empty to use the default settings
+  --         }
+  --       }
+  --     }
+  --
+  --   },
+  --
+  --   init = function()
+  --     local progress = vim.defaulttable()
+  --     vim.api.nvim_create_autocmd("LspProgress", {
+  --       ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+  --       callback = function(ev)
+  --         local client = vim.lsp.get_client_by_id(ev.data.client_id)
+  --         local value = ev.data.params
+  --             .value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
+  --         if not client or type(value) ~= "table" then
+  --           return
+  --         end
+  --         local p = progress[client.id]
+  --
+  --         for i = 1, #p + 1 do
+  --           if i == #p + 1 or p[i].token == ev.data.params.token then
+  --             p[i] = {
+  --               token = ev.data.params.token,
+  --               msg = ("[%3d%%] %s%s"):format(
+  --                 value.kind == "end" and 100 or value.percentage or 100,
+  --                 value.title or "",
+  --                 value.message and (" **%s**"):format(value.message) or ""
+  --               ),
+  --               done = value.kind == "end",
+  --             }
+  --             break
+  --           end
+  --         end
+  --
+  --         local msg = {} ---@type string[]
+  --         progress[client.id] = vim.tbl_filter(function(v)
+  --           return table.insert(msg, v.msg) or not v.done
+  --         end, p)
+  --
+  --         local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+  --         vim.notify(table.concat(msg, "\n"), vim.log.levels.INFO, {
+  --           id = "lsp_progress",
+  --           title = client.name,
+  --           opts = function(notif)
+  --             notif.icon = #progress[client.id] == 0 and " "
+  --                 or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+  --           end,
+  --         })
+  --       end,
+  --     })
+  --
+  --     -- vim.api.nvim_create_autocmd("LspProgress", {
+  --     --   ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+  --     --   callback = function(ev)
+  --     --     local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+  --     --     vim.notify(vim.lsp.status(), vim.log.levels.INFO, {
+  --     --       id = "lsp_progress",
+  --     --       title = "LSP Progress",
+  --     --       opts = function(notif)
+  --     --         notif.icon = ev.data.params.value.kind == "end" and " "
+  --     --             or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+  --     --       end,
+  --     --     })
+  --     --   end,
+  --     -- })
+  --   end
+  -- }
+
+}

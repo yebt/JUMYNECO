@@ -2,6 +2,17 @@
 return {
 
   --- Autopairs
+  -- {
+  --   'windwp/nvim-autopairs',
+  --   event = 'InsertEnter',
+  --   config = function()
+  --     require('nvim-autopairs').setup({
+  --       disable_filetype = { 'TelescopePrompt', 'vim' },
+  --     })
+  --   end,
+  -- },
+
+  --- Autopairs better version with rainbow
   {
     'saghen/blink.pairs',
     -- OR build from source
@@ -110,6 +121,7 @@ return {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
     dependencies = {
+      --- Ads
       'rafamadriz/friendly-snippets',
       {
         'L3MON4D3/LuaSnip',
@@ -123,6 +135,9 @@ return {
           require('luasnip.loaders.from_vscode').lazy_load({ paths = { './snippets' } })
         end,
       },
+
+      --- Comunity sources
+      "mikavilpas/blink-ripgrep.nvim",
     },
     build = 'cargo +nightly build --release',
     event = { 'VeryLazy', 'InsertEnter' },

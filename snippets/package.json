@@ -16,9 +16,27 @@
       },
       {
         "language": [
-          "typescript"
+          "vue"
         ],
-        "path": "./typescript.json"
+        "path": "./vue.json"
+      },
+      {
+        "language": [
+          "php"
+        ],
+        "path": "./php.json"
+      },
+      {
+        "language": [
+          "javascript"
+        ],
+        "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "css"
+        ],
+        "path": "./css.json"
       },
       {
         "language": [
