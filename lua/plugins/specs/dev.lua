@@ -20,6 +20,19 @@ return {
           ['('] = { ')', space = true, enter = true },
           ['['] = { ']', space = true, enter = true },
           ['{'] = { '}', space = true, enter = true },
+          ['*'] = { {
+            '*',
+            ' */',
+            when = function()
+              local cursor = vim.api.nvim_win_get_cursor(0)
+              local line = vim.api.nvim_get_current_line()
+              return line:sub(cursor[2] - 1, cursor[2]) == '/*'
+            end,
+            enter = true,
+            space = false,
+            backspace = false,
+            filetypes = { 'php', 'phtml' }
+          } },
         },
       },
       highlights = {
@@ -37,6 +50,60 @@ return {
       debug = false,
     },
   },
+
+
+  --- File sistem iteration
+  {
+    'echasnovski/mini.files',
+    version = false,
+    dependencies = { 'echasnovski/mini.icons' },
+    config = require('plugins.configs.mini-files-c'),
+    keys = {
+      {
+        '\\',
+        function()
+          local ok, mf = pcall(require, 'mini.files')
+          if not ok then
+            return
+          end
+          if not mf.close() then
+            mf.open()
+          end
+        end,
+        silent = true,
+        desc = 'Toggle Mini Files',
+      },
+      {
+        '¿',
+        function()
+          local ok, mf = pcall(require, 'mini.files')
+          if not mf.close() then
+            MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+          end
+        end,
+        silent = true,
+        desc = 'Toggle Mini Files try reveal',
+      },
+    },
+  },
+
+
+  --- Completion
+  -- {
+  --   'saghen/blink.cmp',
+  --   version = '1.*',
+  --   -- Provee snippets VSCode-style (incluye PHPDoc)
+  --   dependencies = { 'rafamadriz/friendly-snippets' },
+  --   event = { 'VeryLazy', 'InsertEnter' },
+  --   opts = {
+  --     -- Habilita la fuente de snippets junto a LSP, path y buffer
+  --     sources = {
+  --       default = { 'lsp', 'path', 'snippets', 'buffer' },
+  --     },
+  --     -- Usa la configuración por defecto de snippets (vim.snippet)
+  --     -- Para LuaSnip, ver ejemplo en turn9view0
+  --   },
+  -- },
 
   --- Completion
   {
@@ -67,7 +134,7 @@ return {
       completion = {
         keyword = {
           --- full, prefix
-          range = 'prefix',
+          range = 'full',
         },
         accept = {
           dot_repeat = true,
@@ -368,66 +435,16 @@ return {
     opts_extend = { 'sources.default' },
   },
 
-  --- File sistem iteration
+  -- notify progress
   {
-    'echasnovski/mini.files',
-    version = false,
-    dependencies = { 'echasnovski/mini.icons' },
-    config = require('plugins.configs.mini-files-c'),
-    keys = {
-      {
-        '\\',
-        function()
-          local ok, mf = pcall(require, 'mini.files')
-          if not ok then
-            return
-          end
-          if not mf.close() then
-            mf.open()
-          end
-        end,
-        silent = true,
-        desc = 'Toggle Mini Files',
-      },
-      {
-        '¿',
-        function()
-          local ok, mf = pcall(require, 'mini.files')
-          if not mf.close() then
-            MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
-          end
-        end,
-        silent = true,
-        desc = 'Toggle Mini Files try reveal',
+    "j-hui/fidget.nvim",
+    event = { 'LspAttach', 'VeryLazy' },
+    opts = {
+      -- options
+      progress = {
+        ignore_done_already = false
       },
     },
-  },
+  }
 
-  --- Annotation toolkit
-  -- {
-  --   'danymat/neogen',
-  --   config = true,
-  --   -- Uncomment next line if you want to follow only stable versions
-  --   -- version = "*"
-  --   event = {
-  --     'VeryLazy',
-  --     'InsertEnter',
-  --   },
-  --   lazy = false,
-  --   cmd = { 'Neogen' },
-  --   -- cond = false,
-  --   opts = {
-  --     enabled = true,
-  --     snippet_engine = 'luasnip',
-  --     input_after_comment = true,
-  --   },
-  --   dependencies = { 'L3MON4D3/LuaSnip' },
-  --   keys = {
-  --     {
-  --       '<leader>ng',
-  --       ":lua require('neogen').generate()<CR>",
-  --       { noremap = true, silent = true, desc = 'Neogen generate' },
-  --     },
-  --   },
-  -- },
 }
