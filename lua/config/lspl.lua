@@ -1,44 +1,44 @@
 --- General capabilities
-vim.lsp.config('*', {
-  capabilities = {
-    textDocument = {
-
-      -- Semantik tokens
-      semanticTokens = {
-        multilineTokenSupport = true,
-      },
-
-      -- Completion capabilities
-      completion = {
-        completionItem = {
-          snippetSupport = true,
-        },
-      },
-
-      -- Folds
-      -- foldingRange = {
-      --   dynamicRegistration = false,
-      --   lineFoldingOnly = true
-      -- }
-    },
-
-    workspace = {
-      -- Detect file changes
-      fileOperations = {
-        didRename = true,
-        willRename = true,
-      },
-      --- Discover new files
-      didChangeWatchedFiles = {
-        dynamicRegistration = true,
-      },
-    },
-  },
-  -- root_markers = { '.git' },
-})
+-- vim.lsp.config('*', {
+--   capabilities = {
+--     textDocument = {
+--
+--       -- Semantik tokens
+--       semanticTokens = {
+--         multilineTokenSupport = true,
+--       },
+--
+--       -- Completion capabilities
+--       completion = {
+--         completionItem = {
+--           snippetSupport = true,
+--         },
+--       },
+--
+--       -- Folds
+--       -- foldingRange = {
+--       --   dynamicRegistration = false,
+--       --   lineFoldingOnly = true
+--       -- }
+--     },
+--
+--     workspace = {
+--       -- Detect file changes
+--       fileOperations = {
+--         didRename = true,
+--         willRename = true,
+--       },
+--       --- Discover new files
+--       didChangeWatchedFiles = {
+--         dynamicRegistration = true,
+--       },
+--     },
+--   },
+--   -- root_markers = { '.git' },
+-- })
 
 ---
-vim.lsp.set_log_level 'info'
+-- vim.lsp.set_log_level 'info'
 --
 
 -- OFF the log of lsp
