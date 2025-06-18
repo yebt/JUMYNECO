@@ -4,7 +4,7 @@ local g = vim.g
 local group = vim.api.nvim_create_augroup('statusline.actions', { clear = true })
 
 local padding = '%#Normal# %0*' -- xpadding
-local separator = '%=' -- separator
+local separator = '%='          -- separator
 local nrml = '%#Normal# %*'
 
 -----------------------
@@ -174,6 +174,26 @@ vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress' }, {
 -- })
 
 -----------------------
+------ Filetype icon
+-----------------------
+
+local fficon = function()
+  local ok, miniicons = pcall(require, 'mini.icons')
+  if ok then
+    local icon, hlm, _ = miniicons.get('file', vim.fn.bufname())
+    if icon and hlm then
+      vim.b.stl_filetype_icon = "%#" .. hlm .. "# " .. icon .. " "
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd({ 'BufEnter', "BufAdd", "User" }, {
+  pattern = { "VeryLazy" },
+  callback = fficon
+})
+fficon()
+
+-----------------------
 ------- COMPS
 -----------------------
 
@@ -242,3 +262,17 @@ vim.opt.statusline = table.concat(components, '%#Statusline#')
 -- vim.opt.winbar = [[%{%v:lua.l_path()%}]]
 -- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
 -- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:~:.:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]]
+
+local winbar_components = {
+  ' >> ',
+  [[%#Comment#%<%{expand("%:~:.:h")}%{%(bufname() !=# '' ? '/' : '')%}]],
+  [[%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}]],
+  '%*',
+  ' ',
+  '%H%W%M%R%#Normal#',
+  '%#Normal#%=',
+  [[%#Normal#%{%get(b:,'stl_filetype_icon','··')%}]],
+}
+vim.opt.winbar = table.concat(winbar_components, '%#Statusline#')
+
+-- vim.opt.winbar = [[ >> %#Comment#%<%{expand("%:~:.:h")}%{%(bufname() !=# '' ? '/' : '')%}%#Constant#%t%#ModeMsg#%{%(bufname() !=# '' ? ' %y' : '')%}%* %H%W%M%R%#Normal#]],
