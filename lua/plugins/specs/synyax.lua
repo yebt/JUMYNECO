@@ -1,6 +1,6 @@
 -- All about syntax highlight
 
-return  {
+return {
   --- TODO comments
   {
     "folke/todo-comments.nvim",
@@ -30,9 +30,10 @@ return  {
   --- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
     event = { "LazyFile", "VeryLazy" },
+    lazy=false,
+    priority = 1000000,
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
       -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
@@ -73,7 +74,10 @@ return  {
         "yaml",
       },
       auto_install = true,
-    }
+    },
+    config = function(_, opts)
+      require 'nvim-treesitter.configs'.setup(opts)
+    end
   },
 
   --- For comments
@@ -86,22 +90,22 @@ return  {
   {
     "nvim-treesitter/nvim-treesitter-context",
     -- event = 'VeryLazy',
-    opts ={
-      enable = false, -- Enable this plugin (Can be enabled/disabled later via commands)
-      multiwindow = false, -- Enable multiwindow support.
-      max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
-      min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    opts = {
+      enable = false,           -- Enable this plugin (Can be enabled/disabled later via commands)
+      multiwindow = false,      -- Enable multiwindow support.
+      max_lines = 3,            -- How many lines the window should span. Values <= 0 mean no limit.
+      min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
       line_numbers = true,
       multiline_threshold = 20, -- Maximum number of lines to show for a single context
-      trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-      mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+      trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+      mode = 'cursor',          -- Line used to calculate context. Choices: 'cursor', 'topline'
       -- Separator between context and content. Should be a single character string, like '-'.
       -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
       separator = nil,
-      zindex = 4, -- The Z-index of the context window
+      zindex = 4,      -- The Z-index of the context window
       on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
     },
-    cmd = {"TSContext"},
+    cmd = { "TSContext" },
   },
 
 
@@ -116,8 +120,8 @@ return  {
     opts = {
       opts = {
         -- Defaults
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
+        enable_close = true,         -- Auto close tags
+        enable_rename = true,        -- Auto rename pairs of tags
         enable_close_on_slash = true -- Auto close on trailing </
       },
     },
