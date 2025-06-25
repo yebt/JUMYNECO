@@ -220,15 +220,36 @@ return function()
       },
     },
     ['pyright'] = {
+      cmd = { 'pyright-langserver', '--stdio' },
+      filetypes = { 'python' },
+      root_markers = {
+        'pyproject.toml',
+        'setup.py',
+        'setup.cfg',
+        'requirements.txt',
+        'Pipfile',
+        'pyrightconfig.json',
+      },
       settings = {
         python = {
           analysis = {
             autoSearchPaths = true,
-            diagnosticMode = 'openFilesOnly',
             useLibraryCodeForTypes = true,
+            -- diagnosticMode = 'openFilesOnly',
+            diagnosticMode = 'workspace',
           },
         },
       },
+      on_attach = function(client, bufnr)
+        vim.api.nvim_buf_create_user_command(bufnr, 'LspPyrightOrganizeImportsM', function()
+          client:exec_cmd({
+            command = 'pyright.organizeimports',
+            arguments = { vim.uri_from_bufnr(bufnr) },
+          })
+        end, {
+          desc = 'Organize Imports Manual',
+        })
+      end,
     },
     --- NOTE: OLD ts server, now i use vtsls
     ['ts_ls'] = {
