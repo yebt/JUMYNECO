@@ -1,41 +1,41 @@
 --- General capabilities
--- vim.lsp.config('*', {
---   capabilities = {
---     textDocument = {
---
---       -- Semantik tokens
---       semanticTokens = {
---         multilineTokenSupport = true,
---       },
---
---       -- Completion capabilities
---       completion = {
---         completionItem = {
---           snippetSupport = true,
---         },
---       },
---
---       -- Folds
---       -- foldingRange = {
---       --   dynamicRegistration = false,
---       --   lineFoldingOnly = true
---       -- }
---     },
---
---     workspace = {
---       -- Detect file changes
---       fileOperations = {
---         didRename = true,
---         willRename = true,
---       },
---       --- Discover new files
---       didChangeWatchedFiles = {
---         dynamicRegistration = true,
---       },
---     },
---   },
---   -- root_markers = { '.git' },
--- })
+vim.lsp.config('*', {
+  capabilities = {
+    textDocument = {
+
+      -- Semantik tokens
+      semanticTokens = {
+        multilineTokenSupport = true,
+      },
+
+      -- Completion capabilities
+      completion = {
+        completionItem = {
+          snippetSupport = true,
+        },
+      },
+
+      -- Folds
+      -- foldingRange = {
+      --   dynamicRegistration = false,
+      --   lineFoldingOnly = true
+      -- }
+    },
+
+    workspace = {
+      -- Detect file changes
+      fileOperations = {
+        didRename = true,
+        willRename = true,
+      },
+      --- Discover new files
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    },
+  },
+  -- root_markers = { '.git' },
+})
 
 ---
 -- vim.lsp.set_log_level 'info'
@@ -98,7 +98,7 @@ local function format_with_client()
   end
 
   if #clients == 1 then
-    execute_client_formatter(clients[0])
+    execute_client_formatter(clients[1])
     return
   end
 
@@ -114,13 +114,13 @@ end
 vim.api.nvim_create_autocmd('LspAttach', {
   -- callback = function(args)
   callback = function()
-    vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP Formatter" })
-    vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, { desc = "LSP Format Select" })
+    -- vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP Formatter" })
+    vim.keymap.set('n', '<leader>CF', format_with_client, { desc = "LSP Formatter" })
+    vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, { desc = "LSP Format all" })
     vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, { desc = "LSP Rename" })
     vim.keymap.set('n', '<leader>lih', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { desc = "LSP Toggle Inline Hint" })
-
   end,
 })
 
@@ -137,7 +137,8 @@ vim.api.nvim_create_user_command('LspCommands', function()
 
   -- Itera sobre cada cliente activo
   for _, client in ipairs(clients) do
-    local commands = client.server_capabilities.executeCommandProvider and client.server_capabilities.executeCommandProvider.commands or nil
+    local commands = client.server_capabilities.executeCommandProvider and
+        client.server_capabilities.executeCommandProvider.commands or nil
 
     if commands and #commands > 0 then
       -- Usa vim.notify para mostrar una notificación bonita y no invasiva
@@ -155,7 +156,7 @@ vim.api.nvim_create_user_command('LspCommands', function()
     end
   end
 end, {
-desc = "Muestra los comandos disponibles de los servidores LSP activos"
+  desc = "Muestra los comandos disponibles de los servidores LSP activos"
 })
 
 -- require("modules.glepnit-cmp")
@@ -189,4 +190,3 @@ desc = "Muestra los comandos disponibles de los servidores LSP activos"
 --   end,
 -- })
 --
-
