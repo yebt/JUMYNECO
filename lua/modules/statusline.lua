@@ -149,7 +149,7 @@ local function get_actual_clients()
   -- vim.api.nvim__redraw({ statusline = true })
 end
 
-vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress' }, {
+vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress', 'LspNotify', 'LspRequest' }, {
   callback = get_actual_clients,
 })
 
