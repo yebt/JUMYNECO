@@ -145,6 +145,8 @@ local function get_actual_clients()
   else
     vim.b.stl_lsp_clients = ''
   end
+  vim.cmd('redrawstatus')
+  -- vim.api.nvim__redraw({ statusline = true })
 end
 
 vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress' }, {
