@@ -39,6 +39,7 @@ return function()
     },
 
     ['cssls'] = {},
+
     ['denols'] = {
       filetypes = {
         'astro',
@@ -63,7 +64,18 @@ return function()
           variableTypes = { enabled = false },
         },
       },
+      -- root_markers = { "deno.json", "deno.jsonc", ".git" },
+      -- https://neovim.io/doc/user/lsp.html#vim.lsp.enable()
+      root_dir = function(_, on_dir)
+        local deno_files = vim.fs.root(0, { 'deno.json' })
+        if deno_files then
+          on_dir(vim.fn.getcwd())
+        end
+      end
+      -- root_markers = { "deno.json", "deno.jsonc" },
+      -- root_dir = vim.fs.root(0, { 'deno.json' }),
     },
+
     ['emmet_language_server'] = {
       filetypes = {
         'css',
@@ -220,15 +232,36 @@ return function()
       },
     },
     ['pyright'] = {
+      cmd = { 'pyright-langserver', '--stdio' },
+      filetypes = { 'python' },
+      root_markers = {
+        'pyproject.toml',
+        'setup.py',
+        'setup.cfg',
+        'requirements.txt',
+        'Pipfile',
+        'pyrightconfig.json',
+      },
       settings = {
         python = {
           analysis = {
             autoSearchPaths = true,
-            diagnosticMode = 'openFilesOnly',
             useLibraryCodeForTypes = true,
+            -- diagnosticMode = 'openFilesOnly',
+            diagnosticMode = 'workspace',
           },
         },
       },
+      on_attach = function(client, bufnr)
+        vim.api.nvim_buf_create_user_command(bufnr, 'LspPyrightOrganizeImportsM', function()
+          client:exec_cmd({
+            command = 'pyright.organizeimports',
+            arguments = { vim.uri_from_bufnr(bufnr) },
+          })
+        end, {
+          desc = 'Organize Imports Manual',
+        })
+      end,
     },
     --- NOTE: OLD ts server, now i use vtsls
     ['ts_ls'] = {
@@ -292,7 +325,18 @@ return function()
           },
         },
       },
-      root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+      -- root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+      -- not load with deno project
+      root_dir = function(_, on_dir)
+        local deno_files = vim.fs.root(0, { 'deno.json' })
+        local vtsls_files = vim.fs.root(0, { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' })
+
+        if not deno_files and vtsls_files then
+          -- on_dir(vim.fn.getcwd())
+          on_dir(vtsls_files)
+        end
+      end
+
     },
     ['vue_ls'] = {
       -- filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },

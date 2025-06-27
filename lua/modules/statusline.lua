@@ -134,6 +134,7 @@ vim.defer_fn(update_git_branch, 100) -- Llama una vez al inicio
 
 local function get_actual_clients()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local olsstatus = vim.b.stl_lsp_clients
   if #clients > 0 then
     local names = {}
     for _, client in ipairs(clients) do
@@ -145,9 +146,13 @@ local function get_actual_clients()
   else
     vim.b.stl_lsp_clients = ''
   end
+  if olsstatus ~= vim.b.stl_lsp_clients then
+    vim.cmd('redrawstatus')
+    -- vim.api.nvim__redraw({ statusline = true })
+  end
 end
 
-vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress' }, {
+vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'LspProgress', 'LspNotify', 'LspRequest' }, {
   callback = get_actual_clients,
 })
 
