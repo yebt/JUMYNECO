@@ -39,6 +39,7 @@ return function()
     },
 
     ['cssls'] = {},
+
     ['denols'] = {
       filetypes = {
         'astro',
@@ -63,7 +64,18 @@ return function()
           variableTypes = { enabled = false },
         },
       },
+      -- root_markers = { "deno.json", "deno.jsonc", ".git" },
+      -- https://neovim.io/doc/user/lsp.html#vim.lsp.enable()
+      root_dir = function(_, on_dir)
+        local deno_files = vim.fs.root(0, { 'deno.json' })
+        if deno_files then
+          on_dir(vim.fn.getcwd())
+        end
+      end
+      -- root_markers = { "deno.json", "deno.jsonc" },
+      -- root_dir = vim.fs.root(0, { 'deno.json' }),
     },
+
     ['emmet_language_server'] = {
       filetypes = {
         'css',
@@ -313,7 +325,18 @@ return function()
           },
         },
       },
-      root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+      -- root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+      -- not load with deno project
+      root_dir = function(_, on_dir)
+        local deno_files = vim.fs.root(0, { 'deno.json' })
+        local vtsls_files = vim.fs.root(0, { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' })
+
+        if not deno_files and vtsls_files then
+          -- on_dir(vim.fn.getcwd())
+          on_dir(vtsls_files)
+        end
+      end
+
     },
     ['vue_ls'] = {
       -- filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
