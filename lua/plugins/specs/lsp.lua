@@ -26,6 +26,7 @@ return {
       { '<leader>xs', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
       { '<leader>xS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
     },
+    opts = {},
   },
 
   --- LSP Config
