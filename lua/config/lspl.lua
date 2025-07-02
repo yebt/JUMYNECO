@@ -55,7 +55,8 @@ vim.diagnostic.config({
   virtual_text = {
     current_line = true,
     spacing = 4,
-    source = 'if_many',
+    -- source = 'if_many',
+    source = true,
     -- prefix = "●",
   },
   -- virtual_lines ={
@@ -115,8 +116,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   -- callback = function(args)
   callback = function()
     -- vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP Formatter" })
-    vim.keymap.set('n', '<leader>CF', format_with_client, { desc = "LSP Formatter" })
-    vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, { desc = "LSP Format all" })
+    vim.keymap.set('n', '<leader>F', format_with_client, { desc = "LSP Formatter" })
+    -- vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, { desc = "LSP Format all" })
     vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, { desc = "LSP Rename" })
     vim.keymap.set('n', '<leader>lih', function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
