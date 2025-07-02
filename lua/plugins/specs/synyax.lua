@@ -116,7 +116,8 @@ return {
 
   {
     "windwp/nvim-ts-autotag",
-    event = "LazyFile",
+    -- event = "LazyFile",
+    lazy = false,
     opts = {
       opts = {
         -- Defaults
