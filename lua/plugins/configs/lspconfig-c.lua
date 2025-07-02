@@ -38,7 +38,10 @@ return function()
       },
     },
 
-    ['cssls'] = {},
+    ['cssls'] = {
+
+    filetypes = { 'css', 'scss', 'less', 'vue' },
+    },
 
     ['denols'] = {
       filetypes = {

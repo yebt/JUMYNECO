@@ -151,6 +151,7 @@ return {
           --- full, prefix
           range = 'full',
         },
+
         accept = {
           dot_repeat = true,
           create_undo_point = true,
@@ -288,6 +289,11 @@ return {
         -- preset = 'default',
 
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+
+        ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
+        ['<C-L>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
+        -- ['<C-f>'] = { function(cmp) cmp.show({ providers = { 'path' } }) end },
+
         ['<C-e>'] = { 'hide' },
         ['<C-y>'] = { 'select_and_accept' },
         ['<CR>'] = { 'accept', 'fallback' },

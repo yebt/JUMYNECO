@@ -144,7 +144,9 @@ return {
         },
         refresh = 50, -- refresh at most every 50ms
       },
-      words = {},
+      words = {
+        enabled = false
+      },
     },
 
     init = function()
