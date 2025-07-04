@@ -100,6 +100,7 @@ return {
   {
     'rebelot/kanagawa.nvim',
     opts = {
+      dimInactive = true,
       compile = true,
       theme = 'dragon',
       colors = {
