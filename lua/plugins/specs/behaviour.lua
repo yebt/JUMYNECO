@@ -1,12 +1,14 @@
 --- Plugins to change the behaviour
 
+vim.keymap.set({'n'}, '<esc>','<C-c>', {silent = true})
+
 return {
   --- QOL
   {
     'folke/snacks.nvim',
     priority = 1000,
     -- lazy = false,
-    event = {"VeryLazy"},
+    event = { "VeryLazy" },
     dependencies = {
       { 'echasnovski/mini.icons', version = false },
       {
@@ -51,13 +53,13 @@ return {
         sections = {
           { section = 'startup' },
           -- { section = "terminal", cmd = "fortune -s | cowsay", hl = "header", padding = 1, indent = 8 },
-          { title = 'MRU', padding = 1 },
-          { section = 'recent_files', limit = 5, padding = 1 },
-          { title = 'MRU ', file = vim.fn.fnamemodify('.', ':~'), padding = 1 },
-          { section = 'recent_files', cwd = true, limit = 5, padding = 1 },
-          { title = 'Sessions', padding = 1 },
-          { section = 'projects', padding = 1 },
-          { title = 'Bookmarks', padding = 1 },
+          { title = 'MRU',            padding = 1 },
+          { section = 'recent_files', limit = 5,                            padding = 1 },
+          { title = 'MRU ',           file = vim.fn.fnamemodify('.', ':~'), padding = 1 },
+          { section = 'recent_files', cwd = true,                           limit = 5,  padding = 1 },
+          { title = 'Sessions',       padding = 1 },
+          { section = 'projects',     padding = 1 },
+          { title = 'Bookmarks',      padding = 1 },
           { section = 'keys' },
           { section = 'header' },
         },
@@ -108,16 +110,16 @@ return {
       picker = {
         prompt = ' ',
         matcher = {
-          fuzzy = true, -- use fuzzy matching
-          smartcase = true, -- use smartcase
-          ignorecase = true, -- use ignorecase
-          sort_empty = false, -- sort results when the search string is empty
+          fuzzy = true,          -- use fuzzy matching
+          smartcase = true,      -- use smartcase
+          ignorecase = true,     -- use ignorecase
+          sort_empty = false,    -- sort results when the search string is empty
           filename_bonus = true, -- give bonus for matching file names (last part of the path)
-          file_pos = true, -- support patterns like `file:line:col` and `file:line`
+          file_pos = true,       -- support patterns like `file:line:col` and `file:line`
           -- the bonusses below, possibly require string concatenation and path normalization,
           -- so this can have a performance impact for large lists and increase memory usage
-          cwd_bonus = false, -- give bonus for matching files in the cwd
-          frecency = true, -- frecency bonus
+          cwd_bonus = false,     -- give bonus for matching files in the cwd
+          frecency = true,       -- frecency bonus
           history_bonus = false, -- give more weight to chronological order
         },
         win = {
@@ -138,14 +140,16 @@ return {
         left = { 'mark', 'sign' }, -- priority of signs on the left (high to low)
         right = { 'fold', 'git' }, -- priority of signs on the right (high to low)
         folds = {
-          open = false, -- show open fold icons
-          git_hl = false, -- use Git Signs hl for fold icons
+          open = false,            -- show open fold icons
+          git_hl = false,          -- use Git Signs hl for fold icons
         },
         git = {
           -- patterns to match Git signs
           patterns = { 'GitSign', 'MiniDiffSign' },
         },
         refresh = 50, -- refresh at most every 50ms
+      },
+      toggle = {
       },
       words = {
         enabled = false
@@ -154,7 +158,7 @@ return {
 
     init = function()
       --- Load in init if is needed to show dashboard
-      if  vim.fn.argc() == 0 then
+      if vim.fn.argc() == 0 then
         require('snacks')
       end
 
@@ -212,53 +216,53 @@ return {
 
       -- Top Picker
       -- =====================
-      {'<leader><space>', function() Snacks.picker.smart() end, desc = "SP: Smart Find files" },
+      { '<leader><space>', function() Snacks.picker.smart() end,                 desc = "SP: Smart Find files" },
       -- Git Picks
       -- =====================
       -- stylua: ignore
-      {'<leader>gpf', function() Snacks.picker.git_files() end, desc = "SP: Git files" },
-      { "<leader>gpb", function() Snacks.picker.git_branches() end, desc = "SP: Git Branches" },
-      { "<leader>gpl", function() Snacks.picker.git_log() end, desc = "SP: Git Log" },
-      { "<leader>gpL", function() Snacks.picker.git_log_line() end, desc = "SP: Git Log Line" },
-      { "<leader>gps", function() Snacks.picker.git_status() end, desc = "SP: Git Status" },
-      { "<leader>gpS", function() Snacks.picker.git_stash() end, desc = "SP: Git Stash" },
-      { "<leader>gpd", function() Snacks.picker.git_diff() end, desc = "SP: Git Diff (Hunks)" },
-      { "<leader>gpF", function() Snacks.picker.git_log_file() end, desc = "SP: Git Log File" },
-      { "<leader>gpB", function() Snacks.picker.blame_line() end, desc = "SP: Git Blame Line" },
+      { '<leader>gpf',     function() Snacks.picker.git_files() end,             desc = "SP: Git files" },
+      { "<leader>gpb",     function() Snacks.picker.git_branches() end,          desc = "SP: Git Branches" },
+      { "<leader>gpl",     function() Snacks.picker.git_log() end,               desc = "SP: Git Log" },
+      { "<leader>gpL",     function() Snacks.picker.git_log_line() end,          desc = "SP: Git Log Line" },
+      { "<leader>gps",     function() Snacks.picker.git_status() end,            desc = "SP: Git Status" },
+      { "<leader>gpS",     function() Snacks.picker.git_stash() end,             desc = "SP: Git Stash" },
+      { "<leader>gpd",     function() Snacks.picker.git_diff() end,              desc = "SP: Git Diff (Hunks)" },
+      { "<leader>gpF",     function() Snacks.picker.git_log_file() end,          desc = "SP: Git Log File" },
+      { "<leader>gpB",     function() Snacks.picker.blame_line() end,            desc = "SP: Git Blame Line" },
 
       -- Pickers Usual
       -- =====================
-      {'<leader>pf', function() Snacks.picker.files() end, desc = "SP: Fiels" },
-      {'<leader>pp', function() Snacks.picker.projects() end, desc = "SP: Projects" },
-      {'<leader>pb', function() Snacks.picker.buffers() end, desc = "SP: Buffers" },
-      {'<leader>pg', function() Snacks.picker.grep() end, desc = "SP: Grep" },
-      {'<leader>pr', function() Snacks.picker.recent() end, desc = "SP: Recent" },
-      {'<leader>pR', function() Snacks.picker.resume() end, desc = "SP: Resume" },
-      {'<leader>pn', function() Snacks.picker.notifications() end, desc = "SP: Notifications" },
+      { '<leader>pf',      function() Snacks.picker.files() end,                 desc = "SP: Fiels" },
+      { '<leader>pp',      function() Snacks.picker.projects() end,              desc = "SP: Projects" },
+      { '<leader>pb',      function() Snacks.picker.buffers() end,               desc = "SP: Buffers" },
+      { '<leader>pg',      function() Snacks.picker.grep() end,                  desc = "SP: Grep" },
+      { '<leader>pr',      function() Snacks.picker.recent() end,                desc = "SP: Recent" },
+      { '<leader>pR',      function() Snacks.picker.resume() end,                desc = "SP: Resume" },
+      { '<leader>pn',      function() Snacks.picker.notifications() end,         desc = "SP: Notifications" },
 
       -- Pickers LSP
       -- =====================
-      {'<leader>pld', function() Snacks.picker.diagnostics_buffer() end, desc = "SP: Diagnostic in buffer" },
-      {'<leader>plD', function() Snacks.picker.diagnostics() end, desc = "SP: Diagnostics" },
-      { "<leader>pld", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-      { "<leader>plD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-      { "<leader>plr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-      { "<leader>plI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
-      { "<leader>ply", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-      { "<leader>pls", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-      { "<m-o>", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-      { "<leader>plS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+      { '<leader>pld',     function() Snacks.picker.diagnostics_buffer() end,    desc = "SP: Diagnostic in buffer" },
+      { '<leader>plD',     function() Snacks.picker.diagnostics() end,           desc = "SP: Diagnostics" },
+      { "<leader>pld",     function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition" },
+      { "<leader>plD",     function() Snacks.picker.lsp_declarations() end,      desc = "Goto Declaration" },
+      { "<leader>plr",     function() Snacks.picker.lsp_references() end,        nowait = true,                                  desc = "References" },
+      { "<leader>plI",     function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
+      { "<leader>ply",     function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
+      { "<leader>pls",     function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+      { "<m-o>",           function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+      { "<leader>plS",     function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 
       -- =============================================
       --- Buffers
       -- =====================
-      {'<M-c>', function() Snacks.bufdelete() end, desc = 'Delete a buffer',},
-      {'<C-k><C-w>', function() Snacks.bufdelete.all() end, desc = 'Delete all buffers',},
-      {'<C-k><C-q>', function() Snacks.bufdelete.other() end, desc = 'Delete all buffers but not the actual',},
+      { '<M-c>',           function() Snacks.bufdelete() end,                    desc = 'Delete a buffer', },
+      { '<C-k><C-w>',      function() Snacks.bufdelete.all() end,                desc = 'Delete all buffers', },
+      { '<C-k><C-q>',      function() Snacks.bufdelete.other() end,              desc = 'Delete all buffers but not the actual', },
 
       --- If use explorer
       -- =====================
-      {'<M-b>', function() Snacks.explorer() end, desc = 'Open snak explorer',},
+      { '<M-b>',           function() Snacks.explorer() end,                     desc = 'Open snak explorer', },
 
       --- Usual Pickers
       {
@@ -290,7 +294,7 @@ return {
                   title = '{title} {live} {flags}',
                   title_pos = 'center',
                 },
-                { win = 'list', border = 'hpad' },
+                { win = 'list',    border = 'hpad' },
                 { win = 'preview', title = '{preview}', border = 'rounded' },
               },
             },
@@ -329,7 +333,7 @@ return {
         -- { "<auto>", mode = "nxso" },
         --- trigger on a builtin keymap
         { '<auto>', mode = 'nixsotc' },
-        { 'a', mode = { 'n', 'v' } },
+        { 'a',      mode = { 'n', 'v' } },
       },
       win = {
         wo = {
