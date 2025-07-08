@@ -27,7 +27,10 @@ return {
         enabled = true,
         -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L10
         pairs = {
-          ['!'] = { { '<!--', '-->', filetypes = { 'html', 'markdown' } } },
+
+          ['!'] = {
+            { '<!--', '-->', languages = { 'html', 'markdown', 'markdown_inline' } }
+          },
           ['('] = { ')', space = true, enter = true },
           ['['] = { ']', space = true, enter = true },
           ['{'] = { '}', space = true, enter = true },
@@ -42,8 +45,21 @@ return {
             enter = true,
             space = false,
             backspace = false,
-            filetypes = { 'php', 'phtml' }
+            languages = { 'php', 'phtml' }
           } },
+          ['`'] = {
+            {
+              '```',
+              when = function(ctx) return ctx:text_before_cursor(2) == '``' end,
+              languages = { 'markdown', 'markdown_inline', 'typst', 'vimwiki', 'rmarkdown', 'rmd', 'quarto' },
+            },
+            {
+              '`',
+              "'",
+              languages = { 'bibtex', 'latex', 'plaintex' },
+            },
+            { '`', enter = false, space = false },
+          },
         },
       },
       highlights = {
