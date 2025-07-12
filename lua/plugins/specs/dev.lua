@@ -358,7 +358,7 @@ return {
 
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
 
-        ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
+        ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' }, initial_selected_item_idx = 1 }) end },
         ['<C-t>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
         -- ['<C-f>'] = { function(cmp) cmp.show({ providers = { 'path' } }) end },
 
