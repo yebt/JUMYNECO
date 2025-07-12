@@ -7,7 +7,7 @@ return {
   {
     'folke/snacks.nvim',
     priority = 1000,
-    -- lazy = false,
+    lazy = false,
     event = { "VeryLazy" },
     dependencies = {
       { 'echasnovski/mini.icons', version = false },
