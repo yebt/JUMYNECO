@@ -1,6 +1,6 @@
 --- Plugins to change the behaviour
 
-vim.keymap.set({'n'}, '<esc>','<C-c>', {silent = true})
+vim.keymap.set({ 'n' }, '<esc>', '<C-c>', { silent = true })
 
 return {
   --- QOL
@@ -390,6 +390,10 @@ return {
         char = {
           jump_labels = true,
         },
+      },
+      remote_op = {
+        restore = true,
+        motion = true,
       },
     },
     dependencies = {
