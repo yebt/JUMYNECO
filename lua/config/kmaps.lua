@@ -26,8 +26,8 @@ map({ 'n' }, '<C-z>', '', {})
 
 --- Editing
 --- Add lines
-map({ 'n' }, '<leader>o', '3o<esc>k', { silent = true, desc = 'Make a new line below' })
-map({ 'n' }, '<leader>O', '3O<esc>k', { silent = true, desc = 'Make a new line upset' })
+map({ 'n' }, '<leader>o', '3o<esc>ki', { silent = true, desc = 'Make a new line below' })
+map({ 'n' }, '<leader>O', '3O<esc>ki', { silent = true, desc = 'Make a new line upset' })
 
 --- Yaks
 map({ 'x', 'v' }, '<leader>y', '"+y', { silent = true, desc = 'Copy the selection inside the system clipboard' })
