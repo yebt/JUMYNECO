@@ -24,6 +24,11 @@ map('n', '<leader>a', 'ggVG', { silent = true, desc = 'select all content' })
 --- Not use C-z
 map({ 'n' }, '<C-z>', '', {})
 
+--- Editing
+--- Add lines
+map({ 'n' }, '<leader>o', '3o<esc>k', { silent = true, desc = 'Make a new line below' })
+map({ 'n' }, '<leader>O', '3O<esc>j', { silent = true, desc = 'Make a new line upset' })
+
 --- Yaks
 map({ 'x', 'v' }, '<leader>y', '"+y', { silent = true, desc = 'Copy the selection inside the system clipboard' })
 map(
@@ -91,4 +96,5 @@ map('n', '<M-z>w', '<cmd>set wrap!<CR>', { silent = true, desc = 'Toggle wrap' }
 
 --- Terminal
 --- Escape in the terminal
+map('t', '<esc><esc>', '<C-\\><C-n>', { silent = true, desc = 'Exit terminal insert mode' })
 map('t', '<esc><esc>', '<C-\\><C-n>', { silent = true, desc = 'Exit terminal insert mode' })
