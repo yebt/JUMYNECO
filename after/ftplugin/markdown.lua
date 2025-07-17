@@ -81,7 +81,7 @@ vim.keymap.set('n', '<leader>tt', ToggleCheckbox, { desc = 'toggle todo mark' })
 
 vim.keymap.set('i', '<M-b>', create_code_block, { desc = 'Insert Code Block', silent = true })
 
-vim.keymap.set('i', '<C-l>', InsertLink, { desc = 'Inser link', silent = true })
+vim.keymap.set('i', '<M-l>', InsertLink, { desc = 'Inser link', silent = true })
 
 vim.keymap.set('i', '<C-b>', '****h', { noremap = true, silent = true })
 vim.keymap.set('v', '<C-b>', '"zc****hh"zp', { noremap = true, silent = true })

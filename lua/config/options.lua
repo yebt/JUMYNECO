@@ -143,6 +143,8 @@ local options = {
     c = true, -- Autowrapp comments with textwidth
     q = true, -- Allow formating comments with gq
     j = true, -- Where it makes sense, remove a comment leader when joining lines.
+    -- r = true, -- insert comment below when press cr
+    o = true, -- insert comment below when press o
   },
 
   list = true,

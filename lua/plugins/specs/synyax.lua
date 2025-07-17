@@ -72,6 +72,9 @@ return {
         "vimdoc",
         "xml",
         "yaml",
+        "vue",
+        "css",
+        "scss"
       },
       auto_install = true,
     },
@@ -85,6 +88,12 @@ return {
     "JoosepAlviste/nvim-ts-context-commentstring",
     event = 'VeryLazy',
   },
+
+  -- {
+  --   "folke/ts-comments.nvim",
+  --   opts = {},
+  --   event = "VeryLazy",
+  -- },
 
   --- Context
   {

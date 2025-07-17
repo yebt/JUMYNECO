@@ -27,7 +27,10 @@ return {
         enabled = true,
         -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L10
         pairs = {
-          ['!'] = { { '<!--', '-->', filetypes = { 'html', 'markdown' } } },
+
+          ['!'] = {
+            { '<!--', '-->', languages = { 'html', 'markdown', 'markdown_inline' } }
+          },
           ['('] = { ')', space = true, enter = true },
           ['['] = { ']', space = true, enter = true },
           ['{'] = { '}', space = true, enter = true },
@@ -42,8 +45,21 @@ return {
             enter = true,
             space = false,
             backspace = false,
-            filetypes = { 'php', 'phtml' }
+            languages = { 'php', 'phtml' }
           } },
+          ['`'] = {
+            {
+              '```',
+              when = function(ctx) return ctx:text_before_cursor(2) == '``' end,
+              languages = { 'markdown', 'markdown_inline', 'typst', 'vimwiki', 'rmarkdown', 'rmd', 'quarto' },
+            },
+            {
+              '`',
+              "'",
+              languages = { 'bibtex', 'latex', 'plaintex' },
+            },
+            { '`', enter = false, space = false },
+          },
         },
       },
       highlights = {
@@ -98,6 +114,58 @@ return {
     },
   },
 
+
+  --- Comments
+  {
+    -- cond = false,
+    'numToStr/Comment.nvim',
+    opts = {
+      padding = true,
+      ---Whether the cursor should stay at its position
+      sticky = true,
+      ---Lines to be ignored while (un)comment
+      ignore = nil,
+      ---LHS of toggle mappings in NORMAL mode
+      toggler = {
+        ---Line-comment toggle keymap
+        line = 'gcc',
+        ---Block-comment toggle keymap
+        block = 'gbc',
+      },
+      ---LHS of operator-pending mappings in NORMAL and VISUAL mode
+      opleader = {
+        ---Line-comment keymap
+        line = 'gc',
+        ---Block-comment keymap
+        block = 'gb',
+      },
+      ---LHS of extra mappings
+      extra = {
+        ---Add comment on the line above
+        above = 'gcO',
+        ---Add comment on the line below
+        below = 'gco',
+        ---Add comment at the end of line
+        eol = 'gcA',
+      },
+      ---Enable keybindings
+      ---NOTE: If given `false` then the plugin won't create any mappings
+      mappings = {
+        ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
+        basic = true,
+        ---Extra mapping; `gco`, `gcO`, `gcA`
+        extra = true,
+      },
+      ---Function to call before (un)comment
+      pre_hook = nil,
+      ---Function to call after (un)comment
+      post_hook = nil,
+    },
+    keys = {
+      { "gc", mode = { 'x', 'n' }, desc = "Toggle line comment" },
+      { "gb", mode = { 'x', 'n' }, desc = "Toggle block comment" },
+    }
+  },
 
   --- Completion
   -- {
@@ -290,9 +358,10 @@ return {
 
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
 
-        ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
-        ['<C-L>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
+        ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' }, initial_selected_item_idx = 1 }) end },
+        ['<C-t>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
         -- ['<C-f>'] = { function(cmp) cmp.show({ providers = { 'path' } }) end },
+
 
         ['<C-e>'] = { 'hide' },
         ['<C-y>'] = { 'select_and_accept' },

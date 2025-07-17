@@ -100,6 +100,7 @@ return {
   {
     'rebelot/kanagawa.nvim',
     opts = {
+      dimInactive = true,
       compile = true,
       theme = 'dragon',
       colors = {
@@ -154,4 +155,6 @@ return {
       })
     end,
   },
+
+  --- https://github.com/loctvl842/monokai-pro.nvim
 }

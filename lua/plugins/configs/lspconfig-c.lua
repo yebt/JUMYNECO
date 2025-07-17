@@ -40,7 +40,7 @@ return function()
 
     ['cssls'] = {
 
-    filetypes = { 'css', 'scss', 'less', 'vue' },
+      filetypes = { 'css', 'scss', 'less', 'vue' },
     },
 
     ['denols'] = {
@@ -226,6 +226,7 @@ return function()
             -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
             -- library = vim.api.nvim_get_runtime_file("", true)
           },
+          hint = {}
           -- diagnostics = {
           --   globals = {
           --     'vim',
@@ -267,40 +268,42 @@ return function()
       end,
     },
     --- NOTE: OLD ts server, now i use vtsls
-    ['ts_ls'] = {
-      filetypes = {
-        'javascript',
-        'typescript',
-        'vue',
-      },
-      init_options = {
-        plugins = {
-          {
-            name = '@vue/typescript-plugin',
-            location = vim.fn.stdpath('data')
-                .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
-            languages = { 'vue' },
-          },
-        },
-      },
-      settings = {
-        typescript = {
-          tsserver = {
-            useSyntaxServer = false,
-          },
-          inlayHints = {
-            includeInlayParameterNameHints = 'all',
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-          },
-        },
-      },
-    },
+    --- WARNING: now not use ts_ls for server
+    ---
+    -- ['ts_ls'] = {
+    --   filetypes = {
+    --     'javascript',
+    --     'typescript',
+    --     'vue',
+    --   },
+    --   init_options = {
+    --     plugins = {
+    --       {
+    --         name = '@vue/typescript-plugin',
+    --         location = vim.fn.stdpath('data')
+    --             .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+    --         languages = { 'vue' },
+    --       },
+    --     },
+    --   },
+    --   settings = {
+    --     typescript = {
+    --       tsserver = {
+    --         useSyntaxServer = false,
+    --       },
+    --       inlayHints = {
+    --         includeInlayParameterNameHints = 'all',
+    --         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    --         includeInlayFunctionParameterTypeHints = true,
+    --         includeInlayVariableTypeHints = true,
+    --         includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+    --         includeInlayPropertyDeclarationTypeHints = true,
+    --         includeInlayFunctionLikeReturnTypeHints = true,
+    --         includeInlayEnumMemberValueHints = true,
+    --       },
+    --     },
+    --   },
+    -- },
     ['vtsls'] = {
       filetypes = {
         'javascript',
@@ -318,8 +321,19 @@ return function()
               --- Used fot typescript in vue projects
               {
                 name = '@vue/typescript-plugin',
-                location = vim.fn.stdpath('data')
-                    .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                -- location = vim.fn.stdpath('data')
+                --     .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+
+                -- For Mason v1,
+                -- local mason_registry = require('mason-registry')
+                -- local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+                -- For Mason v2,
+                -- local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
+                -- or even
+                -- local vue_language_server_path = vim.fn.stdpath('data') .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+
+                location = vim.fn.expand '$MASON/packages' ..
+                '/vue-language-server' .. '/node_modules/@vue/language-server',
                 languages = { 'vue' },
                 configNamespace = 'typescript',
                 enableForWorkspaceTypeScriptVersions = true,
@@ -342,18 +356,24 @@ return function()
 
     },
     ['vue_ls'] = {
-      -- filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
       init_options = {
-        vue = {
-          -- disable hybrid mode, this dont need ts_ls with vue ts plugni
-          -- hybridMode = false,
-
-          hybridMode = true, -- Use vtsls to manage typescript
+        typescript = {
+          tsdk = '',
         },
-        -- typescript = {
-        --   tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
-        -- },
       },
+
+      -- filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+      -- init_options = {
+      --   vue = {
+      --     -- disable hybrid mode, this dont need ts_ls with vue ts plugni
+      --     -- hybridMode = false,
+      --
+      --     hybridMode = true, -- Use vtsls to manage typescript
+      --   },
+      --   -- typescript = {
+      --   --   tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+      --   -- },
+      -- },
     },
     ['jsonls'] = {
       settings = {
