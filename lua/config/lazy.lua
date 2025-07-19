@@ -60,6 +60,12 @@ require('lazy').setup({
     -- retrobox
     colorscheme = { "unokai" },
   },
+  ui = {
+    size = { width = 0.85, height = 0.7 },
+    border = "single",
+    -- backdrop = 60,
+    -- pills = false
+  },
   -- Output options for headless mode
   headless = {
     -- show the output from process commands like git
