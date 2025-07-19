@@ -21,10 +21,10 @@ return {
       },
     },
     keys = {
-      { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
+      { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>',              desc = 'Diagnostics (Trouble)' },
       { '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
-      { '<leader>xs', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
-      { '<leader>xS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
+      { '<leader>xs', '<cmd>Trouble symbols toggle<cr>',                  desc = 'Symbols (Trouble)' },
+      { '<leader>xS', '<cmd>Trouble lsp toggle<cr>',                      desc = 'LSP references/definitions/... (Trouble)' },
     },
     opts = {},
   },
@@ -73,7 +73,7 @@ return {
     'mason-org/mason-lspconfig.nvim',
     lazy = false,
     opts = {
-      ensure_installed = { 'lua_ls', 'vtsls','vue_ls', 'cssls', 'tailwindcss', 'emmet_language_server' },
+      ensure_installed = { 'lua_ls', 'vtsls', 'vue_ls', 'cssls', 'tailwindcss', 'emmet_language_server' },
       automatic_enable = true,
     },
     dependencies = {
@@ -129,22 +129,22 @@ return {
         show_server_name = true,
         extend_gitsigns = true,
       },
-      lightbulb ={
+      lightbulb = {
         enable = false
       }
     },
     keys = {
-      { '<leader>lic', ':Lspsaga incoming_calls<CR>', desc = 'LSPSaga Incomming calls' },
-      { '<leader>lca', ':Lspsaga code_action<CR>', desc = 'LSPSaga Code Action' },
-      { '<leader>lpd', ':Lspsaga peek_definition<CR>', desc = 'LSPSaga Peek Definition' },
+      { '<leader>lic', ':Lspsaga incoming_calls<CR>',         desc = 'LSPSaga Incomming calls' },
+      { '<leader>lca', ':Lspsaga code_action<CR>',            desc = 'LSPSaga Code Action' },
+      { '<leader>lpd', ':Lspsaga peek_definition<CR>',        desc = 'LSPSaga Peek Definition' },
       { '<leader>lff', ':Lspsaga finder tyd+ref+imp+def<CR>', desc = 'LSPSaga Finder full' },
-      { '<leader>lfi', ':Lspsaga finder imp<CR>', desc = 'LSPSaga Finder Implementation' },
-      { '<leader>lhd', ':Lspsaga hover_doc<CR>', desc = 'LSPSaga Hover Doc' },
-      { '<leader>lol', ':Lspsaga outline<CR>', desc = 'LSPSaga Out Line' },
-      { '<leader>lrn', ':Lspsaga rename<CR>', desc = 'LSPSaga Rename' },
-      { '<leader>lrp', ':Lspsaga rename ++project<CR>', desc = 'LSPSaga Rename Project' },
-      { '<leader>lgd', ':Lspsaga goto_definition<CR>', desc = 'LSPSaga Go To Definition' },
-      { '<leader>lgy', ':Lspsaga goto_type_definition<CR>', desc = 'LSPSaga Go To Type Definition' },
+      { '<leader>lfi', ':Lspsaga finder imp<CR>',             desc = 'LSPSaga Finder Implementation' },
+      { '<leader>lhd', ':Lspsaga hover_doc<CR>',              desc = 'LSPSaga Hover Doc' },
+      { '<leader>lol', ':Lspsaga outline<CR>',                desc = 'LSPSaga Out Line' },
+      { '<leader>lrn', ':Lspsaga rename<CR>',                 desc = 'LSPSaga Rename' },
+      { '<leader>lrp', ':Lspsaga rename ++project<CR>',       desc = 'LSPSaga Rename Project' },
+      { '<leader>lgd', ':Lspsaga goto_definition<CR>',        desc = 'LSPSaga Go To Definition' },
+      { '<leader>lgy', ':Lspsaga goto_type_definition<CR>',   desc = 'LSPSaga Go To Type Definition' },
     },
   },
 
@@ -160,4 +160,14 @@ return {
   --   },
   --   config = require("plugins.configs.guard-c")
   -- },
+
+  --- Diagnostics resume
+  {
+    "ivanjermakov/troublesum.nvim",
+    event = { 'VeryLazy' },
+    config = function()
+      require("troublesum").setup()
+    end
+  },
+
 }
