@@ -38,6 +38,9 @@ return {
               languages = { 'typescript' }
             }
           },
+          ['>'] = {
+            { '>', '<', space = true, enter = true, languages = { 'html', 'vue' } }
+          },
           ['!'] = {
             { '<!--', '-->', languages = { 'html', 'markdown', 'markdown_inline' } }
           },
