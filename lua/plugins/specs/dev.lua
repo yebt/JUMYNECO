@@ -27,7 +27,20 @@ return {
         enabled = true,
         -- see the defaults: https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L10
         pairs = {
-
+          ['<'] = {
+            { '<', '>', when = function(ctx) return ctx.ts:whitelist('angle').matches end, languages = { 'rust' } },
+            {
+              '<',
+              '>',
+              when = function(ctx)
+                return ctx.char_under_cursor:match('%w')
+              end,
+              languages = { 'typescript' }
+            }
+          },
+          ['>'] = {
+            { '>', '<', space = true, enter = true, languages = { 'html', 'vue' } }
+          },
           ['!'] = {
             { '<!--', '-->', languages = { 'html', 'markdown', 'markdown_inline' } }
           },
