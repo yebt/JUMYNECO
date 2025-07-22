@@ -76,12 +76,45 @@ return function()
   local set_mark = function(id, path, desc)
     MiniFiles.set_bookmark(id, path, { desc = desc })
   end
+
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniFilesExplorerOpen',
     callback = function()
       -- set_mark('c', vim.fn.stdpath('config'), 'Config') -- path
       set_mark('w', vim.fn.getcwd, 'Working directory') -- callable
       -- set_mark('~', '~', 'Home directory')
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniFilesExplorerOpen',
+    callback = function()
+      -- try load bookmarks for the project
+      local cwd = vim.fn.getcwd()
+      local bookmarksFileName = '.nvim/bookmarks.json'
+      local bookmarksFilePath = cwd .. "/" .. bookmarksFileName
+      local existFile = (vim.uv or vim.loop).fs_stat(bookmarksFilePath) ~= nil
+      if (existFile) then
+        local content = table.concat(vim.fn.readfile(bookmarksFilePath), "\n")
+        -- local json_data = vim.json.decode(content)
+        local ok, json_data = pcall(vim.json.decode, content)
+        if not ok then
+          vim.notify('error loading bookmarks project file')
+          return
+        end
+        for index, value in pairs(json_data) do
+          local bmdesc = ""
+          local path = cwd .. "/"
+          if type(value) == "table" then
+            bmdesc = value['desc'] or value[1]
+            path = path .. (value['path'] or value[2] or '')
+          elseif type(value) == "string" then
+            bmdesc = value
+            path = path .. value
+          end
+          set_mark(index, path, bmdesc)
+        end
+      end
     end,
   })
 
