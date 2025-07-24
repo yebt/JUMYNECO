@@ -109,18 +109,52 @@ return {
   },
 
   {
-    "akinsho/git-conflict.nvim",
-    -- event = { "VeryLazy" },
-    cmd = {
-      "GitConflictChooseOurs",
-      "GitConflictChooseTheirs",
-      "GitConflictChooseBoth",
-      "GitConflictChooseNone",
-      "GitConflictNextConflict",
-      "GitConflictPrevConflict",
-      "GitConflictListQf",
+    'akinsho/git-conflict.nvim',
+    version = "*",
+    -- config = true,
+    -- lazy = false,
+    event = {"VeryLazy"},
+    dependencies = {
+
+      {
+        'folke/which-key.nvim',
+        opts = {
+          spec = {
+            {
+              {
+                mode = { 'n' },
+                { '<leader>c', group = 'Git Conflicts', icon = '' },
+              },
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      default_mappings = false,    -- disable buffer local mapping created by this plugin
+      default_commands = false,    -- disable commands created by this plugin
+      disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+      list_opener = 'copen',       -- command or function to open the conflicts list
+      highlights = {               -- They must have background color, otherwise the default color will be used
+        incoming = 'DiffAdd',
+        current = 'DiffText',
+      }
+    },
+    keys = {
+      { '<leader>co', '<Plug>(git-conflict-ours)',          desc = "Git conflicts chose ours" },
+      { '<leader>ct', '<Plug>(git-conflict-theirs)',        desc = "Git conflicts chose theirs" },
+      { '<leader>cb', '<Plug>(git-conflict-both)',          desc = "Git conflicts chose both" },
+      { '<leader>c0', '<Plug>(git-conflict-none)',          desc = "Git conflicts chose none" },
+      { ']x',         '<Plug>(git-conflict-next-conflict)', desc = "Git conflicts next" },
+      { '[x',         '<Plug>(git-conflict-prev-conflict)', desc = "Git conflicts prev" },
     }
   },
+
+  -- {
+  --   'tronikelis/conflict-marker.nvim',
+  --   event = 'VeryLazy',
+  --   opts = {},
+  -- },
 
   -- DIFF
   -- {
