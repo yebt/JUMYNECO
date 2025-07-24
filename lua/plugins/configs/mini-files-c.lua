@@ -18,28 +18,30 @@ return function()
       -- Customize window-local settings
       -- vim.wo[win_id].winblend = 50
       local config = vim.api.nvim_win_get_config(win_id)
-      config.border, config.title_pos = 'single', 'right'
+      -- config.border, config.title_pos = 'single', 'right'
+      config.border = 'single'
+      config.title_pos = 'right'
       vim.api.nvim_win_set_config(win_id, config)
     end,
   })
 
   -- - Customize height
-  -- vim.api.nvim_create_autocmd('User', {
-  --   pattern = 'MiniFilesWindowUpdate',
-  --   callback = function(args)
-  --     local config = vim.api.nvim_win_get_config(args.data.win_id)
-  --
-  --     -- Ensure fixed height
-  --     config.height = 10
-  --
-  --     -- Ensure no title padding
-  --     local n = #config.title
-  --     config.title[1][1] = config.title[1][1]:gsub('^ ', '')
-  --     config.title[n][1] = config.title[n][1]:gsub(' $', '')
-  --
-  --     vim.api.nvim_win_set_config(args.data.win_id, config)
-  --   end,
-  -- })
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniFilesWindowUpdate',
+    callback = function(args)
+      local config = vim.api.nvim_win_get_config(args.data.win_id)
+
+      -- Ensure fixed height
+      -- config.height = 10
+
+      -- Ensure no title padding
+      local n = #config.title
+      config.title[1][1] = config.title[1][1]:gsub('^ ', '')
+      config.title[n][1] = config.title[n][1]:gsub(' $', '')
+
+      vim.api.nvim_win_set_config(args.data.win_id, config)
+    end,
+  })
 
   -- Set focused directory as current working directory
   -- local set_cwd = function()
@@ -76,12 +78,45 @@ return function()
   local set_mark = function(id, path, desc)
     MiniFiles.set_bookmark(id, path, { desc = desc })
   end
+
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniFilesExplorerOpen',
     callback = function()
       -- set_mark('c', vim.fn.stdpath('config'), 'Config') -- path
       set_mark('w', vim.fn.getcwd, 'Working directory') -- callable
       -- set_mark('~', '~', 'Home directory')
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniFilesExplorerOpen',
+    callback = function()
+      -- try load bookmarks for the project
+      local cwd = vim.fn.getcwd()
+      local bookmarksFileName = '.nvim/bookmarks.json'
+      local bookmarksFilePath = cwd .. "/" .. bookmarksFileName
+      local existFile = (vim.uv or vim.loop).fs_stat(bookmarksFilePath) ~= nil
+      if (existFile) then
+        local content = table.concat(vim.fn.readfile(bookmarksFilePath), "\n")
+        -- local json_data = vim.json.decode(content)
+        local ok, json_data = pcall(vim.json.decode, content)
+        if not ok then
+          vim.notify('error loading bookmarks project file')
+          return
+        end
+        for index, value in pairs(json_data) do
+          local bmdesc = ""
+          local path = cwd .. "/"
+          if type(value) == "table" then
+            bmdesc = value['desc'] or value[1]
+            path = path .. (value['path'] or value[2] or '')
+          elseif type(value) == "string" then
+            bmdesc = value
+            path = path .. value
+          end
+          set_mark(index, path, bmdesc)
+        end
+      end
     end,
   })
 
@@ -115,6 +150,33 @@ return function()
       map_split(buf_id, '<C-s>', 'belowright horizontal')
       map_split(buf_id, '<C-v>', 'belowright vertical')
       -- map_split(buf_id, '<C-t>', 'tab')
+      --
+    end,
+  })
+
+  --- Create mapping to show/hide dot-files
+
+  local show_dotfiles = true
+
+  local filter_show = function(fs_entry) return true end
+
+  local filter_hide = function(fs_entry)
+    return not vim.startswith(fs_entry.name, '.')
+  end
+
+  local toggle_dotfiles = function()
+    show_dotfiles = not show_dotfiles
+    local new_filter = show_dotfiles and filter_show or filter_hide
+    MiniFiles.refresh({ content = { filter = new_filter } })
+  end
+
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniFilesBufferCreate',
+    callback = function(args)
+      local buf_id = args.data.buf_id
+      -- Tweak left-hand side of mapping to your liking
+      vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = buf_id })
     end,
   })
 
@@ -129,6 +191,8 @@ return function()
       filter = nil,
       -- What prefix to show to the left of file system entry
       prefix = nil,
+      -- prefix = function ()
+      -- end,
       -- In which order to show file system entries
       sort = nil,
     },

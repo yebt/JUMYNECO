@@ -4,6 +4,18 @@
     "snippets": [
       {
         "language": [
+          "css"
+        ],
+        "path": "./css.json"
+      },
+      {
+        "language": [
+          "php"
+        ],
+        "path": "./php.json"
+      },
+      {
+        "language": [
           "typescript"
         ],
         "path": "./typescript.json"
@@ -16,15 +28,9 @@
       },
       {
         "language": [
-          "php"
+          "python"
         ],
-        "path": "./php.json"
-      },
-      {
-        "language": [
-          "css"
-        ],
-        "path": "./css.json"
+        "path": "./python.json"
       },
       {
         "language": [
