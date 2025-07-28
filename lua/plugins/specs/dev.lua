@@ -490,6 +490,12 @@ return {
         implementation = 'prefer_rust_with_warning',
         use_frecency = true,
         sorts = {
+          function(a, b)
+            if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
+              return
+            end
+            return b.client_name == 'emmet_ls'
+          end,
           -- 'exact',
           -- default sorts
           'score',

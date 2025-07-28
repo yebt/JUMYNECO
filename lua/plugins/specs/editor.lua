@@ -95,4 +95,32 @@ return {
       { 'gS' },
     },
   },
-}
+
+  {
+    'Wansmer/treesj',
+    -- keys = { '<space>m', '<space>j', '<space>s' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+    opts = {
+      use_default_keymaps = false,
+    },
+    keys = {
+
+      {
+        '<leader>m',
+        function()
+          require('treesj').toggle()
+        end,
+        desc = "Toggle tree split join"
+      },
+      {
+        '<leader>M',
+        function()
+          require('treesj').toggle({ split = { recursive = true } })
+        end,
+        desc = "Toggle tree split join recursive"
+      },
+    }
+    -- config = function()
+    --   require('treesj').setup({ --[[ your config ]] })
+    -- end,
+  } }
