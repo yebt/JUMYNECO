@@ -149,7 +149,8 @@ return {
     ---@type render.md.UserConfig
     opts = {
       completions = { blink = { enabled = true } },
-      preset = 'obsidian',
+      -- preset = 'obsidian',
+      preset = 'lazy',
     },
   },
 }
