@@ -144,7 +144,7 @@ return function()
             textFormat = 'snippet'
           }, -- asegura snippet output
           completion = {
-            fullyQualifyGlobalConstantsAndFunctions = true,
+            fullyQualifyGlobalConstantsAndFunctions = false, --- if activate it, use the normal function with a '\' like: \json_decode
           },
 
         },
