@@ -182,6 +182,11 @@ return function()
         end
       end
     },
+
+    ['phpactor'] ={
+
+    },
+
     -- ['intelephense'] = {
     --   init_options = {
     --     licenceKey = vim.fn.expand('~') .. '/intelephense/licence.txt',
