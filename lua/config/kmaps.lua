@@ -26,8 +26,14 @@ map({ 'n' }, '<C-z>', '', {})
 
 --- Editing
 --- Add lines
-map({ 'n' }, '<leader>o', '3o<esc>ki', { silent = true, desc = 'Make a new line below' })
-map({ 'n' }, '<leader>O', '3O<esc>ki', { silent = true, desc = 'Make a new line upset' })
+-- map({ 'n' }, '<leader>o', '3o<esc>ki', { silent = true, desc = 'Make a new line below' })
+-- map({ 'n' }, '<leader>O', '3O<esc>ki', { silent = true, desc = 'Make a new line upset' })
+map({ 'n' }, '<leader>o', function()
+  InsertBlankLinesAroundCursor()
+end, { silent = true, desc = 'Make a new line below' })
+map({ 'n' }, '<leader>O', function()
+  InsertBlankLinesAroundCursor(true)
+end, { silent = true, desc = 'Make a new line upset' })
 
 --- Yaks
 map({ 'x', 'v' }, '<leader>y', '"+y', { silent = true, desc = 'Copy the selection inside the system clipboard' })
@@ -98,3 +104,25 @@ map('n', '<M-z>w', '<cmd>set wrap!<CR>', { silent = true, desc = 'Toggle wrap' }
 --- Escape in the terminal
 map('t', '<esc><esc>', '<C-\\><C-n>', { silent = true, desc = 'Exit terminal insert mode' })
 map('t', '<esc><esc>', '<C-\\><C-n>', { silent = true, desc = 'Exit terminal insert mode' })
+
+
+function InsertBlankLinesAroundCursor(insertAbove)
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+
+  if line:match("^%s*$") then
+    -- Empty line
+    vim.api.nvim_buf_set_lines(0, row, row, false, { "", "" })
+    vim.api.nvim_win_set_cursor(0, { row + 1, 0 })
+  else
+    if insertAbove then
+      -- Insert upset
+      vim.api.nvim_buf_set_lines(0, row - 1, row - 1, false, { "", "", "" })
+      vim.api.nvim_win_set_cursor(0, { row+1, 0 })
+    else
+      -- Insert below
+      vim.api.nvim_buf_set_lines(0, row, row, false, { "", "", "" })
+      vim.api.nvim_win_set_cursor(0, { row + 2, 0 })
+    end
+  end
+end
