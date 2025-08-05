@@ -36,5 +36,11 @@
             "\t$0",
             "}"
         ]
+    },
+    "autoload": {
+        "prefix": "reqau",
+        "body" :[
+            "require_once __DIR__ . \"/$1/vendor/autoload.php\";"
+        ]
     }
 }
