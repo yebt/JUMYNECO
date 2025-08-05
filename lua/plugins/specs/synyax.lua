@@ -74,7 +74,8 @@ return {
         "yaml",
         "vue",
         "css",
-        "scss"
+        "scss",
+        "todotxt"
       },
       auto_install = true,
     },

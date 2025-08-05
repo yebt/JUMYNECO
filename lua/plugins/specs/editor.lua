@@ -123,4 +123,45 @@ return {
     -- config = function()
     --   require('treesj').setup({ --[[ your config ]] })
     -- end,
-  } }
+  },
+
+
+  --- TODO txt:
+  -- complex
+  {
+    "phrmendes/todotxt.nvim",
+    cmd = { "TodoTxt", "DoneTxt" },
+    dependencies = {
+      {
+        'folke/which-key.nvim',
+        opts = {
+          spec = {
+            {
+              {
+                mode = { 'n' },
+                { '<leader>t', group = 'TODO.txt', icon = '' },
+              },
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      todotxt = "/home/de-web/Documents/todos/todo.txt",
+      donetxt = "/home/de-web/Documents/todos/done.txt",
+    },
+    keys = {
+      { '<leader>tn',  function() require("todotxt").capture_todo() end,           desc = "todo.txt: New entry" },
+      { '<leader>to',  function() require("todotxt").toggle_todotxt() end,         desc = "todo.txt: Open" },
+      { '<leader>tc',  function() require("todotxt").cycle_priority() end,         desc = "todo.txt: Cycle priority" },
+      { '<leader>tt',  function() require("todotxt").toggle_todo_state() end,      desc = "todo.txt: Toggle task state" },
+      { '<leader>td',  function() require("todotxt").move_done_tasks() end,        desc = "todo.txt: Move to done.txt" },
+      { '<leader>tsd', function() require("todotxt").sort_tasks_by_due_date() end, desc = "todo.txt: Sort By due:date" },
+      { '<leader>tsP', function() require("todotxt").sort_tasks_by_priority() end, desc = "todo.txt: Sort By (priority)" },
+      { '<leader>tsc', function() require("todotxt").sort_tasks_by_context() end,  desc = "todo.txt: Sort By @context" },
+      { '<leader>tsp', function() require("todotxt").sort_tasks_by_project() end,  desc = "todo.txt: Sort By +project" },
+      { '<leader>tss', function() require("todotxt").sort_tasks() end,             desc = "todo.txt: Sort By +Default" },
+    }
+  }
+
+}
