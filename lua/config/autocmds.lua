@@ -13,6 +13,16 @@ au({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   end,
 })
 
+--- Set todo.txt filetype
+au('BufReadPost', {
+  desc = 'todo actions',
+  pattern = { "todo.txt", "done.txt" },
+  callback = function()
+    vim.opt.filetype = "todotxt"
+  end
+});
+
+--- Load las location
 au('BufReadPost', {
   desc = 'load last loc',
   group = group,
@@ -31,6 +41,7 @@ au('BufReadPost', {
   end,
 })
 
+--- Make view on close
 au({ 'BufWinLeave', 'BufWritePost', 'WinLeave' }, {
   desc = 'Save view with mkview for real files',
   group = group,
@@ -41,6 +52,7 @@ au({ 'BufWinLeave', 'BufWritePost', 'WinLeave' }, {
   end,
 })
 
+--- Load makeview
 au('BufWinEnter', {
   desc = 'Try to load file view if is available',
   group = view_group,
@@ -57,6 +69,7 @@ au('BufWinEnter', {
   end,
 })
 
+--- Remove coneal in json
 au({ 'FileType' }, {
   desc = 'Remove conceal form json',
   group = group,
@@ -66,6 +79,7 @@ au({ 'FileType' }, {
   end,
 })
 
+--- Set options in text plain
 au('FileType', {
   group = group,
   pattern = { 'text', 'plaintex', 'typst', 'gitcommit', 'markdown' },
