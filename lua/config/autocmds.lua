@@ -19,6 +19,7 @@ au('BufReadPost', {
   pattern = { "todo.txt", "done.txt" },
   callback = function()
     vim.opt.filetype = "todotxt"
+    vim.opt.textwidth = 0
   end
 });
 
