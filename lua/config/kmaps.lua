@@ -54,8 +54,9 @@ map('x', '<', '<gv', { silent = true, desc = 'Decrease indentation of selection'
 map('x', '>', '>gv', { silent = true, desc = 'Increase indentation of selection' })
 
 --- Move the lines
--- mp('v', 'J', ":m '>+1<CR>gv=gv", { silent = true, desc = 'Move selection up' })
--- mp('v', 'K', ":m '<-2<CR>gv=gv", { silent = true, desc = 'Move selection down' })
+map('v', '<leader>J', ":m '>+1<CR>gv=gv", { silent = true, desc = 'Move selection up' })
+map('v', '<leader>K', ":m '<-2<CR>gv=gv", { silent = true, desc = 'Move selection down' })
+
 --- Move lines Lazynvim
 -- mp("n", "<M-j>", "<cmd>m .+1<cr>==", { desc = "Move Down" })
 -- mp("n", "<M-k>", "<cmd>m .-2<cr>==", { desc = "Move Up" })
