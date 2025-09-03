@@ -488,7 +488,16 @@ return {
 
       fuzzy = {
         implementation = 'prefer_rust_with_warning',
-        use_frecency = true,
+        max_typos = function(keyword) return math.floor(#keyword / 4) end,
+        frecency = {
+          -- Whether to enable the frecency feature
+          enabled = true,
+          -- Location of the frecency database
+          path = vim.fn.stdpath('state') .. '/blink/cmp/fuzzy.db',
+          -- UNSAFE!! When enabled, disables the lock and fsync when writing to the frecency database.
+          -- This should only be used on unsupported platforms (i.e. alpine termux)
+          unsafe_no_lock = false,
+        },
         sorts = {
           function(a, b)
             if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
