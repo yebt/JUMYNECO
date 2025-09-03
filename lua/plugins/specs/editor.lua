@@ -162,6 +162,51 @@ return {
       { '<leader>tsp', function() require("todotxt").sort_tasks_by_project() end,  desc = "todo.txt: Sort By +project" },
       { '<leader>tss', function() require("todotxt").sort_tasks() end,             desc = "todo.txt: Sort By +Default" },
     }
-  }
+  },
+
+  -- Fold
+  {
+    "chrisgrieser/nvim-origami",
+    -- event = "VeryLazy",
+    opts = {
+      useLspFoldsWithTreesitterFallback = true,
+      pauseFoldsOnSearch = true,
+      foldtext = {
+        enabled = true,
+        padding = 3,
+        lineCount = {
+          template = "%d lines", -- `%d` is replaced with the number of folded lines
+          hlgroup = "Comment",
+        },
+        diagnosticsCount = false, -- uses hlgroups and icons from `vim.diagnostic.config().signs`
+        gitsignsCount = false,    -- requires `gitsigns.nvim`
+      },
+      autoFold = {
+        enabled = false,
+        kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
+      },
+      foldKeymaps = {
+        setup = true, -- modifies `h` and `l`
+        hOnlyOpensOnFirstColumn = false,
+      },
+    }, -- needed even when using default config
+
+    -- recommended: disable vim's auto-folding
+    init = function()
+      -- vim.opt.foldlevel = 99
+      -- vim.opt.foldlevelstart = 99
+    end
+  },
+
+  -- Cycle folds
+  -- {
+  --   'jghauser/fold-cycle.nvim',
+  --   keys = {
+  --     {'z'}
+  --   }
+  --   -- config = function()
+  --   --   require('fold-cycle').setup()
+  --   -- end
+  -- }
 
 }
