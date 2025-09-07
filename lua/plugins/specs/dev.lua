@@ -509,8 +509,8 @@ return {
           -- default sorts
           'score',
           'sort_text',
-          -- 'label',
-          -- 'kind'
+          'label',
+          'kind'
         },
       },
 
