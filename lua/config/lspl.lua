@@ -77,46 +77,15 @@ vim.diagnostic.config({
 
 -- Formatter selector
 
-local function execute_client_formatter(client)
-  if client then
-    vim.lsp.buf.format({
-      bufnr = 0,
-      filter = function(c)
-        return c.id == client.id
-      end,
-    })
-    vim.notify('Formatted with: ' .. client.name)
-  end
-end
-
-local function format_with_client()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = 'textDocument/formatting' })
-
-  if #clients == 0 then
-    vim.notify('No LSP clients support formatting', vim.log.levels.WARN)
-    return
-  end
-
-  if #clients == 1 then
-    execute_client_formatter(clients[1])
-    return
-  end
-
-  vim.ui.select(clients, {
-    prompt = 'Select LSP client for formatting:',
-    format_item = function(client)
-      return client.name
-    end,
-  }, execute_client_formatter)
-end
+local frmt = require('config.frmt')
 
 
 vim.api.nvim_create_autocmd('LspAttach', {
   -- callback = function(args)
   callback = function()
     -- vim.keymap.set('n', '<M-F>', format_with_client, { desc = "LSP Formatter" })
-    vim.keymap.set('n', '<leader>F', format_with_client, { desc = "LSP Formatter" })
+    vim.keymap.set('n', '<leader>F', frmt.format_with_client, { desc = "LSP Formatter" })
+    vim.keymap.set('n', '<M-F>', frmt.format_with_client_last, { desc = "LSP Last Formatter" })
     -- vim.keymap.set('n', '<leader>F', vim.lsp.buf.format, { desc = "LSP Format all" })
     vim.keymap.set('n', '<leader>lrn', vim.lsp.buf.rename, { desc = "LSP Rename" })
     vim.keymap.set('n', '<leader>lih', function()
