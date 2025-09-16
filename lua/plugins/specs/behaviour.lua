@@ -29,41 +29,126 @@ return {
     opts = {
       bigfile = { enabled = true },
       dashboard = {
+        -- preset = {},
         formats = {
           key = function(item)
-            return { { '[', hl = 'special' }, { item.key, hl = 'key' }, { ']', hl = 'special' } }
+            return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
           end,
         },
-        preset = {
-          header = table.concat({
-            'yebt',
-          }, '\n'),
-          keys = {
-            { icon = "󰸧", key = "l", desc = "Load last session", action = ":lua require('persistence').load({last=true})", },
-            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-            { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
-            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-          },
-        },
         sections = {
-          { section = 'startup' },
+          { title = "MRU",            padding = 1 },
+          { section = "recent_files", limit = 5,                            padding = 1 },
+          { title = "MRU ",           file = vim.fn.fnamemodify(".", ":~"), padding = 1 },
+          { section = "recent_files", cwd = true,                           limit = 5,  padding = 1 },
           -- { section = "terminal", cmd = "fortune -s | cowsay", hl = "header", padding = 1, indent = 8 },
-          { title = 'MRU',            padding = 1 },
-          { section = 'recent_files', limit = 5,                            padding = 1 },
-          { title = 'MRU ',           file = vim.fn.fnamemodify('.', ':~'), padding = 1 },
-          { section = 'recent_files', cwd = true,                           limit = 5,  padding = 1 },
           { title = 'Sessions',       padding = 1 },
           { section = 'projects',     padding = 1 },
-          { title = 'Bookmarks',      padding = 1 },
           { section = 'keys' },
-          { section = 'header' },
-        },
+          { section = 'startup' },
+
+        }
       },
+      styles = {
+        dashboard = {
+          zindex = 10,
+          height = 0,
+          width = 0,
+          bo = {
+            bufhidden = "wipe",
+            buftype = "nofile",
+            buflisted = false,
+            filetype = "snacks_dashboard",
+            swapfile = false,
+            undofile = false,
+          },
+          wo = {
+            foldcolumn = "0",
+            colorcolumn = "",
+            cursorcolumn = false,
+            cursorline = false,
+            foldmethod = "manual",
+            list = false,
+            number = false,
+            relativenumber = false,
+            sidescrolloff = 0,
+            signcolumn = "no",
+            spell = false,
+            statuscolumn = "",
+            statusline = "",
+            winbar = "",
+            winhighlight = "Normal:StatusLine,NormalFloat:DiffAdd",
+            wrap = false,
+          },
+        }
+      },
+      -- dashboard = {
+      --   formats = {
+      --     key = function(item)
+      --       return { { '[', hl = 'special' }, { item.key, hl = 'key' }, { ']', hl = 'special' } }
+      --     end,
+      --   },
+      --   preset = {
+      --     header = table.concat({
+      --       'yebt',
+      --     }, '\n'),
+      --     --   keys = {
+      --     --     { icon = "󰸧", key = "l", desc = "Load last session", action = ":lua require('persistence').load({last=true})", },
+      --     --     { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+      --     --     { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+      --     --     { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+      --     --     { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+      --     --     { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+      --     --     { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+      --     --     { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+      --     --     { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+      --     --   },
+      --   },
+      --   sections = {
+      --
+      --
+      --     { title = "MRU",            padding = 1 },
+      --     { section = "recent_files", limit = 5,  padding = 1 },
+      --     { title = "MRU ", file = vim.fn.fnamemodify(".", ":~"), padding = 1 },
+      --     { section = "recent_files", cwd = true, limit = 5, padding = 1 },
+      --
+      --     -- { section = "terminal", cmd = "fortune -s | cowsay", hl = "header", padding = 1, indent = 8 },
+      --
+      --     { title = 'Sessions',       padding = 1 },
+      --     { section = 'projects',     padding = 1 },
+      --     -- { title = 'Bookmarks',      padding = 1 },
+      --     { section = 'keys' },
+      --
+      --     { section = 'startup' },
+      --     { section = 'header' },
+      --   },
+      --   zindex = 10,
+      --   align = "left",
+      --   -- bo = {
+      --   --   bufhidden = "wipe",
+      --   --   buftype = "nofile",
+      --   --   buflisted = false,
+      --   --   filetype = "snacks_dashboard",
+      --   --   swapfile = false,
+      --   --   undofile = false,
+      --   -- },
+      --   -- wo = {
+      --   --   colorcolumn = "",
+      --   --   cursorcolumn = false,
+      --   --   cursorline = false,
+      --   --   foldmethod = "manual",
+      --   --   list = false,
+      --   --   number = false,
+      --   --   relativenumber = false,
+      --   --   sidescrolloff = 0,
+      --   --   signcolumn = "no",
+      --   --   spell = false,
+      --   --   statuscolumn = "",
+      --   --   statusline = "",
+      --   --   winbar = "",
+      --   --   winhighlight = "Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal",
+      --   --   wrap = false,
+      --   -- },
+      -- },
       explorer = {},
       image = { enabled = false },
       indent = {

@@ -373,6 +373,7 @@ return {
 
         ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' }, initial_selected_item_idx = 1 }) end },
         ['<C-t>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
+        ['<C-e>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
         -- ['<C-f>'] = { function(cmp) cmp.show({ providers = { 'path' } }) end },
 
 
@@ -499,12 +500,12 @@ return {
           unsafe_no_lock = false,
         },
         sorts = {
-          function(a, b)
-            if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
-              return
-            end
-            return b.client_name == 'emmet_ls'
-          end,
+          -- function(a, b)
+          --   if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
+          --     return
+          --   end
+          --   return b.client_name == 'emmet_ls'
+          -- end,
           -- 'exact',
           -- default sorts
           'score',

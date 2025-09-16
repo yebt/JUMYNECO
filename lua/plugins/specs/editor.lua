@@ -167,7 +167,7 @@ return {
   -- Fold
   {
     "chrisgrieser/nvim-origami",
-    -- event = "VeryLazy",
+    event = "VeryLazy",
     opts = {
       useLspFoldsWithTreesitterFallback = true,
       pauseFoldsOnSearch = true,
@@ -186,7 +186,7 @@ return {
         kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
       },
       foldKeymaps = {
-        setup = true, -- modifies `h` and `l`
+        setup = false, -- modifies `h` and `l`
         hOnlyOpensOnFirstColumn = false,
       },
     }, -- needed even when using default config
