@@ -56,7 +56,7 @@ au({ 'BufWinLeave', 'BufWritePost', 'WinLeave' }, {
 --- Load makeview
 au('BufWinEnter', {
   desc = 'Try to load file view if is available',
-  group = view_group,
+  group = group,
   callback = function(event)
     if not vim.b[event.buf].view_activated then
       local filetype = vim.api.nvim_get_option_value('filetype', { buf = event.buf })
