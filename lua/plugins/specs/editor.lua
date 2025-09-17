@@ -169,7 +169,7 @@ return {
     "chrisgrieser/nvim-origami",
     event = "VeryLazy",
     opts = {
-      useLspFoldsWithTreesitterFallback = true,
+      useLspFoldsWithTreesitterFallback = false,
       pauseFoldsOnSearch = true,
       foldtext = {
         enabled = true,
@@ -192,21 +192,25 @@ return {
     }, -- needed even when using default config
 
     -- recommended: disable vim's auto-folding
-    init = function()
-      -- vim.opt.foldlevel = 99
-      -- vim.opt.foldlevelstart = 99
-    end
+    -- init = function()
+    --   vim.opt.foldlevel = 99
+    --   vim.opt.foldlevelstart = 99
+    -- end
   },
 
   -- Cycle folds
-  -- {
-  --   'jghauser/fold-cycle.nvim',
-  --   keys = {
-  --     {'z'}
-  --   }
-  --   -- config = function()
-  --   --   require('fold-cycle').setup()
-  --   -- end
-  -- }
+  {
+    'jghauser/fold-cycle.nvim',
+    config = function()
+      require('fold-cycle').setup()
+    end,
+    keys = {
+      { 'zA', function() require('fold-cycle').toggle_all() end, desc = "Fold cycle: Toggle all" },
+      { 'zC', function() require('fold-cycle').close_all() end,  desc = "Fold cycle: Close all" },
+      { 'zc', function() require('fold-cycle').close() end,      desc = "Fold cycle: Close" },
+      { 'zO', function() require('fold-cycle').open_all() end,   desc = "Fold cycle: Open all" },
+      { 'zo', function() require('fold-cycle').open() end,       desc = "Fold cycle: Open" },
+    }
+  }
 
 }
