@@ -404,8 +404,10 @@ return function()
       },
     },
     ['tailwindcss'] = {
-      tailwindCSS = {
-        classAttributes = { "class", "className", "class:list", "classList", "ngClass", "active-class", "activeClass", "exact-active-class", "exactActiveClass" },
+      settings = {
+        tailwindCSS = {
+          classAttributes = { "class", "className", "class:list", "classList", "ngClass", "active-class", "activeClass", "exact-active-class", "exactActiveClass" },
+        }
       }
     }
   }
