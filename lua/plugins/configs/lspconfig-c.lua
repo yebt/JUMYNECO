@@ -142,7 +142,7 @@ return function()
           },
           phpdoc = {
             textFormat = 'snippet'
-          }, -- asegura snippet output
+          },                                                 -- asegura snippet output
           completion = {
             fullyQualifyGlobalConstantsAndFunctions = false, --- if activate it, use the normal function with a '\' like: \json_decode
           },
@@ -183,7 +183,7 @@ return function()
       end
     },
 
-    ['phpactor'] ={
+    ['phpactor'] = {
 
     },
 
@@ -338,7 +338,7 @@ return function()
                 -- local vue_language_server_path = vim.fn.stdpath('data') .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
 
                 location = vim.fn.expand '$MASON/packages' ..
-                '/vue-language-server' .. '/node_modules/@vue/language-server',
+                    '/vue-language-server' .. '/node_modules/@vue/language-server',
                 languages = { 'vue' },
                 configNamespace = 'typescript',
                 enableForWorkspaceTypeScriptVersions = true,
@@ -403,6 +403,11 @@ return function()
         },
       },
     },
+    ['tailwindcss'] = {
+      tailwindCSS = {
+        classAttributes = { "class", "className", "class:list", "classList", "ngClass", "active-class", "activeClass", "exact-active-class", "exactActiveClass" },
+      }
+    }
   }
 
   for srvr, srvr_settings in pairs(lsp_settings) do
