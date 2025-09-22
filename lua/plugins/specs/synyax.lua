@@ -158,6 +158,16 @@ return {
           stopline = 500
         }
       })
+      vim.schedule(function()
+        vim.api.nvim_set_hl(0, 'MatchParen', {
+          italic = true,
+          bold = true,
+          underline = true,
+          -- reverse = true,
+          -- foreground = "None",
+        })
+      end)
+      -- vim.cmd("hi! MatchParen  cterm=italic gui=italic,underline guifg=None underline")
     end,
     -- or use the `opts` mechanism built into `lazy.nvim`. It calls
     -- `require('match-up').setup` under the hood
