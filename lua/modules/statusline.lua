@@ -192,11 +192,12 @@ local fficon = function()
   end
 end
 
+
 vim.api.nvim_create_autocmd({ 'BufEnter', "BufAdd", "User" }, {
-  pattern = { "VeryLazy" },
+  -- pattern = { "VeryLazy" },
   callback = fficon
 })
-fficon()
+-- fficon()
 
 -----------------------
 ------- COMPS
@@ -276,7 +277,7 @@ local winbar_components = {
   ' ',
   '%H%W%M%R%#Normal#',
   '%#Normal#%=',
-  [[%#Normal#%{%get(b:,'stl_filetype_icon','··')%}]],
+  [[%#Normal#%{%get(b:,'stl_filetype_icon','##')%}]],
 }
 vim.opt.winbar = table.concat(winbar_components, '%#Statusline#')
 
