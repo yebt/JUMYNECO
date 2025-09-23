@@ -23,6 +23,7 @@ vim.keymap.set("i", "=", function()
   return '=""<left>'
 end, { expr = true, buffer = true, desc = "Smart vue attribute insert" })
 
+
 -- auto close tag when I type `/` inside a tag
 -- vim.keymap.set("i", "/", function()
 --     local node = vim.treesitter.get_node()
@@ -50,62 +51,73 @@ end, { expr = true, buffer = true, desc = "Smart vue attribute insert" })
 --     return "/"
 -- end, { expr = true, buffer = true, desc = "Auto close vue tag" })
 
-vim.schedule(function()
-  -- en lua (init.lua o plugin/*.lua)
-  local ts_ok, tsu = pcall(require, "nvim-treesitter.ts_utils")
-  if not ts_ok then return end
-
-  local function in_start_tag()
-    local node = tsu.get_node_at_cursor()
-    while node do
-      local t = node:type()
-      -- gramáticas comunes: html/vue/xml/svelte
-      if t == "start_tag" or t == "start_tag_name" or t == "tag" or t == "element" then
-        -- estamos dentro del nodo de apertura
-        return true
-      end
-      node = node:parent()
-    end
-    return false
-  end
-
-local function selfclose_or_literal_slash()
-  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  row = row - 1
-  local line = vim.api.nvim_get_current_line()
-
-  local lt = line:sub(1, col):match(".*()<")
-  if not lt then return "/" end
-  if line:sub(lt, lt+1) == "</" then return "/" end
-  if not in_start_tag() then return "/" end
-
-  local gt_pos = line:find(">", col+1, true)
-  if gt_pos and line:sub(gt_pos-1, gt_pos-1) == "/" then
-    return "/"
-  end
-
-  if gt_pos then
-    vim.api.nvim_buf_set_text(0, row, gt_pos-1, row, gt_pos-1, {"/"})
-    return ""
-  else
-    -- chequea si antes del cursor hay espacio
-    local prev_char = line:sub(col, col)
-    if prev_char:match("%s") then
-      return "/>"
-    else
-      return " />"
-    end
-  end
-end
-
-  -- mapping expr en Insert para tipos de archivo relevantes
-  -- local ft_group = vim.api.nvim_create_augroup("SelfCloseSlash", { clear = true })
-  -- vim.api.nvim_create_autocmd("FileType", {
-  --   group = ft_group,
-  --   pattern = { "html", "xml", "vue", "svelte" },
-  --   callback = function()
-      vim.keymap.set("i", "/", selfclose_or_literal_slash,
-        { buffer = true, expr = true, desc = "Self-close tag with '/'" })
-  --   end,
-  -- })
-end)
+-- vim.schedule(function()
+--   -- en lua (init.lua o plugin/*.lua)
+--   local ts_ok, tsu = pcall(require, "nvim-treesitter.ts_utils")
+--   if not ts_ok then return end
+--
+--   local function in_start_tag()
+--     local node = tsu.get_node_at_cursor()
+--     while node do
+--       local t = node:type()
+--       -- gramáticas comunes: html/vue/xml/svelte
+--       if t == "start_tag" or t == "start_tag_name" or t == "tag" or t == "element" then
+--         -- estamos dentro del nodo de apertura
+--         return true
+--       end
+--       node = node:parent()
+--     end
+--     return false
+--   end
+--
+--   local function selfclose_or_literal_slash()
+--     if  true then
+--       return "/"
+--     end
+--     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+--     row = row - 1
+--     local line = vim.api.nvim_get_current_line()
+--
+--     -- NUEVO: si estamos justo después de "<" (sin nombre), delega al mapping de ts-autotag
+--     -- col es 0-based; usa el prefijo antes del cursor
+--     local prefix = line:sub(1, col)
+--     if prefix:match("<%s*$") then
+--       return "/" -- no auto self-close aquí
+--     end
+--
+--     local lt = prefix:match(".*()<")
+--     if not lt then return "/" end
+--     if line:sub(lt, lt + 1) == "</" then return "/" end
+--
+--     if not in_start_tag() then return "/" end
+--
+--     local gt_pos = line:find(">", col + 1, true)
+--     if gt_pos and line:sub(gt_pos - 1, gt_pos - 1) == "/" then
+--       return "/"
+--     end
+--
+--     if gt_pos then
+--       vim.api.nvim_buf_set_text(0, row, gt_pos - 1, row, gt_pos - 1, { "/" })
+--       return ""
+--     else
+--       local prev_char = line:sub(col, col)
+--       if prev_char:match("%s") then
+--         return "/>"
+--       else
+--         return " />"
+--       end
+--     end
+--   end
+--
+--   -- mapping expr en Insert para tipos de archivo relevantes
+--   -- local ft_group = vim.api.nvim_create_augroup("SelfCloseSlash", { clear = true })
+--   -- vim.api.nvim_create_autocmd("FileType", {
+--   --   group = ft_group,
+--   --   pattern = { "html", "xml", "vue", "svelte" },
+--   --   callback = function()
+--   --   end,
+--   -- })
+--   --
+--   vim.keymap.set("i", "/", selfclose_or_literal_slash,
+--     { buffer = true, expr = true, remap = false, desc = "Self-close tag with '/'" })
+-- end)
