@@ -58,5 +58,17 @@
             "}"
         ],
         "description": "Media query screen 2xl like tailwindcss"
+    },
+    "Media dark query": {
+        "prefix": [
+            "@media-dark",
+            "@media-preference-dark"
+        ],
+        "body": [
+            "@media (prefers-color-scheme: dark) {",
+            "\t$1",
+            "}"
+        ],
+        "description": "Media preference-color-scheme dark"
     }
 }
