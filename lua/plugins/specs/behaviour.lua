@@ -315,53 +315,107 @@ return {
 
       -- Top Picker
       -- =====================
-      { '<leader><space>', function() Snacks.picker.smart() end,                 desc = "SP: Smart Find files" },
+      { '<leader><space>', function() Snacks.picker.smart() end,         desc = "SP: Smart Find files" },
       -- Git Picks
       -- =====================
       -- stylua: ignore
-      { '<leader>gpf',     function() Snacks.picker.git_files() end,             desc = "SP: Git files" },
-      { "<leader>gpb",     function() Snacks.picker.git_branches() end,          desc = "SP: Git Branches" },
-      { "<leader>gpl",     function() Snacks.picker.git_log() end,               desc = "SP: Git Log" },
-      { "<leader>gpL",     function() Snacks.picker.git_log_line() end,          desc = "SP: Git Log Line" },
-      { "<leader>gps",     function() Snacks.picker.git_status() end,            desc = "SP: Git Status" },
-      { "<leader>gpS",     function() Snacks.picker.git_stash() end,             desc = "SP: Git Stash" },
-      { "<leader>gpd",     function() Snacks.picker.git_diff() end,              desc = "SP: Git Diff (Hunks)" },
-      { "<leader>gpF",     function() Snacks.picker.git_log_file() end,          desc = "SP: Git Log File" },
-      { "<leader>gpB",     function() Snacks.picker.blame_line() end,            desc = "SP: Git Blame Line" },
+      { '<leader>gpf',     function() Snacks.picker.git_files() end,     desc = "SP: Git files" },
+      { "<leader>gpb",     function() Snacks.picker.git_branches() end,  desc = "SP: Git Branches" },
+      { "<leader>gpl",     function() Snacks.picker.git_log() end,       desc = "SP: Git Log" },
+      { "<leader>gpL",     function() Snacks.picker.git_log_line() end,  desc = "SP: Git Log Line" },
+      { "<leader>gps",     function() Snacks.picker.git_status() end,    desc = "SP: Git Status" },
+      { "<leader>gpS",     function() Snacks.picker.git_stash() end,     desc = "SP: Git Stash" },
+      { "<leader>gpd",     function() Snacks.picker.git_diff() end,      desc = "SP: Git Diff (Hunks)" },
+      { "<leader>gpF",     function() Snacks.picker.git_log_file() end,  desc = "SP: Git Log File" },
+      { "<leader>gpB",     function() Snacks.picker.blame_line() end,    desc = "SP: Git Blame Line" },
 
       -- Pickers Usual
       -- =====================
-      { '<leader>pf',      function() Snacks.picker.files() end,                 desc = "SP: Fiels" },
-      { '<leader>pp',      function() Snacks.picker.projects() end,              desc = "SP: Projects" },
-      { '<leader>pb',      function() Snacks.picker.buffers() end,               desc = "SP: Buffers" },
-      { '<leader>pg',      function() Snacks.picker.grep() end,                  desc = "SP: Grep" },
-      { '<leader>pr',      function() Snacks.picker.recent() end,                desc = "SP: Recent" },
-      { '<leader>pR',      function() Snacks.picker.resume() end,                desc = "SP: Resume" },
-      { '<leader>pn',      function() Snacks.picker.notifications() end,         desc = "SP: Notifications" },
+      { '<leader>pf',      function() Snacks.picker.files() end,         desc = "SP: Fiels" },
+      { '<leader>pp',      function() Snacks.picker.projects() end,      desc = "SP: Projects" },
+      { '<leader>pb',      function() Snacks.picker.buffers() end,       desc = "SP: Buffers" },
+      { '<leader>pg',      function() Snacks.picker.grep() end,          desc = "SP: Grep" },
+      { '<leader>pr',      function() Snacks.picker.recent() end,        desc = "SP: Recent" },
+      { '<leader>pR',      function() Snacks.picker.resume() end,        desc = "SP: Resume" },
+      { '<leader>pn',      function() Snacks.picker.notifications() end, desc = "SP: Notifications" },
+      {
+        '<leader>pF',
+        function()
+          Snacks.picker.files({
+            prompt = "# ",
+            formatters = {
+              text = {
+                ft = nil, ---@type string? filetype for highlighting
+              },
+              file = {
+                filename_first = true, -- display filename before the file path
+                truncate = 80, -- truncate the file path to (roughly) this length
+                filename_only = false, -- only show the filename
+                icon_width = 2, -- width of the icon (in characters)
+                git_status_hl = true, -- use the git status highlight group for the filename
+              },
+              selected = {
+                show_always = false, -- only show the selected column when there are multiple selections
+                unselected = true, -- use the unselected icon for unselected items
+              },
+              severity = {
+                icons = true, -- show severity icons
+                level = false, -- show severity level
+                ---@type "left"|"right"
+                pos = "left", -- position of the diagnostics
+              },
+            },
+            layout = {
+              preview = false,
+              layout = {
+                -- row = 1,
+                -- width = 0.4,
+                -- min_width = 80,
+                -- -- min_height=0.4,
+                height = 0.4,
+                -- border = 'none',
+                -- box = 'vertical',
+                -- -- border = "single",
+                -- {
+                --   win = 'input',
+                --   height = 1,
+                --   border = 'bottom',
+                --   title = '{title} {live} {flags}',
+                --   title_pos = 'center',
+                -- },
+                -- { win = 'list',    border = 'hpad' },
+                -- { win = 'preview', title = '{preview}', border = 'rounded' },
+              },
+            },
+
+          })
+        end,
+        desc = "SP: FILES"
+      },
 
       -- Pickers LSP
       -- =====================
-      { '<leader>pld',     function() Snacks.picker.diagnostics_buffer() end,    desc = "SP: Diagnostic in buffer" },
-      { '<leader>plD',     function() Snacks.picker.diagnostics() end,           desc = "SP: Diagnostics" },
-      { "<leader>pld",     function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition" },
-      { "<leader>plD",     function() Snacks.picker.lsp_declarations() end,      desc = "Goto Declaration" },
-      { "<leader>plr",     function() Snacks.picker.lsp_references() end,        nowait = true,                                  desc = "References" },
-      { "<leader>plI",     function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
-      { "<leader>ply",     function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
-      { "<leader>pls",     function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
-      { "<m-o>",           function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
-      { "<leader>plS",     function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+      { '<leader>pld', function() Snacks.picker.diagnostics_buffer() end,    desc = "SP: Diagnostic in buffer" },
+      { '<leader>plD', function() Snacks.picker.diagnostics() end,           desc = "SP: Diagnostics" },
+      { "<leader>pld", function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition" },
+      { "<leader>plD", function() Snacks.picker.lsp_declarations() end,      desc = "Goto Declaration" },
+      { "<leader>plr", function() Snacks.picker.lsp_references() end,        nowait = true,                                  desc = "References" },
+      { "<leader>plI", function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
+      { "<leader>ply", function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
+      { "<leader>pls", function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+      { "<m-o>",       function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+      { "<leader>plS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 
       -- =============================================
       --- Buffers
       -- =====================
-      { '<M-c>',           function() Snacks.bufdelete() end,                    desc = 'Delete a buffer', },
-      { '<C-k><C-w>',      function() Snacks.bufdelete.all() end,                desc = 'Delete all buffers', },
-      { '<C-k><C-q>',      function() Snacks.bufdelete.other() end,              desc = 'Delete all buffers but not the actual', },
+      { '<M-c>',       function() Snacks.bufdelete() end,                    desc = 'Delete a buffer', },
+      { '<C-k><C-w>',  function() Snacks.bufdelete.all() end,                desc = 'Delete all buffers', },
+      { '<C-k><C-q>',  function() Snacks.bufdelete.other() end,              desc = 'Delete all buffers but not the actual', },
 
       --- If use explorer
       -- =====================
-      { '<M-b>',           function() Snacks.explorer() end,                     desc = 'Open snak explorer', },
+      { '<M-b>',       function() Snacks.explorer() end,                     desc = 'Open snak explorer', },
 
       --- Usual Pickers
       {
