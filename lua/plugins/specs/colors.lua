@@ -3,12 +3,25 @@
 --- Just the colors things
 -- 'tokyonight.nvim', 'slack.nvim'
 local color = 'tokyonight.nvim'
+-- local color = 'yoda.nvim'
 
 local function isColor(plgn)
   return plgn.name == color
 end
 
 return {
+
+  -- Yoda
+  {
+    "kuri-sun/yoda.nvim",
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts ={},
+    config = function(_, opts)
+      vim.cmd.colorscheme('yoda')
+    end,
+  },
 
   --- Tokyonight
   {
@@ -125,7 +138,7 @@ return {
       overrides = function(colors)
         local theme = colors.theme
         return {
-          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
           PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
           PmenuSbar = { bg = theme.ui.bg_m1 },
           PmenuThumb = { bg = theme.ui.bg_p2 },
