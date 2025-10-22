@@ -349,20 +349,20 @@ return {
               },
               file = {
                 filename_first = true, -- display filename before the file path
-                truncate = 80, -- truncate the file path to (roughly) this length
+                truncate = 80,         -- truncate the file path to (roughly) this length
                 filename_only = false, -- only show the filename
-                icon_width = 2, -- width of the icon (in characters)
-                git_status_hl = true, -- use the git status highlight group for the filename
+                icon_width = 2,        -- width of the icon (in characters)
+                git_status_hl = true,  -- use the git status highlight group for the filename
               },
               selected = {
                 show_always = false, -- only show the selected column when there are multiple selections
-                unselected = true, -- use the unselected icon for unselected items
+                unselected = true,   -- use the unselected icon for unselected items
               },
               severity = {
-                icons = true, -- show severity icons
+                icons = true,  -- show severity icons
                 level = false, -- show severity level
                 ---@type "left"|"right"
-                pos = "left", -- position of the diagnostics
+                pos = "left",  -- position of the diagnostics
               },
             },
             layout = {
@@ -422,35 +422,236 @@ return {
         '<C-p>',
         function()
           Snacks.picker.files({
+            prompt = " ",
+            show_delay = 10,
+            layout = {
+              -- layout = {
+              --   box = "vertical"
+              -- },
+              cycle = true,
+              preview = false,
+              hidden = { "preview" },
+
+              --- Botton
+              -- preset = "ivy",
+              -- layout = { position = "bottom" }
+              --- Default
+              -- layout = {
+              --   box = "horizontal",
+              --   width = 0.8,
+              --   min_width = 120,
+              --   height = 0.8,
+              --   {
+              --     box = "vertical",
+              --     border = "rounded",
+              --     title = "{title} {live} {flags}",
+              --     { win = "input", height = 1,     border = "bottom" },
+              --     { win = "list",  border = "none" },
+              --   },
+              --   { win = "preview", title = "{preview}", border = "rounded", width = 0.5 },
+              -- },
+              --- Dropdown
+              -- layout = {
+              --   backdrop = false,
+              --   row = 1,
+              --   width = 0.4,
+              --   min_width = 80,
+              --   height = 0.4,
+              --   border = "none",
+              --   box = "vertical",
+              --   { win = "preview", title = "{preview}", height = 0.4, border = "rounded" },
+              --   {
+              --     box = "vertical",
+              --     border = "rounded",
+              --     title = "{title} {live} {flags}",
+              --     title_pos = "center",
+              --     { win = "input", height = 1,     border = "bottom" },
+              --     { win = "list",  border = "none" },
+              --   },
+              -- },
+              --- IVY
+              -- layout = {
+              --   box = "vertical",
+              --   backdrop = false,
+              --   row = -1,
+              --   width = 0,
+              --   height = 0.4,
+              --   border = "top",
+              --   title = " {title} {live} {flags}",
+              --   title_pos = "left",
+              --   { win = "input", height = 1, border = "bottom" },
+              --   {
+              --     box = "horizontal",
+              --     { win = "list",    border = "none" },
+              --     { win = "preview", title = "{preview}", width = 0.6, border = "left" },
+              --   },
+              -- },
+              --- IVY split
+              -- layout = {
+              --   box = "vertical",
+              --   backdrop = false,
+              --   width = 0,
+              --   height = 0.4,
+              --   position = "bottom",
+              --   border = "top",
+              --   title = " {title} {live} {flags}",
+              --   title_pos = "left",
+              --   { win = "input", height = 1, border = "bottom" },
+              --   {
+              --     box = "horizontal",
+              --     { win = "list",    border = "none" },
+              --     { win = "preview", title = "{preview}", width = 0.6, border = "left" },
+              --   },
+              -- },
+              --- Select
+              -- layout = {
+              --   backdrop = false,
+              --   width = 0.5,
+              --   min_width = 80,
+              --   height = 0.4,
+              --   min_height = 3,
+              --   box = "vertical",
+              --   border = "none",
+              --   title = "{title}",
+              --   title_pos = "center",
+              --   { win = "input",   height = 1,          border = "bottom" },
+              --   { win = "list",    border = "none" },
+              --   { win = "preview", title = "{preview}", height = 0.4,     border = "top" },
+              -- },
+              --- Sidebar
+              -- layout = {
+              --   backdrop = false,
+              --   width = 40,
+              --   min_width = 40,
+              --   height = 0,
+              --   position = "left",
+              --   border = "none",
+              --   box = "vertical",
+              --   {
+              --     win = "input",
+              --     height = 1,
+              --     border = "rounded",
+              --     title = "{title} {live} {flags}",
+              --     title_pos = "center",
+              --   },
+              --   { win = "list",    border = "none" },
+              --   { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+              -- },
+              --- Telescope
+              -- reverse = true,
+              -- layout = {
+              --   box = "horizontal",
+              --   backdrop = false,
+              --   width = 0.8,
+              --   height = 0.9,
+              --   border = "none",
+              --   {
+              --     box = "vertical",
+              --     { win = "list",  title = " Results ", title_pos = "center", border = "rounded" },
+              --     { win = "input", height = 1,          border = "rounded",   title = "{title} {live} {flags}", title_pos = "center" },
+              --   },
+              --   {
+              --     win = "preview",
+              --     title = "{preview:Preview}",
+              --     width = 0.45,
+              --     border = "rounded",
+              --     title_pos = "center",
+              --   },
+              -- },
+              --- IVY top
+              -- preset = "ivy", layout = { position = "top" }
+              --- Vertical
+              -- layout = {
+              --   backdrop = false,
+              --   width = 0.5,
+              --   min_width = 80,
+              --   height = 0.8,
+              --   min_height = 30,
+              --   box = "vertical",
+              --   border = "rounded",
+              --   title = "{title} {live} {flags}",
+              --   title_pos = "center",
+              --   { win = "input",   height = 1,          border = "bottom" },
+              --   { win = "list",    border = "none" },
+              --   { win = "preview", title = "{preview}", height = 0.4,     border = "top" },
+              -- },
+              --- T2
+              layout = {
+                box = "horizontal",
+                backdrop = true,
+                -- width = 0.8,
+                width = function()
+                  return vim.o.columns >= 120 and 0.6 or 0.9
+                end,
+                height = 0.4,
+                border = "none",
+                {
+                  box = "vertical",
+                  { win = "input", title = "{title} {live} {flags}",  title_pos = "center", border = "rounded", height = 1, },
+                  { win = "list",  title = " Results ",               title_pos = "center", border = "none", },
+                },
+                {
+                  win = "preview",
+                  title = "{preview:Preview}",
+                  width = 0.45,
+                  -- border = "rounded",
+                  border = "none",
+                  title_pos = "center",
+                },
+              },
+              --- VSCODE
+              -- layout = {
+              --   backdrop = false,
+              --   row = 1,
+              --   width = 0.4,
+              --   min_width = 80,
+              --   height = 0.4,
+              --   border = "none",
+              --   box = "vertical",
+              --   { win = "input",   height = 1,          border = "rounded", title = "{title} {live} {flags}", title_pos = "center" },
+              --   { win = "list",    border = "hpad" },
+              --   { win = "preview", title = "{preview}", border = "rounded" },
+              -- },
+            },
+
             formatters = {
               file = {
-                -- filename_first = true,
+                filename_first = true,
+                truncate = "center",
                 git_status_hl = false,
-              },
-            },
-            layout = {
-              --- VSCODE
-              preview = false,
-              layout = {
-                row = 1,
-                width = 0.4,
-                min_width = 80,
-                -- min_height=0.4,
-                height = 0.4,
-                border = 'none',
-                box = 'vertical',
-                -- border = "single",
-                {
-                  win = 'input',
-                  height = 1,
-                  border = 'bottom',
-                  title = '{title} {live} {flags}',
-                  title_pos = 'center',
-                },
-                { win = 'list',    border = 'hpad' },
-                { win = 'preview', title = '{preview}', border = 'rounded' },
-              },
-            },
+              }
+            }
+
+            -- formatters = {
+            --   file = {
+            --     -- filename_first = true,
+            --     git_status_hl = false,
+            --   },
+            -- },
+            -- layout = {
+            -- --   --- VSCODE
+            --   preview = false,
+            --   layout = {
+            -- --     row = 1,
+            --     width = 0.95,
+            -- --     min_width = 80,
+            -- --     -- min_height=0.4,
+            --     height = 0.4,
+            --     -- border = 'none',
+            --     -- box = 'vertical',
+            --     border = "single",
+            --     -- border = "shadow",
+            --     -- {
+            --     --   win = 'input',
+            --     --   height = 1,
+            --     --   border = 'bottom',
+            --     --   title = '{title} {live} {flags}',
+            --     --   title_pos = 'center',
+            --     -- },
+            --     -- { win = 'list',    border = 'hpad' },
+            --     -- { win = 'preview', title = '{preview}', border = 'rounded' },
+            --   },
+            -- },
           })
         end,
         desc = 'Pick Resume',
