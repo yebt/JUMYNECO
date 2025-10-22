@@ -4,12 +4,27 @@
 -- 'tokyonight.nvim', 'slack.nvim'
 local color = 'tokyonight.nvim'
 -- local color = 'yoda.nvim'
+-- local color = 'oasis.nvim'
 
 local function isColor(plgn)
   return plgn.name == color
 end
 
 return {
+  --- 'oasis'
+  {
+    "uhs-robert/oasis.nvim",
+    event = { "VeryLazy" },
+    --- Lagon, abyss, midnight, night, starlight, twilight
+
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   require('oasis').setup({
+    --     style = "lagoon", -- Optional: Choose any style like `lagoon` or 'dune'.
+    --   })
+    -- end
+  },
 
   -- Yoda
   {
