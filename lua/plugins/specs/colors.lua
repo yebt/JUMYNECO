@@ -2,9 +2,11 @@
 --- COLORS THINGS
 --- Just the colors things
 -- 'tokyonight.nvim', 'slack.nvim'
-local color = 'tokyonight.nvim'
+-- local color = 'tokyonight.nvim'
 -- local color = 'yoda.nvim'
 -- local color = 'oasis.nvim'
+-- local color = 'finale-nvim'
+local color = 'gruvbox.nvim'
 
 local function isColor(plgn)
   return plgn.name == color
@@ -14,29 +16,144 @@ return {
   --- 'oasis'
   {
     "uhs-robert/oasis.nvim",
-    event = { "VeryLazy" },
+    -- event = { "VeryLazy" },
     --- Lagon, abyss, midnight, night, starlight, twilight
+    cond = isColor,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('oasis').setup({
+        style = "lagoon", -- Optional: Choose any style like `lagoon` or 'dune'.
+      })
+    end
+  },
 
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function()
-    --   require('oasis').setup({
-    --     style = "lagoon", -- Optional: Choose any style like `lagoon` or 'dune'.
-    --   })
-    -- end
+  -- Finale : *****
+  {
+    "https://gitlab.com/bartekjaszczak/finale-nvim",
+    event = { "VeryLazy" },
+    cond = isColor,
+    priority = 10000,
+    opts = {
+      styles = {
+        -- These are the default styles
+        comments = {
+          bold = false,
+          italic = true,
+        },
+        statements = {
+          bold = true,
+          italic = false,
+        }, -- Statements that are NOT keywords + preproc statements (include, define) but NOT macros
+        keywords = {
+          bold = true,
+          italic = false,
+        },
+        operators = {
+          bold = false,
+          italic = false,
+        },
+      },
+      colour_overrides = {
+        -- suggestions = "#FFFFFF", -- Copilot inline suggestions
+        --
+        -- syntax = {
+        --     text = "#FFFFFF",            -- Normal text
+        --     comment = "#FFFFFF",
+        --     comment_special = "#FFFFFF", -- Documentation comments
+        --
+        --     string = "#FFFFFF",          -- String literals
+        --     char = "#FFFFFF",            -- Character literals
+        --     stringspecial = "#FFFFFF",   -- Regex, escape characters and other special parts of the string
+        --
+        --     constant = "#FFFFFF",        -- Constant literals
+        --     enummember = "#FFFFFF",
+        --
+        --     number = "#FFFFFF",    -- Number literals
+        --     boolean = "#FFFFFF",   -- Boolean literals
+        --
+        --     variable = "#FFFFFF",  -- Normal variables
+        --     param = "#FFFFFF",     -- Function parameters
+        --     field = "#FFFFFF",     -- Member variables, properties
+        --     global = "#FFFFFF",    -- Global variables
+        --     static = "#FFFFFF",    -- Static variables
+        --     builtin = "#FFFFFF", -- Built in variables
+        --
+        --     func = "#FFFFFF",      -- Functions
+        --     method = "#FFFFFF",    -- Methods
+        --
+        --     statement = "#FFFFFF", -- Statements (usually overridden by another highlight groups, such as keywords, operators, labels, etc.)
+        --     keyword = "#FFFFFF",
+        --     keyword_flow = "#FFFFFF", -- Keywords related to execution flow, such as conditionals (if, else), loops (for, while), break, continue, goto, etc.
+        --     operator = "#FFFFFF",
+        --
+        --     preproc = "#FFFFFF", -- Preprocessor directives
+        --
+        --     type = "#FFFFFF", -- Types
+        --     type_builtin = "#FFFFFF", -- Built in types, such as int, float, bool (depends on the language)
+        --
+        --     special = "#FFFFFF", -- Special punctuation, parts of comments, special characters in a string, matching parenthesis
+        --
+        --     debug = "#FFFFFF", -- Debugging statements
+        --     error = "#FFFFFF", -- Errors
+        --
+        --     bracket = "#FFFFFF", -- Brackets: (), {}, []
+        --     delimiter = "#FFFFFF", -- Operators such as: +, *, =, sizeof (C/C++), etc.
+        --
+        --     label = "#FFFFFF", -- Labels (cases, default)
+        --     namespace = "#FFFFFF",
+        --     module = "#FFFFFF",
+        --     tag = "#FFFFFF",
+        --     attribute = "#FFFFFF",
+        --
+        --     h1 = "#FFFFFF", -- Headers (HTML, markup, documentation)
+        --     h2 = "#FFFFFF",
+        --     h3 = "#FFFFFF",
+        --     h4 = "#FFFFFF",
+        --     h5 = "#FFFFFF",
+        --     h6 = "#FFFFFF",
+        --     link = "#FFFFFF", -- Links in HTML, markdown, text
+        -- },
+      },
+    },
+    config = function(_, opts)
+      require("finale").setup(opts)
+      -- Activate the theme
+      vim.cmd.colorscheme("finale")
+    end
+  },
+
+  -- lua/plugins/gruvbox.lua
+  {
+    "https://gitlab.com/motaz-shokry/gruvbox.nvim",
+    name = "gruvbox.nvim",
+    -- event = { "VeryLazy" },
+    cond = isColor,
+    lazy = false,
+    priority = 10000,
+    opts = {
+      variant = "hard",      -- hard, medium, soft, light
+      dark_variant = "medium", -- hard, medium, soft
+      dim_inactive_windows = true,
+      extend_background_behind_borders = true,
+    },
+    config = function(_, opts)
+      require("gruvbox").setup(opts)
+      vim.cmd("colorscheme gruvbox")
+    end
   },
 
   -- Yoda
   {
     "kuri-sun/yoda.nvim",
-    event = { "VeryLazy" },
-    -- lazy = false,
-    -- priority = 1000,
-    -- cond = isColor,
-    -- opts ={},
-    -- config = function(_, opts)
-    --   vim.cmd.colorscheme('yoda')
-    -- end,
+    -- event = { "VeryLazy" },
+    lazy = false,
+    priority = 1000,
+    cond = isColor,
+    opts = {},
+    config = function(_, opts)
+      vim.cmd.colorscheme('yoda')
+    end,
   },
 
   --- Tokyonight
