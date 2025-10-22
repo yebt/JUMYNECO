@@ -14,13 +14,14 @@ return {
   -- Yoda
   {
     "kuri-sun/yoda.nvim",
-    lazy = false,
-    priority = 1000,
-    cond = isColor,
-    opts ={},
-    config = function(_, opts)
-      vim.cmd.colorscheme('yoda')
-    end,
+    event = { "VeryLazy" },
+    -- lazy = false,
+    -- priority = 1000,
+    -- cond = isColor,
+    -- opts ={},
+    -- config = function(_, opts)
+    --   vim.cmd.colorscheme('yoda')
+    -- end,
   },
 
   --- Tokyonight
