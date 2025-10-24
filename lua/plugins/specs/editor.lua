@@ -211,6 +211,11 @@ return {
       { 'zO', function() require('fold-cycle').open_all() end,   desc = "Fold cycle: Open all" },
       { 'zo', function() require('fold-cycle').open() end,       desc = "Fold cycle: Open" },
     }
-  }
+  },
 
+  -- Tabularize
+  {
+    'godlygeek/tabular',
+    cmd = { "Tab", "Tabularize" }
+  }
 }
