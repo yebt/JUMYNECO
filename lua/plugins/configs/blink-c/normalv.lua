@@ -150,7 +150,10 @@ return function()
 
       ['<C-l>'] = { function(cmp) cmp.show({ providers = { 'snippets' }, initial_selected_item_idx = 1 }) end },
       ['<C-t>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
-      -- ['<C-f>'] = { function(cmp) cmp.show({ providers = { 'path' } }) end },
+      -- ['<C-p>'] = { function(cmp) cmp.show({ providers = { 'path' } }) end },
+      ['<C-x>'] = { function(cmp) cmp.show({ providers = { 'ripgrep' } }) end },
+
+
 
 
       ['<C-e>'] = { 'hide' },
@@ -180,62 +183,68 @@ return function()
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = {
+        'lsp',
+        'path',
+        'snippets',
+        'buffer',
+        -- 'ripgrep' -- not in the default actions
+      },
       --- When writing prose, you may want significantly different behavior than typical LSP completions.
       providers = {
-        buffer = {
-          -- keep case of first char
-          -- transform_items = function(a, items)
-          --   local keyword = a.get_keyword()
-          --   local correct, case
-          --   if keyword:match('^%l') then
-          --     correct = '^%u%l+$'
-          --     case = string.lower
-          --   elseif keyword:match('^%u') then
-          --     correct = '^%l+$'
-          --     case = string.upper
-          --   else
-          --     return items
-          --   end
-          --
-          --   -- avoid duplicates from the corrections
-          --   local seen = {}
-          --   local out = {}
-          --   for _, item in ipairs(items) do
-          --     local raw = item.insertText
-          --     if raw:match(correct) then
-          --       local text = case(raw:sub(1, 1)) .. raw:sub(2)
-          --       item.insertText = text
-          --       item.label = text
-          --     end
-          --     if not seen[item.insertText] then
-          --       seen[item.insertText] = true
-          --       table.insert(out, item)
-          --     end
-          --   end
-          --   return out
-          -- end,
-
-          opts = {
-            get_bufnrs = function()
-              return vim
-                  .iter(vim.api.nvim_list_bufs())
-                  :filter(function(buf)
-                    return vim.api.nvim_buf_is_loaded(buf)
-                  end)
-                  :totable()
-              -- return vim
-              --   .iter(vim.api.nvim_list_wins())
-              --   :map(function(win)
-              --     return vim.api.nvim_win_get_buf(win)
-              --   end)
-              --   :filter(function(buf)
-              --     return vim.bo[buf].buftype ~= 'nofile'
-              --   end)
-              --   :totable()
-            end,
-          },
-        },
+        -- buffer = {
+        --   -- keep case of first char
+        --   -- transform_items = function(a, items)
+        --   --   local keyword = a.get_keyword()
+        --   --   local correct, case
+        --   --   if keyword:match('^%l') then
+        --   --     correct = '^%u%l+$'
+        --   --     case = string.lower
+        --   --   elseif keyword:match('^%u') then
+        --   --     correct = '^%l+$'
+        --   --     case = string.upper
+        --   --   else
+        --   --     return items
+        --   --   end
+        --   --
+        --   --   -- avoid duplicates from the corrections
+        --   --   local seen = {}
+        --   --   local out = {}
+        --   --   for _, item in ipairs(items) do
+        --   --     local raw = item.insertText
+        --   --     if raw:match(correct) then
+        --   --       local text = case(raw:sub(1, 1)) .. raw:sub(2)
+        --   --       item.insertText = text
+        --   --       item.label = text
+        --   --     end
+        --   --     if not seen[item.insertText] then
+        --   --       seen[item.insertText] = true
+        --   --       table.insert(out, item)
+        --   --     end
+        --   --   end
+        --   --   return out
+        --   -- end,
+        --
+        --   opts = {
+        --     get_bufnrs = function()
+        --       return vim
+        --           .iter(vim.api.nvim_list_bufs())
+        --           :filter(function(buf)
+        --             return vim.api.nvim_buf_is_loaded(buf)
+        --           end)
+        --           :totable()
+        --       -- return vim
+        --       --   .iter(vim.api.nvim_list_wins())
+        --       --   :map(function(win)
+        --       --     return vim.api.nvim_win_get_buf(win)
+        --       --   end)
+        --       --   :filter(function(buf)
+        --       --     return vim.bo[buf].buftype ~= 'nofile'
+        --       --   end)
+        --       --   :totable()
+        --     end,
+        --   },
+        -- },
         lsp = {
           override = {
             -- get_trigger_characters = function(self)
@@ -258,6 +267,16 @@ return function()
             --   -- vim.print(clients and clients[1].server_capabilities.completionProvider)
             --   return trigger_characters
             -- end,
+          },
+        },
+        ripgrep = {
+          module = "blink-ripgrep",
+          name = "Ripgrep",
+          -- see the full configuration below for all available options
+          ---@module "blink-ripgrep"
+          ---@type blink-ripgrep.Options
+          opts = {
+            prefix_min_len = 2,
           },
         },
       },
@@ -313,10 +332,10 @@ return function()
         min_width = 1,
         max_width = 100,
         max_height = 10,
-        border = nil,   -- Defaults to `vim.o.winborder` on nvim 0.11+ or 'padded' when not defined/<=0.10
+        border = nil, -- Defaults to `vim.o.winborder` on nvim 0.11+ or 'padded' when not defined/<=0.10
         winblend = 0,
         winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder',
-        scrollbar = false,   -- Note that the gutter will be disabled when border ~= 'none'
+        scrollbar = false, -- Note that the gutter will be disabled when border ~= 'none'
         -- Which directions to show the window,
         -- falling back to the next direction when there's not enough space,
         -- or another window is in the way

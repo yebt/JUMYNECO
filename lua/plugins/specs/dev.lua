@@ -218,7 +218,11 @@ return {
       },
 
       --- Comunity sources
+    {
       "mikavilpas/blink-ripgrep.nvim",
+      version = "*", -- use the latest stable version
+    }
+
     },
     build = 'cargo +nightly build --release',
     event = { 'VeryLazy', 'InsertEnter' },
