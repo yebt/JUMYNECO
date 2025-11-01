@@ -73,7 +73,18 @@ return {
     'mason-org/mason-lspconfig.nvim',
     lazy = false,
     opts = {
-      ensure_installed = { 'lua_ls', 'vtsls', 'vue_ls', 'cssls', 'tailwindcss', 'emmet_language_server', 'jsonls', 'phpactor', 'intelephense'  },
+      ensure_installed = {
+        'lua_ls',
+        'vtsls',
+        'vue_ls',
+        'cssls',
+        'tailwindcss',
+        'emmet_language_server',
+        'jsonls',
+        'phpactor',
+        'intelephense',
+        'gopls',
+      },
       automatic_enable = true,
     },
     dependencies = {
